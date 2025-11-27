@@ -1,4 +1,4 @@
-import 'package:election_management/src/presentation/screens/login/loginpage.dart';
+import 'package:election_management/src/presentation/screens/Auth/loginpage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -12,7 +12,7 @@ class ElectionManagment extends StatelessWidget {
       title: 'Election Management',
       debugShowCheckedModeBanner: false,
       builder: EasyLoading.init(),
-      home: LoginPage()
+      home: LoginPage(),
     );
   }
 }

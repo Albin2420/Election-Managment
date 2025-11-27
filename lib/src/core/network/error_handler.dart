@@ -197,7 +197,7 @@ class ApiInternalStatus {
 /// Exception handling fot [http] requests
 ///
 
-handleResponse(http.Response response) {
+dynamic handleResponse(http.Response response) {
   switch (response.statusCode) {
     case 200:
     case 201:
