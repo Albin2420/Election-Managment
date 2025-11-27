@@ -13,7 +13,6 @@ class ElectionManagment extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       builder: EasyLoading.init(),
       home: SplashScreen(),
-
     );
   }
 }
