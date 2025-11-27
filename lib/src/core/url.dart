@@ -1,3 +1,5 @@
 class Url {
-  static String baseUrl = 'http://198.169.1.56:8100';
+  static String baseUrl = 'https://vantage-stg.crimsonhack.in/api';
+
+  static String login = "token/";
 }
