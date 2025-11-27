@@ -1,5 +1,6 @@
 import 'package:election_management/src/data/repositories/Auth/auth_repo_impl.dart';
 import 'package:election_management/src/domain/repositories/Auth/auth_repo.dart';
+import 'package:election_management/src/presentation/controller/AppstartupController/app_startup_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -7,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class AuthController extends GetxController {
+  final appstartupCtrl = Get.find<AppStartupController>();
   final LoginRepo _loginRepo = LoginRepoImpl();
 
   // Text editing controllers
@@ -25,6 +27,7 @@ class AuthController extends GetxController {
     final password = passwordController.text.trim();
 
     if (username.isEmpty || password.isEmpty) {
+      Fluttertoast.showToast(msg: "Please fill out this field");
     } else {
       EasyLoading.show();
       final resp = await _loginRepo.login(
@@ -36,7 +39,11 @@ class AuthController extends GetxController {
           EasyLoading.dismiss();
           Fluttertoast.showToast(msg: l.message);
         },
-        (R) {
+        (R) async {
+          await appstartupCtrl.saveTokens(
+            accessTk: R['access_token'],
+            refreshTk: R['refresh_token'],
+          );
           EasyLoading.dismiss();
         },
       );
