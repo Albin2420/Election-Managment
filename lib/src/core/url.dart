@@ -6,4 +6,5 @@ class Url {
   static String refreshToken = "token/refresh/";
 
   static String newvoter = "voters/";
+  static String myBooth = "lsg/permitted-booths/";
 }

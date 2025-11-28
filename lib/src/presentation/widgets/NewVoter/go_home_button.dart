@@ -1,18 +1,12 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../controller/AddVoter/add_voter_controller.dart';
-import '../../screens/Homescreen/home_screen.dart';
 
 class GoHomeButton extends StatelessWidget {
-  const GoHomeButton({super.key});
+  final VoidCallback onTap;
+  const GoHomeButton({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<AddVoterController>();
-
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       decoration: BoxDecoration(
@@ -31,15 +25,9 @@ class GoHomeButton extends StatelessWidget {
       child: Align(
         alignment: Alignment.center,
         child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxWidth: 200,
-            minHeight: 56,
-          ),
+          constraints: const BoxConstraints(maxWidth: 200, minHeight: 56),
           child: ElevatedButton(
-              onPressed:() {
-                log("got to home button clicked");
-                Get.back();
-              } ,
+            onPressed: onTap,
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF2F5DFE),
               shape: RoundedRectangleBorder(
