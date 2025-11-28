@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../screens/Addnewvoter/add_new_voter.dart';
+
 class ActionCard extends StatelessWidget {
-  final String iconImage; // <-- changed from IconData
+  final String iconImage;
   final Color iconBgColor;
   final String title;
   final String subtitle;
@@ -17,7 +21,14 @@ class ActionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return InkWell(
+        borderRadius: BorderRadius.circular(16),
+      onTap: () {
+        if (title == 'Add Voter') {
+          Get.to(() => const AddNewVoterScreen());
+        }
+      },child:
+     Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -74,7 +85,7 @@ class ActionCard extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
         ],
-      ),
+      ))
     );
   }
 }
