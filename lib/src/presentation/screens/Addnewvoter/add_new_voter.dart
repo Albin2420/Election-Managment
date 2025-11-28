@@ -23,7 +23,6 @@ class AddNewVoterScreen extends StatelessWidget {
           child: Column(
             children: [
               const NewVoterHeader(),
-
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 40,
@@ -49,7 +48,6 @@ class AddNewVoterScreen extends StatelessWidget {
                         const SizedBox(height: 24),
                         const PhotoUploadSection(),
                         const SizedBox(height: 14),
-
                         Text(
                           'Upload voter photo',
                           style: GoogleFonts.inter(
@@ -58,7 +56,6 @@ class AddNewVoterScreen extends StatelessWidget {
                             color: Colors.black,
                           ),
                         ),
-
                         const SizedBox(height: 32),
                         TextInputField(
                           label: 'Full Name',
@@ -72,21 +69,18 @@ class AddNewVoterScreen extends StatelessWidget {
                           hint: 'Enter serial number',
                           controller: controller.serialNumberController,
                         ),
-
                         const SizedBox(height: 20),
                         TextInputField(
                           label: 'House Number',
                           hint: 'Enter house number',
-                          controller: controller.houseNumberController
+                          controller: controller.houseNumberController,
                         ),
-
                         const SizedBox(height: 20),
                         TextInputField(
                           label: 'Electoral ID',
                           hint: 'Enter electoral ID',
                           controller: controller.electoralIdController,
                         ),
-
                         const SizedBox(height: 20),
                         TextInputField(
                           label: 'Phone Number',
@@ -94,7 +88,6 @@ class AddNewVoterScreen extends StatelessWidget {
                           keyboard: TextInputType.phone,
                           controller: controller.phoneNumberController,
                         ),
-
                         const SizedBox(height: 20),
                         const AddressField(),
                         const SizedBox(height: 32),
@@ -105,7 +98,11 @@ class AddNewVoterScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const GoHomeButton(),
+              GoHomeButton(
+                onTap: () {
+                  Get.back();
+                },
+              ),
             ],
           ),
         ),
