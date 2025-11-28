@@ -1,4 +1,6 @@
+import 'package:election_management/src/presentation/controller/home/home_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../widgets/home_screen/action_card.dart';
 import '../../widgets/home_screen/assigned_booth_section.dart';
@@ -11,6 +13,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ctrl = Get.put(HomeController());
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
       body: SingleChildScrollView(
