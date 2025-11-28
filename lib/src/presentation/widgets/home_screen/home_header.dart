@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -56,20 +57,26 @@ class HomeHeader extends StatelessWidget {
 
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.logout, size: 22, color: Colors.black54),
-                      const SizedBox(width: 1),
-                      Text(
-                        'Logout',
-                        style: GoogleFonts.poppins(
-                          fontSize: 16,
-                          color: Colors.grey[800],
+                  child: GestureDetector(
+                    onTap: () {
+                      log("Logging out");
+                    },
+                    child: Row(
+                      children: [
+                        const Icon(Icons.logout, size: 22, color: Colors.black54),
+                        const SizedBox(width: 1),
+                        Text(
+                          'Logout',
+                          style: GoogleFonts.poppins(
+                            fontSize: 16,
+                            color: Colors.grey[800],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
+
               ],
             ),
           ),
