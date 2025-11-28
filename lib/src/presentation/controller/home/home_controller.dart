@@ -7,12 +7,13 @@ import 'package:election_management/src/domain/repositories/profile/profile_repo
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
-  //Boothdetails
-
-  RxString boothId = RxString("");
-
   ProfileRepo prf = ProfileRepoImpl();
   BoothRepo bth = BoothRepoImpl();
+
+  //Boothdetails
+  RxString boothId = RxString("");
+  RxInt wardNumber = RxInt(-1);
+  RxInt boothNumber = RxInt(-1);
 
   @override
   void onInit() {
@@ -23,15 +24,9 @@ class HomeController extends GetxController {
   Future<void> fetchUser() async {
     try {
       final res = await prf.getMydetails();
-      res.fold(
-        (l) {
-          log("failed");
-        },
-        (R) {
-          log("success");
-          getBoothDetails();
-        },
-      );
+      res.fold((l) {}, (R) {
+        getBoothDetails();
+      });
     } catch (e) {
       log("⚠️ Error in fetchUser():$e");
     }
