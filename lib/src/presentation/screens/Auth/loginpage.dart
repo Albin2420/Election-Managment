@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../controller/Auth/auth_controller.dart';
@@ -179,7 +180,11 @@ class LoginPage extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: controller.login,
+                      onPressed: () {
+                        if (!EasyLoading.isShow) {
+                          controller.login();
+                        }
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF2F5DFE),
                         padding: const EdgeInsets.symmetric(vertical: 16),
