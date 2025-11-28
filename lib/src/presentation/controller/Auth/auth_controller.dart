@@ -1,6 +1,7 @@
 import 'package:election_management/src/data/repositories/Auth/auth_repo_impl.dart';
 import 'package:election_management/src/domain/repositories/Auth/auth_repo.dart';
 import 'package:election_management/src/presentation/controller/AppstartupController/app_startup_controller.dart';
+import 'package:election_management/src/presentation/screens/Homescreen/home_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -44,6 +45,7 @@ class AuthController extends GetxController {
             accessTk: R['access_token'],
             refreshTk: R['refresh_token'],
           );
+          Get.offAll(() => HomeScreen());
           EasyLoading.dismiss();
         },
       );
