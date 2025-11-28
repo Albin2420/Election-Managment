@@ -23,7 +23,6 @@ class HomeScreen extends StatelessWidget {
             children: [
               const HomeHeader(),
               const SizedBox(height: 24),
-
               const WardBoothDetails(
                 wardnumber: '5',
                 boothnumber: '12',
@@ -34,7 +33,6 @@ class HomeScreen extends StatelessWidget {
                 time: '12:52:33',
               ),
               const SizedBox(height: 24),
-
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 child: AssignedBoothSection(

@@ -46,15 +46,14 @@ class NewVoterHeader extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Container(
-                    width: 30, // Reduced width
-                    height: 30, // Reduced height
-                    // The image is already set as the background using the 'decoration' property below.
+                    width: 30,
+                    height: 30,
                     padding: const EdgeInsets.all(14),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       image: const DecorationImage(
                         image: AssetImage('assets/images/person.png'),
-                        fit: BoxFit.contain, // Use BoxFit.cover for background effect (optional, or stick to .contain)
+                        fit: BoxFit.contain,
                       ),
                     ),
                   ),
@@ -62,7 +61,6 @@ class NewVoterHeader extends StatelessWidget {
 
                 const SizedBox(width: 14),
 
-                // TITLE + SUBTITLE
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

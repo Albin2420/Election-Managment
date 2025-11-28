@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -17,33 +18,24 @@ class AddVoterController extends GetxController {
 
   Future<void> pickImage() async {
     try {
-      final XFile? image =
-      await imagePicker.pickImage(source: ImageSource.camera);
+      final XFile? image = await imagePicker.pickImage(
+        source: ImageSource.camera,
+      );
       if (image != null) {
         selectedImage.value = File(image.path);
       }
     } catch (e) {
-      Get.snackbar(
-        'Error',
-        'Error picking image: $e',
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      log("error");
     }
   }
 
   void addVoter() {
     if (formKey.currentState!.validate()) {
       if (selectedImage.value == null) {
-        Get.snackbar(
-          'Error',
-          'Please upload voter photo',
-          snackPosition: SnackPosition.BOTTOM,
-        );
+        log("please upload voter photo");
         return;
       }
 
-      // Handle add voter logic here
-      // You can send the data to your API or database
       final voterData = {
         'fullName': fullNameController.text,
         'serialNumber': serialNumberController.text,
@@ -54,13 +46,8 @@ class AddVoterController extends GetxController {
         'photo': selectedImage.value!.path,
       };
 
-      Get.snackbar(
-        'Success',
-        'Voter added successfully',
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      log("success,voter added successfully");
 
-      // Clear form after submission
       clearForm();
     }
   }

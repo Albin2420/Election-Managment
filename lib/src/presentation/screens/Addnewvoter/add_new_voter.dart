@@ -14,7 +14,7 @@ class AddNewVoterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  Get.put(AddVoterController());
+    final controller = Get.put(AddVoterController());
 
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
@@ -43,7 +43,7 @@ class AddNewVoterScreen extends StatelessWidget {
                     ],
                   ),
                   child: Form(
-                    key: Get.find<AddVoterController>().formKey,
+                    key: controller.formKey,
                     child: Column(
                       children: [
                         const SizedBox(height: 24),
@@ -63,36 +63,36 @@ class AddNewVoterScreen extends StatelessWidget {
                         TextInputField(
                           label: 'Full Name',
                           hint: 'Enter full name',
-                          controller: Get.find<AddVoterController>().fullNameController,
+                          controller: controller.fullNameController,
                         ),
 
                         const SizedBox(height: 20),
                         TextInputField(
                           label: 'Serial Number',
                           hint: 'Enter serial number',
-                          controller: Get.find<AddVoterController>().serialNumberController,
+                          controller: controller.serialNumberController,
                         ),
 
                         const SizedBox(height: 20),
                         TextInputField(
                           label: 'House Number',
                           hint: 'Enter house number',
-                          controller: Get.find<AddVoterController>().houseNumberController,
+                          controller: controller.houseNumberController
                         ),
 
                         const SizedBox(height: 20),
                         TextInputField(
                           label: 'Electoral ID',
                           hint: 'Enter electoral ID',
-                          controller: Get.find<AddVoterController>().electoralIdController,
+                          controller: controller.electoralIdController,
                         ),
 
                         const SizedBox(height: 20),
                         TextInputField(
                           label: 'Phone Number',
                           hint: 'Enter phone number',
-                          controller: Get.find<AddVoterController>().phoneNumberController,
                           keyboard: TextInputType.phone,
+                          controller: controller.phoneNumberController,
                         ),
 
                         const SizedBox(height: 20),
