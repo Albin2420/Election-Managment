@@ -18,6 +18,9 @@ class AddVoterController extends GetxController {
   final electoralIdController = TextEditingController();
   final phoneNumberController = TextEditingController();
   final addressController = TextEditingController();
+  final genderController = TextEditingController();
+  final ageController = TextEditingController();
+
 
   final selectedImage = Rx<File?>(null);
   final imagePicker = ImagePicker();
@@ -95,6 +98,8 @@ class AddVoterController extends GetxController {
     electoralIdController.clear();
     phoneNumberController.clear();
     addressController.clear();
+    genderController.clear();
+    ageController.clear();
     selectedImage.value = null;
   }
 
@@ -110,6 +115,8 @@ class AddVoterController extends GetxController {
     electoralIdController.dispose();
     phoneNumberController.dispose();
     addressController.dispose();
+    genderController.dispose();
+    ageController.dispose();
     super.onClose();
   }
 }
