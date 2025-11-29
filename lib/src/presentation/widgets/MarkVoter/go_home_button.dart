@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -30,7 +31,10 @@ class GoHomeButton extends StatelessWidget {
             minHeight: 56,
           ),
           child: ElevatedButton(
-            onPressed: () => Get.back(),
+            onPressed: () {
+              log("go to home button clicked");
+              Get.back();
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF2F5DFE),
               shape: RoundedRectangleBorder(
@@ -43,11 +47,10 @@ class GoHomeButton extends StatelessWidget {
               children: [
                 Image.asset(
                   'assets/images/home.png',
-                  width: 35,
-                  height: 35,
+                  width: 45,
+                  height: 45,
                   color: Colors.white,
                 ),
-                const SizedBox(width: 8),
                 Text(
                   'Go to Home',
                   style: GoogleFonts.inter(

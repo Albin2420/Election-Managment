@@ -15,7 +15,6 @@ class MarkVoterHeader extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.09),
@@ -42,7 +41,8 @@ class MarkVoterHeader extends StatelessWidget {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: const Color(0xFF00C853),
+                    // color: const Color(0xFF00C853),
+                    color: Colors.green[700],
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Container(

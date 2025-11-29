@@ -1,4 +1,3 @@
-
 import 'package:election_management/src/presentation/screens/Homescreen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
