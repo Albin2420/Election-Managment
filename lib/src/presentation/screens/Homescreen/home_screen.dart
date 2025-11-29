@@ -1,4 +1,6 @@
+import 'dart:developer';
 import 'package:election_management/src/presentation/controller/home/home_controller.dart';
+import 'package:election_management/src/presentation/screens/Addnewvoter/add_new_voter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -21,7 +23,11 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const HomeHeader(),
+              HomeHeader(
+                onLogout: () {
+                  log("logout");
+                },
+              ),
               const SizedBox(height: 24),
               const WardBoothDetails(
                 wardnumber: '5',
@@ -55,46 +61,52 @@ class HomeScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
 
-              const Padding(
+              Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 child: ActionCard(
                   iconImage: "assets/images/person.png",
                   iconBgColor: Color(0xFF2F5DFE),
                   title: 'Add Voter',
                   subtitle: 'Register new voter',
+                  onTap: () {
+                    Get.to(() => AddNewVoterScreen());
+                  },
                 ),
               ),
               const SizedBox(height: 16),
 
-              const Padding(
+              Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 child: ActionCard(
                   iconImage: "assets/images/round_tick.png",
                   iconBgColor: Color(0xFF00C853),
                   title: 'Mark Voter',
                   subtitle: 'Tag political alliance',
+                  onTap: () {},
                 ),
               ),
               const SizedBox(height: 16),
 
-              const Padding(
+              Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 child: ActionCard(
                   iconImage: "assets/images/search.png",
                   iconBgColor: Color(0xFFD946EF),
                   title: 'Search Voter',
                   subtitle: 'Find voter details',
+                  onTap: () {},
                 ),
               ),
               const SizedBox(height: 16),
 
-              const Padding(
+              Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 child: ActionCard(
                   iconImage: "assets/images/white_tick.png",
                   iconBgColor: Color(0xFFFF9100),
                   title: 'Mark Voted',
                   subtitle: 'Record cast votes',
+                  onTap: () {},
                 ),
               ),
 
