@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../screens/Addnewvoter/add_new_voter.dart';
-import '../../screens/MarkVoter/mark_voter_screen.dart';
-import '../../screens/SearchVoter/search_voter.dart';
 
 class ActionCard extends StatelessWidget {
   final String iconImage;
   final Color iconBgColor;
   final String title;
   final String subtitle;
+  final VoidCallback onTap; // <-- ADDED
 
   const ActionCard({
     super.key,
@@ -18,23 +14,14 @@ class ActionCard extends StatelessWidget {
     required this.iconBgColor,
     required this.title,
     required this.subtitle,
+    required this.onTap, // <-- ADDED
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(16),
-      onTap: () {
-        if (title == 'Add Voter') {
-          Get.to(() => const AddNewVoterScreen());
-        }
-        if (title == 'Mark Voter') {
-          Get.to(() => const MarkVoterScreen());
-        }
-        if (title == 'Search Voter') {
-          Get.to(() => const SearchVoterPage());
-        }
-      },
+      onTap: onTap, // <-- USE CALLBACK
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(16),
