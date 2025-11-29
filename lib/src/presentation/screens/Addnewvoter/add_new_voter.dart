@@ -76,33 +76,43 @@ class AddNewVoterScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 8),
                             DropdownButtonFormField<String>(
-                              value: controller.genderController.text.isEmpty
+                              value: controller.gender.isEmpty
                                   ? null
-                                  : controller.genderController.text,
-                              items: ['Male', 'Female', 'Other']
-                                  .map((gender) => DropdownMenuItem(
-                                value: gender,
-                                child: Text(gender),
-                              ))
+                                  : controller.gender.value,
+                              items: ['male', 'female', 'other ']
+                                  .map(
+                                    (gender) => DropdownMenuItem(
+                                      value: gender,
+                                      child: Text(gender),
+                                    ),
+                                  )
                                   .toList(),
                               onChanged: (value) {
-                                controller.genderController.text = value!;
+                                controller.gender.value = value ?? '';
                               },
                               decoration: InputDecoration(
                                 hintText: 'Select gender',
-                                hintStyle: TextStyle(color: Colors.grey.shade50),
+                                hintStyle: TextStyle(
+                                  color: Colors.grey.shade50,
+                                ),
                                 // Grey border before tapping/focus
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
-                                  borderSide: const BorderSide(color: Color(0xFFE5E7EB)),
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFFE5E7EB),
+                                  ),
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
-                                  borderSide: const BorderSide(color: Color(0xFFE5E7EB)), // Grey when idle
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFFE5E7EB),
+                                  ), // Grey when idle
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
-                                  borderSide: const BorderSide(color: Color(0xFF2F5DFE)), // Blue when focused
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFF2F5DFE),
+                                  ), // Blue when focused
                                 ),
                                 contentPadding: const EdgeInsets.symmetric(
                                   horizontal: 16,
@@ -110,7 +120,9 @@ class AddNewVoterScreen extends StatelessWidget {
                                 ),
                               ),
                               validator: (value) =>
-                              (value == null || value.isEmpty) ? 'Please select gender' : null,
+                                  (value == null || value.isEmpty)
+                                  ? 'Please select gender'
+                                  : null,
                             ),
                           ],
                         ),
@@ -128,6 +140,7 @@ class AddNewVoterScreen extends StatelessWidget {
                           label: 'Serial Number',
                           hint: 'Enter serial number',
                           controller: controller.serialNumberController,
+                          keyboard: TextInputType.number,
                         ),
                         const SizedBox(height: 20),
                         TextInputField(

@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
             children: [
               HomeHeader(
                 onLogout: () {
-                  log("logout");
+                  ctrl.logout();
                 },
               ),
               const SizedBox(height: 24),
