@@ -23,7 +23,6 @@ class AddNewVoterScreen extends StatelessWidget {
           child: Column(
             children: [
               const NewVoterHeader(),
-
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 40,
@@ -49,7 +48,6 @@ class AddNewVoterScreen extends StatelessWidget {
                         const SizedBox(height: 24),
                         const PhotoUploadSection(),
                         const SizedBox(height: 14),
-
                         Text(
                           'Upload voter photo',
                           style: GoogleFonts.inter(
@@ -58,12 +56,83 @@ class AddNewVoterScreen extends StatelessWidget {
                             color: Colors.black,
                           ),
                         ),
-
                         const SizedBox(height: 32),
                         TextInputField(
                           label: 'Full Name',
                           hint: 'Enter full name',
                           controller: controller.fullNameController,
+                        ),
+                        const SizedBox(height: 20),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Gender',
+                              style: GoogleFonts.inter(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xFF1F2937),
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            DropdownButtonFormField<String>(
+                              value: controller.gender.isEmpty
+                                  ? null
+                                  : controller.gender.value,
+                              items: ['male', 'female', 'other ']
+                                  .map(
+                                    (gender) => DropdownMenuItem(
+                                      value: gender,
+                                      child: Text(gender),
+                                    ),
+                                  )
+                                  .toList(),
+                              onChanged: (value) {
+                                controller.gender.value = value ?? '';
+                              },
+                              decoration: InputDecoration(
+                                hintText: 'Select gender',
+                                hintStyle: TextStyle(
+                                  color: Colors.grey.shade50,
+                                ),
+                                // Grey border before tapping/focus
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFFE5E7EB),
+                                  ),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFFE5E7EB),
+                                  ), // Grey when idle
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFF2F5DFE),
+                                  ), // Blue when focused
+                                ),
+                                contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 12,
+                                ),
+                              ),
+                              validator: (value) =>
+                                  (value == null || value.isEmpty)
+                                  ? 'Please select gender'
+                                  : null,
+                            ),
+                          ],
+                        ),
+
+                        const SizedBox(height: 20),
+                        TextInputField(
+                          label: 'Age',
+                          hint: 'Enter age',
+                          keyboard: TextInputType.number,
+                          controller: controller.ageController,
                         ),
 
                         const SizedBox(height: 20),
@@ -71,22 +140,20 @@ class AddNewVoterScreen extends StatelessWidget {
                           label: 'Serial Number',
                           hint: 'Enter serial number',
                           controller: controller.serialNumberController,
+                          keyboard: TextInputType.number,
                         ),
-
                         const SizedBox(height: 20),
                         TextInputField(
                           label: 'House Number',
                           hint: 'Enter house number',
-                          controller: controller.houseNumberController
+                          controller: controller.houseNumberController,
                         ),
-
                         const SizedBox(height: 20),
                         TextInputField(
                           label: 'Electoral ID',
                           hint: 'Enter electoral ID',
                           controller: controller.electoralIdController,
                         ),
-
                         const SizedBox(height: 20),
                         TextInputField(
                           label: 'Phone Number',
@@ -94,7 +161,6 @@ class AddNewVoterScreen extends StatelessWidget {
                           keyboard: TextInputType.phone,
                           controller: controller.phoneNumberController,
                         ),
-
                         const SizedBox(height: 20),
                         const AddressField(),
                         const SizedBox(height: 32),
@@ -105,7 +171,11 @@ class AddNewVoterScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const GoHomeButton(),
+              GoHomeButton(
+                onTap: () {
+                  Get.back();
+                },
+              ),
             ],
           ),
         ),

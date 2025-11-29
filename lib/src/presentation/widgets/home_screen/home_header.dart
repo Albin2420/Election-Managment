@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomeHeader extends StatelessWidget {
-  const HomeHeader({super.key});
+  final VoidCallback onLogout;
+  const HomeHeader({super.key, required this.onLogout});
 
   @override
   Widget build(BuildContext context) {
@@ -44,13 +45,19 @@ class HomeHeader extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Election Management',
-                          overflow: TextOverflow.ellipsis,
-                          style: GoogleFonts.poppins(fontSize: 16)),
-                      Text('Booth Officer Dashboard',
-                          overflow: TextOverflow.ellipsis,
-                          style: GoogleFonts.poppins(
-                              fontSize: 14, color: Colors.black54)),
+                      Text(
+                        'Election Management',
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.poppins(fontSize: 16),
+                      ),
+                      Text(
+                        'Booth Officer Dashboard',
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.poppins(
+                          fontSize: 14,
+                          color: Colors.black54,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -58,12 +65,14 @@ class HomeHeader extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: GestureDetector(
-                    onTap: () {
-                      log("Logging out");
-                    },
+                    onTap: onLogout,
                     child: Row(
                       children: [
-                        const Icon(Icons.logout, size: 22, color: Colors.black54),
+                        const Icon(
+                          Icons.logout,
+                          size: 22,
+                          color: Colors.black54,
+                        ),
                         const SizedBox(width: 1),
                         Text(
                           'Logout',
@@ -76,7 +85,6 @@ class HomeHeader extends StatelessWidget {
                     ),
                   ),
                 ),
-
               ],
             ),
           ),

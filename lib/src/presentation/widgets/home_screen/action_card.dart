@@ -6,22 +6,22 @@ class ActionCard extends StatelessWidget {
   final Color iconBgColor;
   final String title;
   final String subtitle;
-  final VoidCallback onTap; // <-- ADDED
+  final VoidCallback onTap;
 
   const ActionCard({
     super.key,
-    required this.iconImage,
+    required this.iconImage, // <-- updated
     required this.iconBgColor,
     required this.title,
     required this.subtitle,
-    required this.onTap, // <-- ADDED
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(16),
-      onTap: onTap, // <-- USE CALLBACK
+      onTap: onTap,
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(16),

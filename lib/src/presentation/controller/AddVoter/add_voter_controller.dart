@@ -1,10 +1,18 @@
+import 'dart:convert';
 import 'dart:developer';
+import 'package:election_management/src/data/repositories/new_voter/new_voter_repo_impl.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
+import '../../../domain/repositories/new_voter/new_voter_repo.dart';
+
 class AddVoterController extends GetxController {
+  final NewVoterRepo _newVoterRepo = NewVoterRepoImpl();
+
   final formKey = GlobalKey<FormState>();
   final fullNameController = TextEditingController();
   final serialNumberController = TextEditingController();
@@ -12,6 +20,8 @@ class AddVoterController extends GetxController {
   final electoralIdController = TextEditingController();
   final phoneNumberController = TextEditingController();
   final addressController = TextEditingController();
+  RxString gender = RxString("");
+  final ageController = TextEditingController();
 
   final selectedImage = Rx<File?>(null);
   final imagePicker = ImagePicker();
@@ -25,30 +35,41 @@ class AddVoterController extends GetxController {
         selectedImage.value = File(image.path);
       }
     } catch (e) {
-      log("error");
+      log("⚠️ Error in pickImage():$e");
     }
   }
 
-  void addVoter() {
+  Future<void> addVoter() async {
     if (formKey.currentState!.validate()) {
-      if (selectedImage.value == null) {
-        log("please upload voter photo");
-        return;
+      try {
+        var voterdata = jsonEncode({
+          "name": fullNameController.text,
+          "serial_number": int.parse(serialNumberController.text.toString()),
+          "age": int.parse(ageController.text.toString()),
+          "gender": gender.value,
+          "address": addressController.text.toString(),
+          "ward_number": 20,
+          "house_number": int.parse(houseNumberController.text.toString()),
+          "is_active": true,
+          "is_alive": true,
+          "is_disputed": true,
+        });
+
+        EasyLoading.show();
+        final res = await _newVoterRepo.createNewvoter(newVoter: voterdata);
+        res.fold(
+          (l) {
+            EasyLoading.dismiss();
+          },
+          (R) {
+            EasyLoading.dismiss();
+            Fluttertoast.showToast(msg: "voters addedd successfully");
+            clearForm();
+          },
+        );
+      } catch (e) {
+        log("⚠️ Error in addVoter():$e");
       }
-
-      final voterData = {
-        'fullName': fullNameController.text,
-        'serialNumber': serialNumberController.text,
-        'houseNumber': houseNumberController.text,
-        'electoralId': electoralIdController.text,
-        'phoneNumber': phoneNumberController.text,
-        'address': addressController.text,
-        'photo': selectedImage.value!.path,
-      };
-
-      log("success,voter added successfully");
-
-      clearForm();
     }
   }
 
@@ -60,7 +81,9 @@ class AddVoterController extends GetxController {
     electoralIdController.clear();
     phoneNumberController.clear();
     addressController.clear();
+    ageController.clear();
     selectedImage.value = null;
+    gender.value = '';
   }
 
   void goToHome() {
@@ -75,6 +98,7 @@ class AddVoterController extends GetxController {
     electoralIdController.dispose();
     phoneNumberController.dispose();
     addressController.dispose();
+    ageController.dispose();
     super.onClose();
   }
 }
