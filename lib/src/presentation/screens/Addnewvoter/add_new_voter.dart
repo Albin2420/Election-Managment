@@ -62,6 +62,66 @@ class AddNewVoterScreen extends StatelessWidget {
                           hint: 'Enter full name',
                           controller: controller.fullNameController,
                         ),
+                        const SizedBox(height: 20),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Gender',
+                              style: GoogleFonts.inter(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xFF1F2937),
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            DropdownButtonFormField<String>(
+                              value: controller.genderController.text.isEmpty
+                                  ? null
+                                  : controller.genderController.text,
+                              items: ['Male', 'Female', 'Other']
+                                  .map((gender) => DropdownMenuItem(
+                                value: gender,
+                                child: Text(gender),
+                              ))
+                                  .toList(),
+                              onChanged: (value) {
+                                controller.genderController.text = value!;
+                              },
+                              decoration: InputDecoration(
+                                hintText: 'Select gender',
+                                hintStyle: TextStyle(color: Colors.grey.shade50),
+                                // Grey border before tapping/focus
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: const BorderSide(color: Color(0xFFE5E7EB)),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: const BorderSide(color: Color(0xFFE5E7EB)), // Grey when idle
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: const BorderSide(color: Color(0xFF2F5DFE)), // Blue when focused
+                                ),
+                                contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 12,
+                                ),
+                              ),
+                              validator: (value) =>
+                              (value == null || value.isEmpty) ? 'Please select gender' : null,
+                            ),
+                          ],
+                        ),
+
+                        const SizedBox(height: 20),
+                        TextInputField(
+                          label: 'Age',
+                          hint: 'Enter age',
+                          keyboard: TextInputType.number,
+                          controller: controller.ageController,
+                        ),
 
                         const SizedBox(height: 20),
                         TextInputField(
