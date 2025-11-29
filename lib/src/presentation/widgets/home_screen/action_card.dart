@@ -4,6 +4,7 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../screens/Addnewvoter/add_new_voter.dart';
+import '../../screens/MarkVoter/mark_voter_screen.dart';
 
 class ActionCard extends StatelessWidget {
   final String iconImage;
@@ -13,7 +14,7 @@ class ActionCard extends StatelessWidget {
 
   const ActionCard({
     super.key,
-    required this.iconImage,   // <-- updated
+    required this.iconImage,
     required this.iconBgColor,
     required this.title,
     required this.subtitle,
@@ -27,6 +28,10 @@ class ActionCard extends StatelessWidget {
         if (title == 'Add Voter') {
           Get.to(() => const AddNewVoterScreen());
         }
+        if (title == 'Mark Voter') {
+          Get.to(() => const MarkVoterScreen());
+        }
+
       },child:
      Container(
       width: double.infinity,

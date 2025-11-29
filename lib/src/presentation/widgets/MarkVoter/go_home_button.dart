@@ -1,16 +1,12 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../controller/AddVoter/add_voter_controller.dart';
 
 class GoHomeButton extends StatelessWidget {
   const GoHomeButton({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<AddVoterController>();
-
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       decoration: BoxDecoration(
@@ -34,10 +30,7 @@ class GoHomeButton extends StatelessWidget {
             minHeight: 56,
           ),
           child: ElevatedButton(
-              onPressed:() {
-                log("got to home button clicked");
-                Get.back();
-              } ,
+            onPressed: () => Get.back(),
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF2F5DFE),
               shape: RoundedRectangleBorder(
@@ -50,8 +43,8 @@ class GoHomeButton extends StatelessWidget {
               children: [
                 Image.asset(
                   'assets/images/home.png',
-                  width: 32,
-                  height: 32,
+                  width: 35,
+                  height: 35,
                   color: Colors.white,
                 ),
                 const SizedBox(width: 8),
