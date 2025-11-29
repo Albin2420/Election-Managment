@@ -53,6 +53,7 @@ class AppStartupController extends GetxController {
   }
 
   Future<void> logout() async {
+    await sh.deleteAll();
     Get.offAll(() => LoginPage());
   }
 }

@@ -17,7 +17,7 @@ class NewVoterRepoImpl extends NewVoterRepo {
       log("📤 Sending Request Data:\n$newVoter");
 
       final response = await DioClient.dio.post(url, data: newVoter);
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         return right(response.data as Map<String, dynamic>);
       } else {
         return Left(Failure(message: "${response.statusMessage}"));

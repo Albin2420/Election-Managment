@@ -12,6 +12,8 @@ class DioClient {
           final ctrl = Get.find<AppStartupController>();
           final token = ctrl.accessToken.value;
 
+          log("my data ----->:${options.data}");
+
           if (token.isNotEmpty) {
             options.headers['Authorization'] = 'Bearer $token';
           }
@@ -22,7 +24,7 @@ class DioClient {
         },
 
         onError: (DioException error, handler) async {
-          log("❌ API Error Status: ${error.response?.statusCode}");
+          log("❌ API Error Status: ${error.response}");
 
           if (error.response?.statusCode == 403) {
             log("🔴 Token expired — Attempting refresh...");

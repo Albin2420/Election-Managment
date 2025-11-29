@@ -4,6 +4,7 @@ import 'package:election_management/src/data/repositories/Booth/booth_repo_impl.
 import 'package:election_management/src/data/repositories/profile/profile_repo_impl.dart';
 import 'package:election_management/src/domain/repositories/Booth/booth_repo.dart';
 import 'package:election_management/src/domain/repositories/profile/profile_repo.dart';
+import 'package:election_management/src/presentation/controller/AppstartupController/app_startup_controller.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
@@ -41,5 +42,9 @@ class HomeController extends GetxController {
     } catch (e) {
       log("⚠️ Error in getBoothDetails():$e");
     }
+  }
+
+  Future<void> logout() async {
+    Get.find<AppStartupController>().logout();
   }
 }
