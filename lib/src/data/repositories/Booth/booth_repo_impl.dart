@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:election_management/src/core/network/dio_client.dart';
@@ -14,7 +15,15 @@ class BoothRepoImpl extends BoothRepo {
     try {
       final response = await DioClient.dio.get(url);
       if (response.statusCode == 200) {
-        return right({"votersList": response.data as List<dynamic>});
+        final List<dynamic> data = response.data;
+        // Access a single item
+        final item = data[0];
+
+        return right({
+          "lsg_booth": item['id'],
+          "wardNumber": item['ward']['number'],
+          "boothNumber": item['number'],
+        });
       } else {
         return Left(Failure(message: "${response.statusMessage}"));
       }

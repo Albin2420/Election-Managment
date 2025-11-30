@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:election_management/src/data/repositories/new_voter/new_voter_repo_impl.dart';
+import 'package:election_management/src/presentation/controller/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -12,6 +13,7 @@ import '../../../domain/repositories/new_voter/new_voter_repo.dart';
 
 class AddVoterController extends GetxController {
   final NewVoterRepo _newVoterRepo = NewVoterRepoImpl();
+  final hmctrl = Get.find<HomeController>();
 
   final formKey = GlobalKey<FormState>();
   final fullNameController = TextEditingController();
@@ -53,6 +55,7 @@ class AddVoterController extends GetxController {
           "is_active": true,
           "is_alive": true,
           "is_disputed": true,
+          "lsg_booth": hmctrl.boothId.value,
         });
 
         EasyLoading.show();
