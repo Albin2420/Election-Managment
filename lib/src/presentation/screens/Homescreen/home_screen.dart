@@ -1,6 +1,7 @@
-import 'dart:developer';
 import 'package:election_management/src/presentation/controller/home/home_controller.dart';
 import 'package:election_management/src/presentation/screens/Addnewvoter/add_new_voter.dart';
+import 'package:election_management/src/presentation/screens/MarkVoter/mark_voter_screen.dart';
+import 'package:election_management/src/presentation/screens/SearchVoter/search_voter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -84,7 +85,9 @@ class HomeScreen extends StatelessWidget {
                             iconBgColor: Color(0xFF00C853),
                             title: 'Mark Voter',
                             subtitle: 'Tag political alliance',
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(() => MarkVoterScreen());
+                            },
                           ),
                         ),
                         const SizedBox(height: 16),
@@ -96,7 +99,9 @@ class HomeScreen extends StatelessWidget {
                             iconBgColor: Color(0xFFD946EF),
                             title: 'Search Voter',
                             subtitle: 'Find voter details',
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(() => SearchVoterPage());
+                            },
                           ),
                         ),
                         const SizedBox(height: 16),
