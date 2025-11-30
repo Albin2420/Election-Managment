@@ -50,7 +50,7 @@ class AddVoterController extends GetxController {
           "age": int.parse(ageController.text.toString()),
           "gender": gender.value,
           "address": addressController.text.toString(),
-          "ward_number": 20,
+          "ward_number": hmctrl.wardNumber.value,
           "house_number": int.parse(houseNumberController.text.toString()),
           "is_active": true,
           "is_alive": true,
