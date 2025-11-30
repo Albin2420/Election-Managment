@@ -34,10 +34,7 @@ class NewVoterHeader extends StatelessWidget {
                     child: const Icon(Icons.arrow_back, color: Colors.black),
                   ),
                 ),
-
                 const SizedBox(width: 10),
-
-                // ICON BOX
                 Container(
                   width: 40,
                   height: 40,
@@ -45,6 +42,7 @@ class NewVoterHeader extends StatelessWidget {
                     color: const Color(0xFF2F5DFE),
                     borderRadius: BorderRadius.circular(12),
                   ),
+                  padding: EdgeInsets.all(6),
                   child: Container(
                     width: 30,
                     height: 30,
