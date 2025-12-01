@@ -1,15 +1,19 @@
-import 'package:election_management/src/data/model/votermodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import '../../controller/MarkVoter/mark_voter_controller.dart';
+import '../../../data/model/votermodel.dart';
 
 class VoterCard extends StatelessWidget {
   final VoterModel voter;
-  const VoterCard({super.key, required this.voter});
+  VoterCard({super.key, required this.voter});
+
+  // Local observable to track "Our Voter" state
+  final RxBool isVoter = false.obs;
 
   @override
   Widget build(BuildContext context) {
+    // initialize local observable with the current voter state
+    isVoter.value = voter.isOurVoter ?? false;
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -17,8 +21,8 @@ class VoterCard extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: Colors.grey.shade200,
-            blurRadius: 6,
-            offset: const Offset(0, 3),
+            blurRadius: 8,
+            offset: const Offset(0, 6),
           ),
         ],
       ),
@@ -31,10 +35,10 @@ class VoterCard extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(50),
                   child: Image.asset(
-                    "assets/images/tick_mark.png",
+                    "assets/images/default_profile.png",
                     width: 60,
                     height: 60,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.contain,
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -51,37 +55,59 @@ class VoterCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 12),
-
             Obx(() {
-              final isVoter = voter.isOurVoter == true ? true : false;
               return SizedBox(
                 width: double.infinity,
                 height: 48,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    isVoter.value = !isVoter.value; // Toggle state
+                  },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: isVoter
-                        ? const Color(0xFF00C853)
-                        : Colors.white,
-                    side: BorderSide(
-                      color: isVoter
-                          ? const Color(0xFF00C853)
-                          : const Color(0xFFE5E7EB),
+                    backgroundColor: isVoter.value
+                        ? const Color(0xFF4CAF50) // Green for "Our Voter"
+                        : Colors.white, // White for "Mark as Our Voter"
+                    foregroundColor: isVoter.value
+                        ? Colors
+                              .white // White text for "Our Voter"
+                        : const Color(
+                            0xFF6B7280,
+                          ), // Gray text for "Mark as Our Voter"
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                        8,
+                      ), // Smaller corner radius
+                      side: BorderSide(
+                        color: isVoter.value
+                            ? const Color(
+                                0xFF4CAF50,
+                              ) // Green border for "Our Voter"
+                            : const Color(
+                                0xFFD1D5DB,
+                              ), // Light gray border for "Mark as Our Voter"
+                      ),
                     ),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(
-                        isVoter
+                        isVoter.value
                             ? 'assets/images/thumbsup.png'
                             : 'assets/images/round_tick_grey.png',
                         width: 30,
                         height: 30,
-                        color: isVoter ? Colors.white : null,
+                        color: isVoter.value ? Colors.white : null,
                       ),
                       const SizedBox(width: 8),
-                      Text(isVoter ? 'Our Voter' : 'Mark as Our Voter'),
+                      Text(
+                        isVoter.value ? 'Our Voter' : 'Mark as Our Voter',
+                        style: TextStyle(
+                          color: isVoter.value
+                              ? Colors.white
+                              : const Color(0xFF6B7280),
+                        ),
+                      ),
                     ],
                   ),
                 ),

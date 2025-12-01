@@ -36,10 +36,13 @@ class MarkVoterScreen extends StatelessWidget {
                 }
 
                 return ListView.builder(
-                  padding: const EdgeInsets.symmetric(horizontal: 40),
+                  padding: const EdgeInsets.symmetric(horizontal: 40,),
                   itemCount: controller.voters.length,
                   itemBuilder: (context, index) {
-                    return VoterCard(voter: controller.voters[index]);
+                    return Padding(
+                      padding: const EdgeInsets.symmetric( vertical: 8),
+                      child: VoterCard(voter: controller.voters[index]),
+                    );
                   },
                 );
               }),
