@@ -11,8 +11,8 @@ class EmptyStateWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Container(
           width: double.infinity,
-          margin: const EdgeInsets.only(top: 10),
-          padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 50),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(16),

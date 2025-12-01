@@ -9,6 +9,7 @@ import '../../widgets/home_screen/assigned_booth_section.dart';
 import '../../widgets/home_screen/simple_option_card.dart';
 import '../../widgets/home_screen/ward_booth_details.dart';
 import '../../widgets/home_screen/home_header.dart';
+import '../SearchVoter/search_voter.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -94,7 +95,9 @@ class HomeScreen extends StatelessWidget {
                   iconBgColor: Color(0xFFD946EF),
                   title: 'Search Voter',
                   subtitle: 'Find voter details',
-                  onTap: () {},
+                  onTap: () {
+                    Get.to(() => SearchVoterPage());
+                  },
                 ),
               ),
               const SizedBox(height: 16),
