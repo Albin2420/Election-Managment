@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import '../../controller/MarkVoter/mark_voter_controller.dart';
 import '../../widgets/MarkVoter/mark_voter_header.dart';
 import '../../widgets/MarkVoter/voter_card.dart';
@@ -19,56 +19,41 @@ class MarkVoterScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
+            const MarkVoterHeader(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+              child: const SearchField(),
+            ),
             Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const MarkVoterHeader(),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 40,
-                        vertical: 20,
-                      ),
-                      child: Column(
-                        children: [
-                          const SearchField(),
-                          const SizedBox(height: 20),
-                          Obx(() {
-                            final filteredVoters = controller.filteredVoters;
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Showing ${filteredVoters.length} voter(s)',
-                                  style: GoogleFonts.inter(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.grey[800],
-                                  ),
-                                ),
-                                const SizedBox(height: 16),
-                                ...filteredVoters
-                                    .map(
-                                      (voter) => Padding(
-                                        padding: const EdgeInsets.only(
-                                          bottom: 16,
-                                        ),
-                                        child: VoterCard(voter: voter),
-                                      ),
-                                    )
-                                    .toList(),
-                              ],
-                            );
-                          }),
-                        ],
-                      ),
+              child: Obx(() {
+                if (controller.voters.isEmpty) {
+                  return const Center(
+                    child: Text(
+                      "No voters found",
+                      style: TextStyle(fontSize: 16),
                     ),
-                    const GoHomeButton(),
-                  ],
-                ),
-              ),
+                  );
+                }
+
+                return ListView.builder(
+                  padding: const EdgeInsets.symmetric(horizontal: 40),
+                  itemCount: controller.voters.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: VoterCard(voter: controller.voters[index]),
+                    );
+                  },
+                );
+              }),
             ),
           ],
+        ),
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [const GoHomeButton()],
         ),
       ),
     );

@@ -11,13 +11,13 @@ class IsOurVoterRepoImpl extends IsOurVoterRepo {
   Future<Either<Failure, Map<String, dynamic>>> ourVoter({
     required dynamic ourVoter,
   }) async {
-    final url = "${Url.baseUrl}/${Url.isOurvoter}";
+    final url = "${Url.baseUrl}/${Url.updateIsOurvoter}";
 
     try {
       log("📤 Sending Request Data:\n$ourVoter");
 
       final response = await DioClient.dio.post(url, data: ourVoter);
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         return right({});
       } else {
         return Left(Failure(message: "${response.statusMessage}"));

@@ -8,6 +8,7 @@ class Url {
   static String newvoter = "voters/";
   static String myBooth = "lsg/permitted-booths/";
 
-  static String fetchAllvoters = "voters/";
-  static String isOurvoter = "voters/update-is-our-voter/";
+  static String fetchAllvoters = "voters";
+
+  static String updateIsOurvoter = "voters/update-is-our-voter/";
 }
