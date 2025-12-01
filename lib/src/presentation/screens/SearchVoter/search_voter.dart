@@ -33,7 +33,6 @@ class SearchVoterPage extends StatelessWidget {
               Get.back(); // or Get.to(HomeScreen());
             },
           ),
-
         ],
       ),
     );

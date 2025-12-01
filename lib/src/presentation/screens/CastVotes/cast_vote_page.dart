@@ -47,9 +47,14 @@ class CastVotesPage extends StatelessWidget {
           ),
 
           // NO PADDING HERE
-          const GoHomeButton(),
         ],
       ),
+      bottomNavigationBar: SafeArea(child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const GoHomeButton(),
+        ],
+      )),
     );
   }
 }
