@@ -11,6 +11,7 @@ import '../../widgets/home_screen/assigned_booth_section.dart';
 import '../../widgets/home_screen/simple_option_card.dart';
 import '../../widgets/home_screen/ward_booth_details.dart';
 import '../../widgets/home_screen/home_header.dart';
+import '../CastVotes/cast_vote_page.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -122,7 +123,9 @@ class HomeScreen extends StatelessWidget {
                             iconBgColor: Color(0xFFFF9100),
                             title: 'Mark Voted',
                             subtitle: 'Record cast votes',
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(() =>CastVotesPage());
+                            },
                           ),
                         ),
 

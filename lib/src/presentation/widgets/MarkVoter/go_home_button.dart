@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../screens/Homescreen/home_screen.dart';
+
 class GoHomeButton extends StatelessWidget {
   const GoHomeButton({super.key});
 
@@ -33,7 +35,7 @@ class GoHomeButton extends StatelessWidget {
           child: ElevatedButton(
             onPressed: () {
               log("go to home button clicked");
-              Get.back();
+              Get.to(() => HomeScreen());
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF2F5DFE),
