@@ -1,3 +1,4 @@
+import 'package:election_management/src/presentation/controller/MarkVoter/mark_voter_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../data/model/votermodel.dart';
@@ -6,12 +7,11 @@ class VoterCard extends StatelessWidget {
   final VoterModel voter;
   VoterCard({super.key, required this.voter});
 
-  // Local observable to track "Our Voter" state
   final RxBool isVoter = false.obs;
 
   @override
   Widget build(BuildContext context) {
-    // initialize local observable with the current voter state
+    final ctrl = Get.find<MarkVoterController>();
     isVoter.value = voter.isOurVoter ?? false;
 
     return Container(
@@ -60,31 +60,34 @@ class VoterCard extends StatelessWidget {
                 width: double.infinity,
                 height: 48,
                 child: ElevatedButton(
-                  onPressed: () {
-                    isVoter.value = !isVoter.value; // Toggle state
+                  onPressed: () async {
+                    if (isVoter.value) {
+                      final data = {"voter_id": voter.id, "value": false};
+                      bool x = await ctrl.addVotertoOur(isOurvoterData: data);
+                      if (x) {
+                        isVoter.value = !isVoter.value;
+                      }
+                    } else {
+                      final data = {"voter_id": voter.id, "value": true};
+                      bool x = await ctrl.addVotertoOur(isOurvoterData: data);
+                      if (x) {
+                        isVoter.value = !isVoter.value;
+                      }
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: isVoter.value
-                        ? const Color(0xFF4CAF50) // Green for "Our Voter"
-                        : Colors.white, // White for "Mark as Our Voter"
+                        ? const Color(0xFF4CAF50)
+                        : Colors.white,
                     foregroundColor: isVoter.value
-                        ? Colors
-                              .white // White text for "Our Voter"
-                        : const Color(
-                            0xFF6B7280,
-                          ), // Gray text for "Mark as Our Voter"
+                        ? Colors.white
+                        : const Color(0xFF6B7280),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                        8,
-                      ), // Smaller corner radius
+                      borderRadius: BorderRadius.circular(8),
                       side: BorderSide(
                         color: isVoter.value
-                            ? const Color(
-                                0xFF4CAF50,
-                              ) // Green border for "Our Voter"
-                            : const Color(
-                                0xFFD1D5DB,
-                              ), // Light gray border for "Mark as Our Voter"
+                            ? const Color(0xFF4CAF50)
+                            : const Color(0xFFD1D5DB),
                       ),
                     ),
                   ),

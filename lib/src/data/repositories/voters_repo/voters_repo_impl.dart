@@ -6,7 +6,6 @@ import 'package:election_management/src/core/url.dart';
 import 'package:dio/dio.dart';
 import 'package:election_management/src/data/model/votermodel.dart';
 import 'package:election_management/src/domain/repositories/voters/voters_repo.dart';
-import 'package:get/get.dart';
 
 class VotersRepoImpl extends VotersRepo {
   @override
