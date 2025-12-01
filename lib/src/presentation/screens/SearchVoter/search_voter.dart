@@ -16,24 +16,33 @@ class SearchVoterPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
-      body: Column(
-        children: [
-          const SearchVoterHeader(),
-          const SearchBox(),
-          Expanded(
-            child: Obx(() {
-              if (controller.searchQuery.isEmpty) {
-                return const EmptyStateWidget();
-              }
-              return const SearchResultList();
-            }),
-          ),
-          GoHomeButton(
-            onTap: () {
-              Get.back(); // or Get.to(HomeScreen());
-            },
-          ),
-        ],
+      body: SafeArea(
+        child: Column(
+          children: [
+            const SearchVoterHeader(),
+            const SearchBox(),
+            Expanded(
+              child: Obx(() {
+                if (controller.searchQuery.isEmpty) {
+                  return const EmptyStateWidget();
+                }
+                return const SearchResultList();
+              }),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            GoHomeButton(
+              onTap: () {
+                Get.back(); // or Get.to(HomeScreen());
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

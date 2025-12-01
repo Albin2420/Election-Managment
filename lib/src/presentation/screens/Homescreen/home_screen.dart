@@ -12,6 +12,7 @@ import '../../widgets/home_screen/simple_option_card.dart';
 import '../../widgets/home_screen/ward_booth_details.dart';
 import '../../widgets/home_screen/home_header.dart';
 import '../CastVotes/cast_vote_page.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -57,7 +58,7 @@ class HomeScreen extends StatelessWidget {
                         SizedBox(height: 24),
                         AssignedBoothSection(
                           boothno: '${ctrl.boothNumber.value}',
-                          wardno: '${ctrl.boothNumber.value}',
+                          wardno: '${ctrl.wardNumber.value}',
                           voteno: '849',
                         ),
                         const SizedBox(height: 24),
@@ -140,7 +141,30 @@ class HomeScreen extends StatelessWidget {
                     ),
                   );
                 } else {
-                  return SizedBox();
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 200, left: 8, right: 8),
+                    child: Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          LoadingAnimationWidget.twistingDots(
+                            leftDotColor: const Color(0xFF1A1A3F),
+                            rightDotColor: Colors.red,
+                            size: 40,
+                          ),
+                          const SizedBox(height: 20),
+                          const Text(
+                            'Hold on, getting things ready...',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
                 }
               }),
             ],

@@ -1,100 +1,62 @@
+import 'dart:developer';
+
+import 'package:election_management/src/data/model/votermodel.dart';
+import 'package:election_management/src/data/repositories/isourvoter/is_our_voter_repo_impl.dart';
+import 'package:election_management/src/data/repositories/voters_repo/voters_repo_impl.dart';
+import 'package:election_management/src/domain/repositories/isourvoter/is_our_voter_repo.dart';
+import 'package:election_management/src/domain/repositories/voters/voters_repo.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 class MarkVoterController extends GetxController {
-  final voters = <VoterData>[
-    VoterData(
-      id: '001',
-      name: 'Rajesh Kumar',
-      serialNumber: '001',
-      houseNumber: 'H-101',
-      electoralId: 'ELC001234',
-      image: 'assets/images/rajesh.png',
-      isMarked: false,
-    ),
-    VoterData(
-      id: '002',
-      name: 'Priya Sharma',
-      serialNumber: '002',
-      houseNumber: 'H-101',
-      electoralId: 'ELC001235',
-      image: 'assets/images/priya.png',
-      isMarked: false,
-    ),
-    VoterData(
-      id: '003',
-      name: 'Amit Patel',
-      serialNumber: '003',
-      houseNumber: 'H-102',
-      electoralId: 'ELC001236',
-      image: 'assets/images/amit.png',
-      isMarked: false,
-    ),
-    VoterData(
-      id: '004',
-      name: 'Sunita Devi',
-      serialNumber: '004',
-      houseNumber: 'H-103',
-      electoralId: 'ELC001237',
-      image: 'assets/images/sunita.png',
-      isMarked: false,
-    ),
-    VoterData(
-      id: '005',
-      name: 'Vikram Singh',
-      serialNumber: '005',
-      houseNumber: 'H-104',
-      electoralId: 'ELC001238',
-      image: 'assets/images/vikram.png',
-      isMarked: false,
-    ),
-  ].obs;
+  IsOurVoterRepo isOurVoterRepo = IsOurVoterRepoImpl();
+  VotersRepo votersRepo = VotersRepoImpl();
+  final voters = <VoterModel>[].obs;
 
-  final searchQuery = ''.obs;
-
-  List<VoterData> get filteredVoters {
-    if (searchQuery.value.isEmpty) {
-      return voters;
-    }
-    return voters
-        .where((voter) =>
-    voter.name.toLowerCase().contains(searchQuery.value.toLowerCase()) ||
-        voter.houseNumber.toLowerCase().contains(searchQuery.value.toLowerCase()))
-        .toList();
+  @override
+  void onInit() {
+    super.onInit();
+    fetchVoters();
   }
 
-  void updateSearchQuery(String query) {
-    searchQuery.value = query;
-  }
-
-  void toggleVoterMark(String voterId) {
-    final index = voters.indexWhere((voter) => voter.id == voterId);
-    if (index != -1) {
-      voters[index].isMarked.value = !voters[index].isMarked.value;
-      voters.refresh();
+  Future<void> fetchVoters() async {
+    EasyLoading.show();
+    try {
+      final res = await votersRepo.fetchAllVoters(pageNumber: 1);
+      res.fold(
+        (l) {
+          EasyLoading.dismiss();
+        },
+        (R) {
+          log("R:$R");
+          voters.value = R['voters'];
+          log("voterLength:${voters.length}");
+          EasyLoading.dismiss();
+        },
+      );
+    } catch (e) {
+      EasyLoading.dismiss();
+      log("⚠️ Error in fetchVoters :$e");
     }
   }
 
-  int get markedVotersCount {
-    return voters.where((voter) => voter.isMarked.value).length;
+  Future<bool> addVotertoOur({required dynamic isOurvoterData}) async {
+    try {
+      EasyLoading.show();
+      final res = await isOurVoterRepo.ourVoter(ourVoter: isOurvoterData);
+      return res.fold(
+        (l) {
+          EasyLoading.dismiss();
+          return false;
+        },
+        (r) {
+          EasyLoading.dismiss();
+          return true;
+        },
+      );
+    } catch (e) {
+      log("⚠️ Error in addVotertoOur():$e");
+      return false;
+    }
   }
-}
-
-class VoterData {
-  final String id;
-  final String name;
-  final String serialNumber;
-  final String houseNumber;
-  final String electoralId;
-  final String image;
-  final RxBool isMarked;
-
-  VoterData({
-    required this.id,
-    required this.name,
-    required this.serialNumber,
-    required this.houseNumber,
-    required this.electoralId,
-    required this.image,
-    required bool isMarked,
-  }) : isMarked = RxBool(isMarked);
 }
