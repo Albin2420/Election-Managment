@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
 
-class NewVoterHeader extends StatelessWidget {
-  const NewVoterHeader({super.key});
+class MarkVoterHeader extends StatelessWidget {
+  const MarkVoterHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,10 +12,9 @@ class NewVoterHeader extends StatelessWidget {
       children: [
         Expanded(
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.09),
@@ -26,7 +25,7 @@ class NewVoterHeader extends StatelessWidget {
             ),
             child: Row(
               children: [
-                // BACK BUTTON
+                // Back Button
                 GestureDetector(
                   onTap: () => Get.back(),
                   child: Container(
@@ -34,15 +33,18 @@ class NewVoterHeader extends StatelessWidget {
                     child: const Icon(Icons.arrow_back, color: Colors.black),
                   ),
                 ),
+
                 const SizedBox(width: 10),
+
+                // Icon Box
                 Container(
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: const Color(0xFF2F5DFE),
+                    // color: const Color(0xFF00C853),
+                    color: Colors.green[700],
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  padding: EdgeInsets.all(6),
                   child: Container(
                     width: 30,
                     height: 30,
@@ -50,30 +52,31 @@ class NewVoterHeader extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       image: const DecorationImage(
-                        image: AssetImage('assets/images/person.png'),
+                        image: AssetImage('assets/images/round_tick.png'),
                         fit: BoxFit.contain,
                       ),
                     ),
                   ),
                 ),
 
-                const SizedBox(width: 14),
+                const SizedBox(width: 16),
 
+                // Title & Subtitle
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Add New Voter',
+                        'Mark Voter',
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.inter(
                           fontSize: 16,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                           color: const Color(0xFF1F2937),
                         ),
                       ),
                       Text(
-                        'Register a new voter to the system',
+                        'Tag voters by political alliance',
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.inter(
                           fontSize: 12,

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:election_management/src/data/repositories/new_voter/new_voter_repo_impl.dart';
+import 'package:election_management/src/presentation/controller/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -12,6 +13,7 @@ import '../../../domain/repositories/new_voter/new_voter_repo.dart';
 
 class AddVoterController extends GetxController {
   final NewVoterRepo _newVoterRepo = NewVoterRepoImpl();
+  final hmctrl = Get.find<HomeController>();
 
   final formKey = GlobalKey<FormState>();
   final fullNameController = TextEditingController();
@@ -48,11 +50,12 @@ class AddVoterController extends GetxController {
           "age": int.parse(ageController.text.toString()),
           "gender": gender.value,
           "address": addressController.text.toString(),
-          "ward_number": 20,
+          "ward_number": hmctrl.wardNumber.value,
           "house_number": int.parse(houseNumberController.text.toString()),
           "is_active": true,
           "is_alive": true,
           "is_disputed": true,
+          "lsg_booth": hmctrl.boothId.value,
         });
 
         EasyLoading.show();
