@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:get/get.dart';
 
 class VoterModel {
@@ -8,6 +7,10 @@ class VoterModel {
   final String houseNumber;
   final String electoralId;
   final String serialNumber;
+  final String phoneNumber;
+  final String address;
+  final String photoUrl;
+  final String status; // "Our Voter", "Opposition", etc.
   bool isSearched;
 
   VoterModel({
@@ -16,6 +19,10 @@ class VoterModel {
     required this.houseNumber,
     required this.electoralId,
     required this.serialNumber,
+    required this.phoneNumber,
+    required this.address,
+    this.photoUrl = '',
+    this.status = 'Our Voter',
     this.isSearched = false,
   });
 }
@@ -30,31 +37,43 @@ class SearchVoterController extends GetxController {
   final List<VoterModel> allVoters = [
     VoterModel(
       id: '1',
-      name: 'John Doe',
-      houseNumber: '123',
-      electoralId: 'EL001',
-      serialNumber: 'SN001',
+      name: 'Rajesh Kumar',
+      houseNumber: 'H-101',
+      electoralId: 'ELC001234',
+      serialNumber: '001',
+      phoneNumber: '9876543210',
+      address: '123 MG Road, Ward 5',
+      status: 'Our Voter',
     ),
     VoterModel(
       id: '2',
-      name: 'Jane Smith',
-      houseNumber: '456',
-      electoralId: 'EL002',
-      serialNumber: 'SN002',
+      name: 'Priya Sharma',
+      houseNumber: 'H-101',
+      electoralId: 'ELC001235',
+      serialNumber: '002',
+      phoneNumber: '9876543211',
+      address: '124 MG Road, Ward 5',
+      status: 'Our Voter',
     ),
     VoterModel(
       id: '3',
-      name: 'Robert Johnson',
-      houseNumber: '789',
-      electoralId: 'EL003',
-      serialNumber: 'SN003',
+      name: 'Vikram Singh',
+      houseNumber: 'H-104',
+      electoralId: 'ELC001238',
+      serialNumber: '005',
+      phoneNumber: '9876543212',
+      address: '127 MG Road, Ward 5',
+      status: 'Our Voter',
     ),
     VoterModel(
       id: '4',
-      name: 'Emily Brown',
-      houseNumber: '101',
-      electoralId: 'EL004',
-      serialNumber: 'SN004',
+      name: 'Sunita Devi',
+      houseNumber: 'H-103',
+      electoralId: 'ELC001237',
+      serialNumber: '004',
+      phoneNumber: '9876543213',
+      address: '126 MG Road, Ward 5',
+      status: 'Our Voter',
     ),
   ];
 
@@ -71,10 +90,12 @@ class SearchVoterController extends GetxController {
   void performSearch() {
     if (searchQuery.isEmpty) {
       searchResults.clear();
+      log("Search cleared - query is empty");
       return;
     }
 
     final query = searchQuery.value.toLowerCase();
+    log("Performing search for: '$query'");
 
     final results = allVoters.where((voter) {
       return voter.name.toLowerCase().contains(query) ||
@@ -84,7 +105,22 @@ class SearchVoterController extends GetxController {
     }).toList();
 
     searchResults.assignAll(results);
+    log("Search results: ${results.length} found");
+
+    if (results.isEmpty) {
+      log("No results found for query: '$query'");
+    } else {
+      for (var voter in results) {
+        log("Found voter: ${voter.name}");
+      }
+    }
   }
+
+  // Check if search has results
+  bool get hasResults => searchResults.isNotEmpty;
+
+  // Check if search has been performed
+  bool get hasSearched => searchQuery.isNotEmpty;
 
   /// Mark a voter as searched
   void searchVoterAsSearched(String voterId) {
@@ -92,11 +128,10 @@ class SearchVoterController extends GetxController {
       searchedVoters.add(voterId);
 
       final voter = allVoters.firstWhere((v) => v.id == voterId);
-
       voter.isSearched = true;
       log("Success ${voter.name} has been marked as searched");
     } else {
-      log("info,This voter is already marked as searched ");
+      log("info, This voter is already marked as searched");
     }
   }
 
@@ -114,5 +149,14 @@ class SearchVoterController extends GetxController {
 
   int searchedVotersCount() {
     return searchedVoters.length;
+  }
+
+  // Get voter by ID
+  VoterModel? getVoterById(String voterId) {
+    try {
+      return allVoters.firstWhere((v) => v.id == voterId);
+    } catch (e) {
+      return null;
+    }
   }
 }
