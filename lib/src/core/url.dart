@@ -9,4 +9,5 @@ class Url {
   static String myBooth = "lsg/permitted-booths/";
 
   static String fetchAllvoters = "voters/";
+  static String isOurvoter = "voters/update-is-our-voter/";
 }
