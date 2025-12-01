@@ -56,7 +56,7 @@ class HomeScreen extends StatelessWidget {
                         SizedBox(height: 24),
                         AssignedBoothSection(
                           boothno: '${ctrl.boothNumber.value}',
-                          wardno: '${ctrl.boothNumber.value}',
+                          wardno: '${ctrl.wardNumber.value}',
                           voteno: '849',
                         ),
                         const SizedBox(height: 24),
