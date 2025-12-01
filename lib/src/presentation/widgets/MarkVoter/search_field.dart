@@ -26,13 +26,13 @@ class SearchField extends StatelessWidget {
       ),
       child: Center(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 20),
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
           child: Container(
             width: double.infinity,
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.white,
-                  border: Border.all(color: Colors.grey.shade400, width: 1),
+                border: Border.all(color: Colors.grey.shade400, width: 1),
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
@@ -43,7 +43,7 @@ class SearchField extends StatelessWidget {
                 ],
               ),
               child: TextField(
-                onChanged: controller.updateSearchQuery,
+                // onChanged: controller.updateSearchQuery,
                 decoration: InputDecoration(
                   prefixIcon: Padding(
                     padding: const EdgeInsets.only(left: 7, right: 7),

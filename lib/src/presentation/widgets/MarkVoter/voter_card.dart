@@ -1,17 +1,15 @@
+import 'package:election_management/src/data/model/votermodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../controller/MarkVoter/mark_voter_controller.dart';
 
 class VoterCard extends StatelessWidget {
-  final VoterData voter;
-
+  final VoterModel voter;
   const VoterCard({super.key, required this.voter});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<MarkVoterController>();
-
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -44,93 +42,51 @@ class VoterCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        voter.name,
-                        style: GoogleFonts.inter(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: const Color(0xFF1F2937),
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        'SN: ${voter.serialNumber}',
-                        style: GoogleFonts.inter(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black,
-                        ),
-                      ),
-                      Text(
-                        voter.houseNumber,
-                        style: GoogleFonts.inter(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black,
-                        ),
-                      ),
-                      Text(
-                        voter.electoralId,
-                        style: GoogleFonts.inter(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w400,
-                          color: const Color(0xFF6B7280),
-                        ),
-                      ),
+                      Text(voter.name),
+                      Text("SN: ${voter.serialNumber}"),
+                      Text("${voter.address}"),
                     ],
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 12),
-            Obx(
-              () => SizedBox(
+
+            Obx(() {
+              final isVoter = voter.isOurVoter == true ? true : false;
+              return SizedBox(
                 width: double.infinity,
                 height: 48,
                 child: ElevatedButton(
-                  onPressed: () => controller.toggleVoterMark(voter.id),
+                  onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: voter.isMarked.value
+                    backgroundColor: isVoter
                         ? const Color(0xFF00C853)
                         : Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      side: BorderSide(
-                        color: voter.isMarked.value
-                            ? const Color(0xFF00C853)
-                            : const Color(0xFFE5E7EB),
-                      ),
+                    side: BorderSide(
+                      color: isVoter
+                          ? const Color(0xFF00C853)
+                          : const Color(0xFFE5E7EB),
                     ),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(
-                        voter.isMarked.value
+                        isVoter
                             ? 'assets/images/thumbsup.png'
                             : 'assets/images/round_tick_grey.png',
                         width: 30,
                         height: 30,
-                        color: voter.isMarked.value ? Colors.white : null,
+                        color: isVoter ? Colors.white : null,
                       ),
                       const SizedBox(width: 8),
-                      Text(
-                        voter.isMarked.value
-                            ? 'Our Voter'
-                            : 'Mark as Our Voter',
-                        style: GoogleFonts.inter(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: voter.isMarked.value
-                              ? Colors.white
-                              : const Color(0xFF6B7280),
-                        ),
-                      ),
+                      Text(isVoter ? 'Our Voter' : 'Mark as Our Voter'),
                     ],
                   ),
                 ),
-              ),
-            ),
+              );
+            }),
           ],
         ),
       ),

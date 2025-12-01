@@ -4,7 +4,9 @@ import 'package:election_management/src/core/network/dio_client.dart';
 import 'package:election_management/src/core/network/failure.dart';
 import 'package:election_management/src/core/url.dart';
 import 'package:dio/dio.dart';
+import 'package:election_management/src/data/model/votermodel.dart';
 import 'package:election_management/src/domain/repositories/voters/voters_repo.dart';
+import 'package:get/get.dart';
 
 class VotersRepoImpl extends VotersRepo {
   @override
@@ -16,7 +18,16 @@ class VotersRepoImpl extends VotersRepo {
     try {
       final response = await DioClient.dio.get(url);
       if (response.statusCode == 200) {
-        return right(response.data as Map<String, dynamic>);
+        final results = response.data['results'] as List;
+
+        final List<VoterModel> voters = results
+            .map((item) => VoterModel.fromJson(item as Map<String, dynamic>))
+            .toList();
+
+        return right({
+          "isTherenayNext": response.data['next'] != null ? true : false,
+          "voters": voters,
+        });
       } else {
         return Left(Failure(message: "${response.statusMessage}"));
       }
