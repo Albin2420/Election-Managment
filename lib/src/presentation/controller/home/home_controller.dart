@@ -1,7 +1,5 @@
 import 'dart:developer';
-
 import 'package:election_management/src/data/repositories/Booth/booth_repo_impl.dart';
-
 import 'package:election_management/src/domain/repositories/Booth/booth_repo.dart';
 import 'package:election_management/src/presentation/controller/AppstartupController/app_startup_controller.dart';
 import 'package:get/get.dart';
