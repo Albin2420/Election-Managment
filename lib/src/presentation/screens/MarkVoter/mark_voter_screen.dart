@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 import '../../controller/MarkVoter/mark_voter_controller.dart';
@@ -26,25 +27,30 @@ class MarkVoterScreen extends StatelessWidget {
             ),
             Expanded(
               child: Obx(() {
-                if (controller.voters.isEmpty) {
+                if (controller.voters.isEmpty && EasyLoading.isShow) {
+                  return const Center(
+                    child: Text("", style: TextStyle(fontSize: 16)),
+                  );
+                } else if (controller.voters.isEmpty &&
+                    EasyLoading.isShow == false) {
                   return const Center(
                     child: Text(
-                      "No voters found",
+                      "No voters Found",
                       style: TextStyle(fontSize: 16),
                     ),
                   );
+                } else {
+                  return ListView.builder(
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                    itemCount: controller.voters.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: VoterCard(voter: controller.voters[index]),
+                      );
+                    },
+                  );
                 }
-
-                return ListView.builder(
-                  padding: const EdgeInsets.symmetric(horizontal: 40),
-                  itemCount: controller.voters.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: VoterCard(voter: controller.voters[index]),
-                    );
-                  },
-                );
               }),
             ),
           ],
