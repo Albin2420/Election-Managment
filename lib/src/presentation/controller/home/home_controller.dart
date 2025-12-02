@@ -12,6 +12,8 @@ class HomeController extends GetxController {
   RxInt wardNumber = RxInt(-1);
   RxInt boothNumber = RxInt(-1);
   RxInt totalvoters = RxInt(-1);
+  RxString boothName = RxString("");
+  RxString wardName = RxString("");
   RxBool boothLoading = RxBool(true);
 
   @override
@@ -29,6 +31,8 @@ class HomeController extends GetxController {
         boothNumber.value = R['boothNumber'];
         wardNumber.value = R['wardNumber'];
         totalvoters.value = R['totalVoters'];
+        boothName.value = R['boothName'];
+        wardName.value = R['wardName'];
         boothLoading.value = false;
       });
     } catch (e) {

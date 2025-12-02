@@ -15,7 +15,6 @@ class BoothRepoImpl extends BoothRepo {
       final response = await DioClient.dio.get(url);
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data;
-        // Access a single item
         final item = data[0];
 
         return right({
@@ -23,6 +22,8 @@ class BoothRepoImpl extends BoothRepo {
           "wardNumber": item['ward']['number'],
           "boothNumber": item['number'],
           "totalVoters": item['total_voters'],
+          "boothName": item['name'],
+          "wardName": item['ward']['name'],
         });
       } else {
         return Left(Failure(message: "${response.statusMessage}"));
