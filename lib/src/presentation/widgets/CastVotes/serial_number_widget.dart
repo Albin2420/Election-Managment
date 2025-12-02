@@ -40,9 +40,7 @@ class SerialNumberWidget extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
             ),
-
             const SizedBox(height: 12),
-
             Wrap(
               spacing: 12,
               runSpacing: 12,
@@ -50,20 +48,32 @@ class SerialNumberWidget extends StatelessWidget {
                 return Obx(() {
                   final isSelected = controller.isSerialVoted(serial);
 
+                  final voter = controller.voterstatus.firstWhereOrNull(
+                    (v) => v.serialNumber.toString() == serial,
+                  );
+
+                  final hasVoted = voter?.hasVoted ?? false;
+
                   return GestureDetector(
-                    onTap: () => controller.toggleSerialVote(serial),
+                    onTap: hasVoted
+                        ? null
+                        : () => controller.toggleSerialVote(serial),
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 16,
                         vertical: 10,
                       ),
                       decoration: BoxDecoration(
-                        color: isSelected
+                        color: hasVoted
+                            ? Colors.grey.shade300
+                            : isSelected
                             ? const Color(0xFFE94B1B)
                             : Colors.white,
                         borderRadius: BorderRadius.circular(8),
                         border: Border.all(
-                          color: isSelected
+                          color: hasVoted
+                              ? Colors.grey.shade400
+                              : isSelected
                               ? const Color(0xFFE94B1B)
                               : Colors.grey.shade300,
                         ),
@@ -72,7 +82,11 @@ class SerialNumberWidget extends StatelessWidget {
                         serial,
                         style: GoogleFonts.inter(
                           fontSize: 13,
-                          color: isSelected ? Colors.white : Colors.black87,
+                          color: hasVoted
+                              ? Colors.grey.shade600
+                              : isSelected
+                              ? Colors.white
+                              : Colors.black87,
                         ),
                       ),
                     ),
