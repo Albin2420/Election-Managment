@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -48,8 +50,8 @@ class SerialNumberWidget extends StatelessWidget {
                 return Obx(() {
                   final isSelected = controller.isSerialVoted(serial);
 
-                  final voter = controller.voterstatus.firstWhereOrNull(
-                    (v) => v.serialNumber.toString() == serial,
+                  final voter = controller.voterstatusvdata.firstWhereOrNull(
+                    (v) => v.serialNumber == int.tryParse(serial),
                   );
 
                   final hasVoted = voter?.hasVoted ?? false;
