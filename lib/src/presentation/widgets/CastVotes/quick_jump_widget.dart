@@ -1,14 +1,23 @@
+import 'package:election_management/src/presentation/controller/CastVotes/cast_votes_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../controller/CastVotes/cast_votes_controller.dart';
 
 class QuickJumpWidget extends StatelessWidget {
-  const QuickJumpWidget({super.key});
+  final int limit;
+  final int step;
+
+  const QuickJumpWidget({super.key, required this.limit, this.step = 100});
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<CastVotesController>();
+
+    final List<String> ranges = [];
+    for (int i = 1; i <= limit; i += step) {
+      int end = (i + step - 1) > limit ? limit : (i + step - 1);
+      ranges.add("$i - $end");
+    }
 
     return Container(
       width: double.infinity,
@@ -29,39 +38,50 @@ class QuickJumpWidget extends StatelessWidget {
         children: [
           Text(
             "Quick Jump to Range",
-            style: GoogleFonts.inter(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-            ),
+            style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w600),
           ),
-
           const SizedBox(height: 12),
 
-          Wrap(
-            spacing: 8,
-            children: [
-              GestureDetector(
-                onTap: () => controller.jumpToRange("0 - 5"),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 14, vertical: 8),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFFEEDD5),
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: const Color(0xFFE94B1B)),
-                  ),
-                  child: Text(
-                    "0 - 5",
-                    style: GoogleFonts.inter(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xFFE94B1B),
+          Obx(() {
+            return Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: List.generate(ranges.length, (index) {
+                final range = ranges[index];
+                final bool isSelected = controller.selectedRange.value == range;
+
+                return GestureDetector(
+                  onTap: () => controller.jumpToRange(range),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 14,
+                      vertical: 8,
+                    ),
+                    decoration: BoxDecoration(
+                      color: isSelected
+                          ? const Color(0xFFE94B1B)
+                          : Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: isSelected
+                            ? const Color(0xFFE94B1B)
+                            : Colors.grey.shade400,
+                      ),
+                    ),
+                    child: Text(
+                      range,
+                      style: GoogleFonts.inter(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                        color: isSelected ? Colors.white : Colors.grey.shade700,
+                      ),
                     ),
                   ),
-                ),
-              ),
-            ],
-          ),
+                );
+              }),
+            );
+          }),
         ],
       ),
     );

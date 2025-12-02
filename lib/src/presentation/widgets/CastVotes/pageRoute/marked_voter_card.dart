@@ -1,18 +1,18 @@
+import 'package:election_management/src/data/model/votermodel.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../../controller/CastVotes/cast_votes_controller.dart';
 
 class MarkedVoterCard extends StatelessWidget {
-  // final VoterModel voter;
-  final VoterCastModel voter;
-
-  const MarkedVoterCard({super.key, required this.voter});
+  final VoterModel voter;
+  final VoidCallback? onCancel;
+  const MarkedVoterCard({
+    super.key,
+    required this.voter,
+    required this.onCancel,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<CastVotesController>();
-
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
@@ -29,7 +29,6 @@ class MarkedVoterCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // Serial Number
           Container(
             width: 70,
             height: 70,
@@ -39,7 +38,7 @@ class MarkedVoterCard extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                voter.serialNumber,
+                "${voter.serialNumber}",
                 style: GoogleFonts.inter(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -65,7 +64,7 @@ class MarkedVoterCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  "Electoral ID: ${voter.electoralId}",
+                  "SEC ID: ${voter.secIdNumber}",
                   style: GoogleFonts.inter(
                     fontSize: 13,
                     color: Colors.grey.shade600,
@@ -83,8 +82,7 @@ class MarkedVoterCard extends StatelessWidget {
             ),
           ),
 
-          // Profile Image
-          Container(
+          SizedBox(
             width: 60,
             height: 60,
             child: Image.asset(
@@ -95,11 +93,8 @@ class MarkedVoterCard extends StatelessWidget {
 
           const SizedBox(width: 12),
 
-          // Remove Button
           GestureDetector(
-            onTap: () {
-              controller.removeMarkedVoter(voter.serialNumber);
-            },
+            onTap: onCancel,
             child: Container(
               width: 36,
               height: 36,

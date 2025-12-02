@@ -2,7 +2,7 @@ class Url {
   static String baseUrl = 'https://vantage-stg.crimsonhack.in/api';
 
   static String login = "token/";
-  // static String profile = "accounts/profile/";
+
   static String refreshToken = "token/refresh/";
 
   static String newvoter = "voters/";
@@ -11,4 +11,10 @@ class Url {
   static String fetchAllvoters = "voters";
 
   static String updateIsOurvoter = "voters/update-is-our-voter/";
+
+  static String serialNumber = "voters/serial-numbers/";
+
+  static String byserialNumber = "voters/by-serial-numbers/";
+
+  static String castVoter = "voters/bulk-update-is-our-voter/";
 }

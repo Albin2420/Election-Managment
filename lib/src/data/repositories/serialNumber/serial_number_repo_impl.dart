@@ -1,29 +1,26 @@
 import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:election_management/src/core/network/dio_client.dart';
 import 'package:election_management/src/core/network/failure.dart';
 import 'package:election_management/src/core/url.dart';
 import 'package:dio/dio.dart';
-import 'package:election_management/src/domain/repositories/Booth/booth_repo.dart';
 
-class BoothRepoImpl extends BoothRepo {
+import 'package:election_management/src/domain/repositories/serialNumber/serial_number_repo.dart';
+
+class SerialNumberRepoImpl extends SerialNumberRepo {
   @override
-  Future<Either<Failure, Map<String, dynamic>>> getMyboothDetails() async {
-    final url = "${Url.baseUrl}/${Url.myBooth}";
+  Future<Either<Failure, Map<String, dynamic>>> getBySerialnumber({
+    required int start,
+    required int end,
+  }) async {
+    final url = "${Url.baseUrl}/${Url.serialNumber}?end=$end&start=$start";
 
     try {
       final response = await DioClient.dio.get(url);
-      if (response.statusCode == 200) {
-        final List<dynamic> data = response.data;
-        // Access a single item
-        final item = data[0];
 
-        return right({
-          "lsg_booth": item['id'],
-          "wardNumber": item['ward']['number'],
-          "boothNumber": item['number'],
-          "totalVoters": item['total_voters'],
-        });
+      if (response.statusCode == 200) {
+        return right({});
       } else {
         return Left(Failure(message: "${response.statusMessage}"));
       }

@@ -10,30 +10,37 @@ class SerialNumberWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<CastVotesController>();
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.08),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Obx(() {
-        final range = controller.currentRange.value;
+    return Obx(() {
+      final range = controller.currentRange.value;
 
-        return Column(
+      if (range.isEmpty) {
+        return const SizedBox.shrink();
+      }
+
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.08),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               "Serial Numbers $range",
               style: GoogleFonts.inter(
-                  fontSize: 14, fontWeight: FontWeight.w600),
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
             ),
+
             const SizedBox(height: 12),
 
             Wrap(
@@ -47,7 +54,9 @@ class SerialNumberWidget extends StatelessWidget {
                     onTap: () => controller.toggleSerialVote(serial),
                     child: Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 10),
+                        horizontal: 16,
+                        vertical: 10,
+                      ),
                       decoration: BoxDecoration(
                         color: isSelected
                             ? const Color(0xFFE94B1B)
@@ -63,8 +72,7 @@ class SerialNumberWidget extends StatelessWidget {
                         serial,
                         style: GoogleFonts.inter(
                           fontSize: 13,
-                          color:
-                          isSelected ? Colors.white : Colors.black87,
+                          color: isSelected ? Colors.white : Colors.black87,
                         ),
                       ),
                     ),
@@ -73,8 +81,8 @@ class SerialNumberWidget extends StatelessWidget {
               }).toList(),
             ),
           ],
-        );
-      }),
-    );
+        ),
+      );
+    });
   }
 }
