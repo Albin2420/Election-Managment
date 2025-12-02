@@ -1,3 +1,4 @@
+import 'package:election_management/src/data/model/votermodel.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../controller/SearchVoter/search_voter_controller.dart';
@@ -27,15 +28,12 @@ class MemberCard extends StatelessWidget {
               color: Colors.grey.shade300,
               borderRadius: BorderRadius.circular(10),
             ),
-            child: member.photoUrl.isEmpty
+            child: member.photo!.isEmpty
                 ? Icon(Icons.person, size: 30, color: Colors.grey.shade500)
                 : ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.network(
-                member.photoUrl,
-                fit: BoxFit.cover,
-              ),
-            ),
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.network(member.photo!, fit: BoxFit.cover),
+                  ),
           ),
 
           const SizedBox(width: 12),

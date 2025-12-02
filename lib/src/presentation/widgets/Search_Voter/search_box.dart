@@ -41,7 +41,7 @@ class SearchBox extends StatelessWidget {
             ],
           ),
           child: TextField(
-            onChanged: controller.updateSearchQuery,
+            onChanged: (x) {},
             decoration: InputDecoration(
               prefixIcon: Padding(
                 padding: const EdgeInsets.only(left: 10, right: 6),
