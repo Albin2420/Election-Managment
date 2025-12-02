@@ -4,7 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../controller/SearchVoter/search_voter_controller.dart';
 
 class SearchBox extends StatelessWidget {
-  const SearchBox({super.key});
+  final void Function(String value)? onSubmit;
+  const SearchBox({super.key, required this.onSubmit});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,10 @@ class SearchBox extends StatelessWidget {
             ],
           ),
           child: TextField(
-            onChanged: (x) {},
+            onSubmitted: (value) {
+              if (onSubmit != null) onSubmit!(value);
+            },
+
             decoration: InputDecoration(
               prefixIcon: Padding(
                 padding: const EdgeInsets.only(left: 10, right: 6),

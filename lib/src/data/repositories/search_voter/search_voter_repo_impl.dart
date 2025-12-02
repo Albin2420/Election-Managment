@@ -5,7 +5,8 @@ import 'package:election_management/src/core/network/dio_client.dart';
 import 'package:election_management/src/core/network/failure.dart';
 import 'package:election_management/src/core/url.dart';
 import 'package:dio/dio.dart';
-import 'package:election_management/src/data/model/voterstatus.dart';
+import 'package:election_management/src/data/model/votermodel.dart';
+
 import 'package:election_management/src/domain/repositories/search_voter/search_voter_repo.dart';
 
 class SearchVoterRepoImpl extends SearchVoterRepo {
@@ -19,11 +20,11 @@ class SearchVoterRepoImpl extends SearchVoterRepo {
       final response = await DioClient.dio.get(url);
 
       if (response.statusCode == 200) {
-        final voters = response.data
-            .map((e) => VoterStatus.fromJson(e))
+        final voters = response.data['results']
+            .map((e) => VoterModel.fromJson(e))
             .toList();
 
-        return right({"voter_status": voters});
+        return right({"searchResult": voters});
       } else {
         return Left(Failure(message: "${response.statusMessage}"));
       }
