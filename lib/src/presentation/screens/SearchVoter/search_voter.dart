@@ -20,10 +20,14 @@ class SearchVoterPage extends StatelessWidget {
         child: Column(
           children: [
             const SearchVoterHeader(),
-            const SearchBox(),
+            SearchBox(
+              onSubmit: (String value) {
+                controller.searchVoter(key: value);
+              },
+            ),
             Expanded(
               child: Obx(() {
-                if (controller.searchQuery.isEmpty) {
+                if (controller.searchResult.isEmpty) {
                   return const EmptyStateWidget();
                 }
                 return const SearchResultList();

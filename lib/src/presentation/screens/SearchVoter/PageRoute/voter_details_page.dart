@@ -1,33 +1,17 @@
-import 'package:election_management/src/presentation/screens/Homescreen/home_screen.dart';
+import 'package:election_management/src/data/model/votermodel.dart';
+import 'package:election_management/src/presentation/widgets/Search_Voter/PageRoute/voter_profile_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../controller/SearchVoter/search_voter_controller.dart';
 import '../../../widgets/NewVoter/go_home_button.dart';
-import '../../../widgets/Search_Voter/PageRoute/other_members_section.dart';
 import '../../../widgets/Search_Voter/PageRoute/voter_details_header.dart';
-import '../../../widgets/Search_Voter/PageRoute/voter_profile_card.dart';
 
 class VoterDetailsPage extends StatelessWidget {
-  final String voterId;
+  final VoterModel currenTVoter;
 
-  const VoterDetailsPage({super.key, required this.voterId});
+  const VoterDetailsPage({super.key, required this.currenTVoter});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<SearchVoterController>();
-    final voter = controller.getVoterById(voterId);
-
-    if (voter == null) {
-      return Scaffold(
-        appBar: AppBar(title: const Text('Voter Not Found')),
-        body: const Center(child: Text('Voter details not found')),
-      );
-    }
-
-    final otherMembers = controller.allVoters
-        .where((v) => v.houseNumber == voter.houseNumber && v.id != voter.id)
-        .toList();
-
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       body: Column(
@@ -39,11 +23,8 @@ class VoterDetailsPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 25),
               child: Column(
                 children: [
-                  VoterProfileCard(voter: voter),
+                  VoterProfileCard(voter: currenTVoter),
                   const SizedBox(height: 24),
-                  OtherMembersSection(
-                      members: otherMembers,
-                      houseNumber: voter.houseNumber),
                 ],
               ),
             ),
@@ -54,9 +35,14 @@ class VoterDetailsPage extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            GoHomeButton(onTap: () => Get.to(HomeScreen())),
+            GoHomeButton(
+              onTap: () {
+                Get.back();
+                Get.back();
+              },
+            ),
           ],
-        )
+        ),
       ),
     );
   }

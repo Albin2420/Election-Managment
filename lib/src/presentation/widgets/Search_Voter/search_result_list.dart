@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,15 +14,13 @@ class SearchResultList extends StatelessWidget {
     final controller = Get.find<SearchVoterController>();
 
     return Obx(() {
-      print("Building SearchResultList with ${controller.searchResults.length} results");
-
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Text(
-              "Found ${controller.searchResults.length} result(s)",
+              "Found ${controller.searchResult.length} result(s)",
               style: GoogleFonts.inter(
                 fontSize: 15,
                 fontWeight: FontWeight.w500,
@@ -31,15 +31,13 @@ class SearchResultList extends StatelessWidget {
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              itemCount: controller.searchResults.length,
+              itemCount: controller.searchResult.length,
               itemBuilder: (context, index) {
-                final voter = controller.searchResults[index];
+                final voter = controller.searchResult[index];
 
-                return InkWell(
+                return GestureDetector(
                   onTap: () {
-                    print("Tapped on voter: ${voter.name} with ID: ${voter.id}");
-                    // Navigate to voter details page
-                    Get.to(() => VoterDetailsPage(voterId: voter.id));
+                    Get.to(() => VoterDetailsPage(currenTVoter: voter));
                   },
                   child: Container(
                     margin: const EdgeInsets.only(bottom: 12),
@@ -76,7 +74,7 @@ class SearchResultList extends StatelessWidget {
                             ),
                             const SizedBox(width: 6),
                             Text(
-                              voter.houseNumber,
+                              "${voter.houseNumber}",
                               style: GoogleFonts.inter(
                                 fontSize: 13,
                                 color: Colors.grey.shade600,
@@ -90,7 +88,7 @@ class SearchResultList extends StatelessWidget {
                             ),
                             const SizedBox(width: 6),
                             Text(
-                              voter.electoralId,
+                              "Electrol id",
                               style: GoogleFonts.inter(
                                 fontSize: 13,
                                 color: Colors.grey.shade600,
