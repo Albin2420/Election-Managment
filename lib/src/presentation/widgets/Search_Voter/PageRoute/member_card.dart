@@ -1,7 +1,6 @@
 import 'package:election_management/src/data/model/votermodel.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../../controller/SearchVoter/search_voter_controller.dart';
 
 class MemberCard extends StatelessWidget {
   final VoterModel member;

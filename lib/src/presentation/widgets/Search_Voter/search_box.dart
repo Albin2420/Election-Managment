@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../controller/SearchVoter/search_voter_controller.dart';
 
 class SearchBox extends StatelessWidget {
   final void Function(String value)? onSubmit;
@@ -9,8 +7,6 @@ class SearchBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<SearchVoterController>();
-
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Container(

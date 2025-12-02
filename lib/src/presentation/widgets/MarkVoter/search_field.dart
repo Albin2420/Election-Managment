@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../controller/MarkVoter/mark_voter_controller.dart';
 
 class SearchField extends StatelessWidget {
   const SearchField({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<MarkVoterController>();
-
     return Container(
       width: double.infinity,
       height: 100,
@@ -27,7 +23,7 @@ class SearchField extends StatelessWidget {
       child: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-          child: Container(
+          child: SizedBox(
             width: double.infinity,
             child: Container(
               decoration: BoxDecoration(
@@ -43,7 +39,6 @@ class SearchField extends StatelessWidget {
                 ],
               ),
               child: TextField(
-                // onChanged: controller.updateSearchQuery,
                 decoration: InputDecoration(
                   prefixIcon: Padding(
                     padding: const EdgeInsets.only(left: 7, right: 7),
