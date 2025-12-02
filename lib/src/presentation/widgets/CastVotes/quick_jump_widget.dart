@@ -1,4 +1,3 @@
-// import 'package:election_management/src/presentation/controller/CastVotes/cast_votes_controller.dart';
 import 'package:election_management/src/presentation/controller/CastVotes/cast_votes_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,7 +13,6 @@ class QuickJumpWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<CastVotesController>();
 
-    // If no voters available
     if (limit == 0) {
       return Container(
         width: double.infinity,

@@ -32,7 +32,7 @@ class CastVotesController extends GetxController {
 
   RxString selectedRange = "".obs;
 
-  final RxList<VoterStatus> voterstatus = <VoterStatus>[].obs;
+  final RxList<VoterStatus> voterstatusvdata = <VoterStatus>[].obs;
 
   void updateSearchQuery(String value) {
     searchQuery.value = value.trim();
@@ -81,7 +81,6 @@ class CastVotesController extends GetxController {
         },
         (R) {
           voterbySerial.value = R['votersbySerial'] as List<VoterModel>;
-
           EasyLoading.dismiss();
           Get.to(() => const ReviewMarkedVotersPage());
         },
@@ -137,9 +136,10 @@ class CastVotesController extends GetxController {
         final res = await sr.getBySerialnumber(start: start, end: end);
         res.fold((l) => EasyLoading.dismiss(), (R) {
           currentRange.value = range;
-          voterstatus.value = (R['voter_status'] as List<dynamic>)
+          voterstatusvdata.value = (R['voter_status'] as List<dynamic>)
               .map((e) => e as VoterStatus)
               .toList();
+
           EasyLoading.dismiss();
         });
       } else {
