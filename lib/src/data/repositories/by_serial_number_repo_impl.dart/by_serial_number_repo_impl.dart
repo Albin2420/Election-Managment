@@ -1,29 +1,33 @@
+import 'dart:convert';
 import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:election_management/src/core/network/dio_client.dart';
 import 'package:election_management/src/core/network/failure.dart';
 import 'package:election_management/src/core/url.dart';
 import 'package:dio/dio.dart';
-import 'package:election_management/src/domain/repositories/Booth/booth_repo.dart';
+import 'package:election_management/src/data/model/votermodel.dart';
+import 'package:election_management/src/domain/repositories/byserialnumber/by_serial_number_repo.dart';
 
-class BoothRepoImpl extends BoothRepo {
+class BySerialNumberRepoImpl extends BySerialNumberRepo {
   @override
-  Future<Either<Failure, Map<String, dynamic>>> getMyboothDetails() async {
-    final url = "${Url.baseUrl}/${Url.myBooth}";
+  Future<Either<Failure, Map<String, dynamic>>> getVotersbyserialNum({
+    required dynamic list,
+  }) async {
+    final url = "${Url.baseUrl}/${Url.byserialNumber}";
 
     try {
-      final response = await DioClient.dio.get(url);
-      if (response.statusCode == 200) {
-        final List<dynamic> data = response.data;
-        // Access a single item
-        final item = data[0];
+      final requestData = jsonEncode({"serial_numbers": list});
 
-        return right({
-          "lsg_booth": item['id'],
-          "wardNumber": item['ward']['number'],
-          "boothNumber": item['number'],
-          "totalVoters": item['total_voters'],
-        });
+      log("📤 Sending Request Data:\n$requestData");
+
+      final response = await DioClient.dio.post(url, data: requestData);
+
+      if (response.statusCode == 200) {
+        final data = response.data as List;
+        final voters = data.map((e) => VoterModel.fromJson(e)).toList();
+
+        return right({"votersbySerial": voters});
       } else {
         return Left(Failure(message: "${response.statusMessage}"));
       }

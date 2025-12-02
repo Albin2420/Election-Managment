@@ -1,97 +1,38 @@
 import 'dart:developer';
+import 'package:election_management/src/data/model/votercastmodel.dart';
+import 'package:election_management/src/data/model/votermodel.dart';
+import 'package:election_management/src/data/repositories/by_serial_number_repo_impl.dart/by_serial_number_repo_impl.dart';
+import 'package:election_management/src/data/repositories/castvoter/cast_voter_repo_impl.dart';
+import 'package:election_management/src/data/repositories/serialNumber/serial_number_repo_impl.dart';
+import 'package:election_management/src/domain/repositories/byserialnumber/by_serial_number_repo.dart';
+import 'package:election_management/src/domain/repositories/castvoter/cast_voter_repo.dart';
+import 'package:election_management/src/domain/repositories/serialNumber/serial_number_repo.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 import '../../screens/CastVotes/pageRoute/review_marked_voters_page.dart';
 
-class VoterCastModel {
-  final String id;
-  final String name;
-  final String houseNumber;
-  final String electoralId;
-  final String serialNumber;
-  bool hasVoted;
-
-  VoterCastModel({
-    required this.id,
-    required this.name,
-    required this.houseNumber,
-    required this.electoralId,
-    required this.serialNumber,
-    this.hasVoted = false,
-  });
-}
-
 class CastVotesController extends GetxController {
+  SerialNumberRepo sr = SerialNumberRepoImpl();
+  BySerialNumberRepo byserialNumber = BySerialNumberRepoImpl();
+  CastVoterRepo cst = CastVoterRepoImpl();
+
   final searchQuery = ''.obs;
   final searchResults = <VoterCastModel>[].obs;
 
   final castedVotes = <String>[].obs;
-  final currentRange = '0 - 5'.obs;
+  final currentRange = ''.obs;
 
   final votedSerials = <String>[].obs;
 
-  final List<VoterCastModel> allVoters = [
-    VoterCastModel(
-        id: '1',
-        name: 'Rajesh Kumar',
-        houseNumber: 'H-101',
-        electoralId: 'ELC001234',
-        serialNumber: '001'),
-    VoterCastModel(
-        id: '2',
-        name: 'Priya Sharma',
-        houseNumber: 'H-101',
-        electoralId: 'ELC001235',
-        serialNumber: '002'),
-    VoterCastModel(
-        id: '3',
-        name: 'Robert Johnson',
-        houseNumber: '789',
-        electoralId: 'EL003',
-        serialNumber: '003'),
-    VoterCastModel(
-        id: '4',
-        name: 'Emily Brown',
-        houseNumber: '101',
-        electoralId: 'EL004',
-        serialNumber: '004'),
-    VoterCastModel(
-        id: '5',
-        name: 'Vikram Singh',
-        houseNumber: 'H-104',
-        electoralId: 'ELC001238',
-        serialNumber: '005'),
-  ];
+  final List<VoterCastModel> allVoters = [];
+  final RxList<VoterModel> voterbySerial = <VoterModel>[].obs;
 
-  @override
-  void onInit() {
-    ever(searchQuery, (_) => performSearch());
-    super.onInit();
-  }
+  RxString selectedRange = "".obs;
 
   void updateSearchQuery(String value) {
     searchQuery.value = value.trim();
-  }
-
-  void performSearch() {
-    if (searchQuery.isEmpty) {
-      searchResults.clear();
-      return;
-    }
-
-    final query = searchQuery.value.toLowerCase();
-    final results = allVoters.where((v) {
-      return v.name.toLowerCase().contains(query) ||
-          v.serialNumber.toLowerCase().contains(query) ||
-          v.electoralId.toLowerCase().contains(query);
-    }).toList();
-
-    searchResults.assignAll(results);
-  }
-
-  // RANGE LOGIC
-  void jumpToRange(String range) {
-    currentRange.value = range;
   }
 
   List<String> getSerialNumbersForRange() {
@@ -99,81 +40,104 @@ class CastVotesController extends GetxController {
     final start = int.parse(parts[0].trim());
     final end = int.parse(parts[1].trim());
 
-    return [
-      for (int i = start; i <= end; i++) i.toString().padLeft(3, '0')
-    ];
+    return [for (int i = start; i <= end; i++) i.toString().padLeft(3, '0')];
   }
 
-  // SERIAL MARKING
   void toggleSerialVote(String serial) {
     if (votedSerials.contains(serial)) {
       votedSerials.remove(serial);
-      log("Unmarked Serial $serial removed");
     } else {
       votedSerials.add(serial);
-      log("marked Serial $serial added");
     }
   }
 
   bool isSerialVoted(String serial) => votedSerials.contains(serial);
 
-  // Get count of marked voters
   int get markedCount => votedSerials.length;
-
-  // Check if any voter is marked
   bool get hasMarkedVoters => votedSerials.isNotEmpty;
 
-  // Get voter details by serial number
-  VoterCastModel? getVoterBySerial(String serial) {
+  // Review → Fetch Voters by Serial
+  Future<void> proceedToReview() async {
     try {
-      return allVoters.firstWhere((voter) => voter.serialNumber == serial);
+      if (votedSerials.isEmpty) {
+        Fluttertoast.showToast(msg: "Please mark at least one voter");
+        return;
+      }
+
+      EasyLoading.show();
+
+      final List<int> serials = votedSerials
+          .map((e) => int.parse(e.trim()))
+          .toList();
+
+      final res = await byserialNumber.getVotersbyserialNum(list: serials);
+
+      res.fold(
+        (failure) {
+          EasyLoading.dismiss();
+          Fluttertoast.showToast(msg: "Something went wrong");
+        },
+        (data) {
+          voterbySerial.value = data['votersbySerial'] as List<VoterModel>;
+
+          EasyLoading.dismiss();
+          Get.to(() => const ReviewMarkedVotersPage());
+        },
+      );
     } catch (e) {
-      return null;
+      EasyLoading.dismiss();
+      log("⚠️ Error in proceedToReview(): $e");
+      Fluttertoast.showToast(msg: "Unexpected error occurred");
     }
   }
 
-  // Get list of marked voters
-  List<VoterCastModel> getMarkedVoters() {
-    return votedSerials
-        .map((serial) => getVoterBySerial(serial))
-        .where((voter) => voter != null)
-        .cast<VoterCastModel>()
-        .toList();
-  }
-
-  // Remove voter from marked list
-  void removeMarkedVoter(String serial) {
-    votedSerials.remove(serial);
-    log("Removed voter with serial $serial from marked list");
-  }
-
-  // Navigate to review page
-  void proceedToReview() {
-    if (votedSerials.isEmpty) {
-      log("no selection,please mark atleast one voter before proceeding");
-      return;
-    }
-
-    // Navigate to review page
-    Get.to(() => const ReviewMarkedVotersPage());
-  }
-
-  // Cancel all marked voters
   void cancelAllMarkedVoters() {
     votedSerials.clear();
-    log("All marked voters cancelled");
   }
 
-  // Confirm marked voters
-  void confirmMarkedVoters() {
-    // Here you can add API call or database save logic
-    final count = markedCount;
+  Future<void> confirmMarkedVoters() async {
+    try {
+      EasyLoading.show();
+      final serialIds = voterbySerial.map((voter) => voter.id).toList();
 
-    Get.back(); // Go back to previous page
+      log("Confirmed as casted votes: $serialIds");
 
-    log("Success $count voter(s) confirmed as casted voters");
+      final res = await cst.markasCastVoter(list: serialIds);
+      res.fold(
+        (l) {
+          Fluttertoast.showToast(msg: "something went wrong");
+          EasyLoading.dismiss();
+        },
+        (R) {
+          EasyLoading.dismiss();
+          votedSerials.clear();
+          voterbySerial.clear();
+          Get.back();
+        },
+      );
+    } catch (e) {
+      log("Error confirming voters: $e");
+      EasyLoading.dismiss();
+      Fluttertoast.showToast(msg: "something went wrong:e-103");
+    }
+  }
 
-    // Clear the marked voters after confirmation
-    votedSerials.clear();
+  Future<void> jumpToRange(String range) async {
+    selectedRange.value = range;
+    final parts = range.split('-');
+
+    final start = int.tryParse(parts[0].trim());
+    final end = int.tryParse(parts[1].trim());
+
+    if (start != null && end != null) {
+      EasyLoading.show();
+      final res = await sr.getBySerialnumber(start: start, end: end);
+      res.fold((l) => EasyLoading.dismiss(), (R) {
+        EasyLoading.dismiss();
+        currentRange.value = range;
+      });
+    } else {
+      log("❌ Invalid Range Format");
+    }
   }
 }

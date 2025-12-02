@@ -55,7 +55,7 @@ class VoterModel {
       address: json['address'],
       photo: json['photo'],
       wardNumber: json['ward_number'],
-      houseNumber: json['house_number'],
+      houseNumber: int.tryParse(json['house_number'] ?? -1),
       secIdNumber: json['sec_id_number'],
       isActive: json['is_active'],
       inactiveReason: json['inactive_reason'],

@@ -51,7 +51,7 @@ class HomeScreen extends StatelessWidget {
                           boothnumber: '${ctrl.boothNumber.value}',
                           percentagevote: '0.00',
                           remainvote: '850',
-                          totalvote: '850',
+                          totalvote: '${ctrl.totalvoters.value}',
                           date: '27/11/25',
                           time: '12:52:33',
                         ),
@@ -59,7 +59,7 @@ class HomeScreen extends StatelessWidget {
                         AssignedBoothSection(
                           boothno: '${ctrl.boothNumber.value}',
                           wardno: '${ctrl.wardNumber.value}',
-                          voteno: '849',
+                          voteno: '${ctrl.totalvoters.value}',
                         ),
                         const SizedBox(height: 24),
                         Padding(
@@ -124,7 +124,7 @@ class HomeScreen extends StatelessWidget {
                             title: 'Mark Voted',
                             subtitle: 'Record cast votes',
                             onTap: () {
-                              Get.to(() =>CastVotesPage());
+                              Get.to(() => CastVotesPage());
                             },
                           ),
                         ),
