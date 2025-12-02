@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:election_management/src/data/model/votercastmodel.dart';
 import 'package:election_management/src/data/model/votermodel.dart';
+import 'package:election_management/src/data/model/voterstatus.dart';
 import 'package:election_management/src/data/repositories/by_serial_number_repo_impl.dart/by_serial_number_repo_impl.dart';
 import 'package:election_management/src/data/repositories/castvoter/cast_voter_repo_impl.dart';
 import 'package:election_management/src/data/repositories/serialNumber/serial_number_repo_impl.dart';
@@ -31,6 +32,8 @@ class CastVotesController extends GetxController {
 
   RxString selectedRange = "".obs;
 
+  final RxList<VoterStatus> voterstatus = <VoterStatus>[].obs;
+
   void updateSearchQuery(String value) {
     searchQuery.value = value.trim();
   }
@@ -56,7 +59,6 @@ class CastVotesController extends GetxController {
   int get markedCount => votedSerials.length;
   bool get hasMarkedVoters => votedSerials.isNotEmpty;
 
-  // Review → Fetch Voters by Serial
   Future<void> proceedToReview() async {
     try {
       if (votedSerials.isEmpty) {
@@ -73,12 +75,12 @@ class CastVotesController extends GetxController {
       final res = await byserialNumber.getVotersbyserialNum(list: serials);
 
       res.fold(
-        (failure) {
+        (L) {
           EasyLoading.dismiss();
           Fluttertoast.showToast(msg: "Something went wrong");
         },
-        (data) {
-          voterbySerial.value = data['votersbySerial'] as List<VoterModel>;
+        (R) {
+          voterbySerial.value = R['votersbySerial'] as List<VoterModel>;
 
           EasyLoading.dismiss();
           Get.to(() => const ReviewMarkedVotersPage());
@@ -123,21 +125,30 @@ class CastVotesController extends GetxController {
   }
 
   Future<void> jumpToRange(String range) async {
-    selectedRange.value = range;
-    final parts = range.split('-');
+    try {
+      selectedRange.value = range;
+      final parts = range.split('-');
 
-    final start = int.tryParse(parts[0].trim());
-    final end = int.tryParse(parts[1].trim());
+      final start = int.tryParse(parts[0].trim());
+      final end = int.tryParse(parts[1].trim());
 
-    if (start != null && end != null) {
-      EasyLoading.show();
-      final res = await sr.getBySerialnumber(start: start, end: end);
-      res.fold((l) => EasyLoading.dismiss(), (R) {
+      if (start != null && end != null) {
+        EasyLoading.show();
+        final res = await sr.getBySerialnumber(start: start, end: end);
+        res.fold((l) => EasyLoading.dismiss(), (R) {
+          currentRange.value = range;
+          voterstatus.value = (R['voter_status'] as List<dynamic>)
+              .map((e) => e as VoterStatus)
+              .toList();
+          EasyLoading.dismiss();
+        });
+      } else {
+        log("❌ Invalid Range Format");
         EasyLoading.dismiss();
-        currentRange.value = range;
-      });
-    } else {
-      log("❌ Invalid Range Format");
+      }
+    } catch (e) {
+      log("⚠️ Error in jumpToRange():$e");
+      EasyLoading.dismiss();
     }
   }
 }

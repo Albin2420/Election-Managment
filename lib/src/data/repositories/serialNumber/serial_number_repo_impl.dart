@@ -5,6 +5,7 @@ import 'package:election_management/src/core/network/dio_client.dart';
 import 'package:election_management/src/core/network/failure.dart';
 import 'package:election_management/src/core/url.dart';
 import 'package:dio/dio.dart';
+import 'package:election_management/src/data/model/voterstatus.dart';
 
 import 'package:election_management/src/domain/repositories/serialNumber/serial_number_repo.dart';
 
@@ -20,7 +21,11 @@ class SerialNumberRepoImpl extends SerialNumberRepo {
       final response = await DioClient.dio.get(url);
 
       if (response.statusCode == 200) {
-        return right({});
+        final voters = response.data
+            .map((e) => VoterStatus.fromJson(e))
+            .toList();
+
+        return right({"voter_status": voters});
       } else {
         return Left(Failure(message: "${response.statusMessage}"));
       }
