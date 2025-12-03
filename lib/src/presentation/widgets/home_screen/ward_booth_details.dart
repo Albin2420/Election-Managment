@@ -1,3 +1,4 @@
+import 'package:election_management/src/presentation/widgets/home_screen/info_card_static.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'info_card.dart';
@@ -63,7 +64,7 @@ class WardBoothDetails extends StatelessWidget {
 
             const SizedBox(height: 20),
 
-            InfoCard(
+            InfoCardStatic(
               bgColor: const Color(0xFFE3F2FD),
               label: 'Ward',
               value: wardnumber,

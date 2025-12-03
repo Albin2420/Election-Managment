@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../widgets/home_screen/action_card.dart';
 import '../../widgets/home_screen/assigned_booth_section.dart';
-import '../../widgets/home_screen/simple_option_card.dart';
 import '../../widgets/home_screen/ward_booth_details.dart';
 import '../../widgets/home_screen/home_header.dart';
 import '../CastVotes/cast_vote_page.dart';
@@ -132,11 +131,6 @@ class HomeScreen extends StatelessWidget {
                         ),
 
                         const SizedBox(height: 24),
-
-                        const SimpleOptionCard(
-                          iconImage: "assets/images/grey_home.png",
-                          title: "Search Home",
-                        ),
 
                         const SizedBox(height: 32),
                       ],
