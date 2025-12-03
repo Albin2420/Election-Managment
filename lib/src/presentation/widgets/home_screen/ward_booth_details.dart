@@ -105,7 +105,7 @@ class WardBoothDetails extends StatelessWidget {
             VoteCard(
               bgColor: const Color(0xFFFFF3E0),
               label: 'Remaining Voters',
-              value: '$remainvote',
+              value: remainvote,
               borderColor: const Color(0xFFFFE3C2),
               labelColor: const Color(0xFFEF6C00),
               valueColor: const Color(0xFFB34A00),
@@ -117,7 +117,7 @@ class WardBoothDetails extends StatelessWidget {
             VoteCard(
               bgColor: const Color(0xFFE3F2FD),
               label: 'Total Voters',
-              value: '$totalvote',
+              value: totalvote,
               borderColor: const Color(0xFFAEDAFF),
               labelColor: const Color(0xFF0D47A1),
               valueColor: const Color(0xFF062A66),
