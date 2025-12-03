@@ -1,8 +1,6 @@
 import 'package:election_management/src/data/model/votermodel.dart';
 import 'package:election_management/src/presentation/widgets/Search_Voter/PageRoute/voter_profile_card.dart';
-import 'package:election_management/src/presentation/widgets/go_home_button.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import '../../../widgets/Search_Voter/PageRoute/voter_details_header.dart';
 
 class VoterDetailsPage extends StatelessWidget {
@@ -30,18 +28,6 @@ class VoterDetailsPage extends StatelessWidget {
             ),
           ),
         ],
-      ),
-      bottomNavigationBar: SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            GoHomeButton(
-              onTap: () {
-                Get.back();
-              },
-            ),
-          ],
-        ),
       ),
     );
   }

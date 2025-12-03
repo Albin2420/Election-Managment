@@ -1,4 +1,3 @@
-import 'package:election_management/src/presentation/widgets/go_home_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controller/SearchVoter/search_voter_controller.dart';
@@ -32,18 +31,6 @@ class SearchVoterPage extends StatelessWidget {
                 }
                 return const SearchResultList();
               }),
-            ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            GoHomeButton(
-              onTap: () {
-                Get.back(); // or Get.to(HomeScreen());
-              },
             ),
           ],
         ),
