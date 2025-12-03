@@ -19,5 +19,5 @@ class Url {
 
   static String castVoter = "voters/bulk-update-is-our-voter/";
 
-  static String statistics = "voters/statistics/";
+  static String status = "voters/statistics/";
 }

@@ -4,12 +4,12 @@ import 'package:election_management/src/core/network/dio_client.dart';
 import 'package:election_management/src/core/network/failure.dart';
 import 'package:election_management/src/core/url.dart';
 import 'package:dio/dio.dart';
-import 'package:election_management/src/domain/repositories/statitics/statitics_repo.dart';
+import 'package:election_management/src/domain/repositories/statitics/status_repo.dart';
 
-class StatiticsRepoImpl extends StatiticsRepo {
+class StatusRepoImpl extends StatussRepo {
   @override
   Future<Either<Failure, Map<String, dynamic>>> getstatus() async {
-    final url = "${Url.baseUrl}/${Url.statistics}";
+    final url = "${Url.baseUrl}/${Url.status}";
 
     try {
       final response = await DioClient.dio.get(url);
