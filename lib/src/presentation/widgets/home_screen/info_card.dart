@@ -23,8 +23,7 @@ class InfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color borderColor =
-    Color.lerp(borderBaseColor, Colors.black, 0.05)!;
+    final Color borderColor = Color.lerp(borderBaseColor, Colors.black, 0.05)!;
 
     return Container(
       padding: const EdgeInsets.all(12),
@@ -39,17 +38,23 @@ class InfoCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(label,
-                  style: GoogleFonts.inter(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 14,
-                      color: labelColor)),
+              Text(
+                label,
+                style: GoogleFonts.inter(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14,
+                  color: labelColor,
+                ),
+              ),
               const SizedBox(height: 2),
-              Text(value,
-                  style: GoogleFonts.poppins(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: valueColor)),
+              Text(
+                value,
+                style: GoogleFonts.poppins(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: valueColor,
+                ),
+              ),
             ],
           ),
           Image.asset(imageName, width: 55, height: 55),

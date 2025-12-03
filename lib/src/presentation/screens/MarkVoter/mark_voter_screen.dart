@@ -1,12 +1,11 @@
+import 'package:election_management/src/presentation/widgets/go_home_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-
 import '../../controller/MarkVoter/mark_voter_controller.dart';
 import '../../widgets/MarkVoter/mark_voter_header.dart';
 import '../../widgets/MarkVoter/voter_card.dart';
 import '../../widgets/MarkVoter/search_field.dart';
-import '../../widgets/MarkVoter/go_home_button.dart';
 
 class MarkVoterScreen extends StatelessWidget {
   const MarkVoterScreen({super.key});
@@ -59,7 +58,13 @@ class MarkVoterScreen extends StatelessWidget {
       bottomNavigationBar: SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [const GoHomeButton()],
+          children: [
+            GoHomeButton(
+              onTap: () {
+                Get.back();
+              },
+            ),
+          ],
         ),
       ),
     );

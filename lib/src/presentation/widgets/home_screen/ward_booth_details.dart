@@ -11,7 +11,16 @@ class WardBoothDetails extends StatelessWidget {
   final String totalvote;
   final String date;
   final String time;
-  const WardBoothDetails({super.key,required this.wardnumber, required this.boothnumber,required this.percentagevote,required this.remainvote,required this.totalvote, required this.date, required this.time,});
+  const WardBoothDetails({
+    super.key,
+    required this.wardnumber,
+    required this.boothnumber,
+    required this.percentagevote,
+    required this.remainvote,
+    required this.totalvote,
+    required this.date,
+    required this.time,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -36,15 +45,15 @@ class WardBoothDetails extends StatelessWidget {
           children: [
             Row(
               children: [
-                Image.asset('assets/images/ward.png',
-                    width: 40, height: 40),
+                Image.asset('assets/images/ward.png', width: 40, height: 40),
                 const SizedBox(width: 10),
-
-                Text('Ward & Booth Details',
-                    style: GoogleFonts.inter(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    )),
+                Text(
+                  'Ward & Booth Details',
+                  style: GoogleFonts.inter(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ],
             ),
 
@@ -119,8 +128,11 @@ class WardBoothDetails extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  Icon(Icons.access_time,
-                      color: Colors.grey.shade700, size: 20),
+                  Icon(
+                    Icons.access_time,
+                    color: Colors.grey.shade700,
+                    size: 20,
+                  ),
                   const SizedBox(width: 8),
                   Text(
                     'Last updated: $date, $time',
@@ -131,7 +143,7 @@ class WardBoothDetails extends StatelessWidget {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
