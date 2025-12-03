@@ -54,6 +54,8 @@ class HomeScreen extends StatelessWidget {
                           totalvote: '${ctrl.totalvoters.value}',
                           date: '27/11/25',
                           time: '12:52:33',
+                          wardName: ctrl.wardName.value,
+                          boothName: ctrl.boothName.value,
                         ),
                         SizedBox(height: 24),
                         AssignedBoothSection(

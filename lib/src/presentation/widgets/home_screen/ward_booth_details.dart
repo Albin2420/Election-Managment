@@ -6,6 +6,8 @@ import 'vote_card.dart';
 class WardBoothDetails extends StatelessWidget {
   final String wardnumber;
   final String boothnumber;
+  final String wardName;
+  final String boothName;
   final String percentagevote;
   final String remainvote;
   final String totalvote;
@@ -20,6 +22,8 @@ class WardBoothDetails extends StatelessWidget {
     required this.totalvote,
     required this.date,
     required this.time,
+    required this.wardName,
+    required this.boothName,
   });
 
   @override
@@ -62,11 +66,12 @@ class WardBoothDetails extends StatelessWidget {
             InfoCard(
               bgColor: const Color(0xFFE3F2FD),
               label: 'Ward',
-              value: 'Ward $wardnumber',
+              value: wardnumber,
               labelColor: const Color(0xFF3A7BFE),
               valueColor: const Color(0xFF0A3D91),
               imageName: 'assets/images/home.png',
               borderBaseColor: const Color(0xFFAEDAFF),
+              tag: wardName,
             ),
 
             const SizedBox(height: 20),
@@ -74,11 +79,12 @@ class WardBoothDetails extends StatelessWidget {
             InfoCard(
               bgColor: const Color(0xFFF3E5F5),
               label: 'Booth Number',
-              value: 'Booth $boothnumber',
+              value: boothnumber,
               labelColor: const Color(0xFF9B5CFF),
               valueColor: const Color(0xFF4B0082),
               imageName: 'assets/images/tick.png',
               borderBaseColor: const Color(0xFFFFC9DF),
+              tag: boothName,
             ),
 
             const SizedBox(height: 20),
