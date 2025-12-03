@@ -1,3 +1,4 @@
+import 'package:election_management/src/presentation/widgets/go_home_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -6,7 +7,6 @@ import '../../../controller/CastVotes/cast_votes_controller.dart';
 import '../../../widgets/CastVotes/pageRoute/cancel_confirm_buttons.dart';
 import '../../../widgets/CastVotes/pageRoute/marked_voter_card.dart';
 import '../../../widgets/CastVotes/pageRoute/review_mark_header.dart';
-import '../../../widgets/MarkVoter/go_home_button.dart';
 
 class ReviewMarkedVotersPage extends StatelessWidget {
   const ReviewMarkedVotersPage({super.key});
@@ -82,7 +82,13 @@ class ReviewMarkedVotersPage extends StatelessWidget {
       bottomNavigationBar: SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [const GoHomeButton()],
+          children: [
+            GoHomeButton(
+              onTap: () {
+                Get.back();
+              },
+            ),
+          ],
         ),
       ),
     );

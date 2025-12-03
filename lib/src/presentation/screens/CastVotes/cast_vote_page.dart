@@ -1,11 +1,11 @@
 import 'package:election_management/src/presentation/controller/home/home_controller.dart';
+import 'package:election_management/src/presentation/widgets/go_home_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controller/CastVotes/cast_votes_controller.dart';
 import '../../widgets/CastVotes/cast_voter_header.dart';
 import '../../widgets/CastVotes/quick_jump_widget.dart';
 import '../../widgets/CastVotes/serial_number_widget.dart';
-import '../../widgets/MarkVoter/go_home_button.dart';
 
 class CastVotesPage extends StatelessWidget {
   const CastVotesPage({super.key});
@@ -47,7 +47,13 @@ class CastVotesPage extends StatelessWidget {
       bottomNavigationBar: SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [const GoHomeButton()],
+          children: [
+            GoHomeButton(
+              onTap: () {
+                Get.back();
+              },
+            ),
+          ],
         ),
       ),
     );

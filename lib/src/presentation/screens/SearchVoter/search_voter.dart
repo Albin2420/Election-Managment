@@ -1,7 +1,7 @@
+import 'package:election_management/src/presentation/widgets/go_home_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controller/SearchVoter/search_voter_controller.dart';
-import '../../widgets/NewVoter/go_home_button.dart';
 import '../../widgets/Search_Voter/empty_state.dart';
 import '../../widgets/Search_Voter/search_box.dart';
 import '../../widgets/Search_Voter/search_header.dart';

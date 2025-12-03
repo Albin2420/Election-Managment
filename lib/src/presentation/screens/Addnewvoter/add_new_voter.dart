@@ -1,10 +1,10 @@
+import 'package:election_management/src/presentation/widgets/go_home_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../controller/AddVoter/add_voter_controller.dart';
 import '../../widgets/NewVoter/add_voter_button.dart';
 import '../../widgets/NewVoter/address_field.dart';
-import '../../widgets/NewVoter/go_home_button.dart';
 import '../../widgets/NewVoter/new_voter_header.dart';
 import '../../widgets/NewVoter/photo_upload_section.dart';
 import '../../widgets/NewVoter/text_input_field.dart';

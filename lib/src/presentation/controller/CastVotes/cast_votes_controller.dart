@@ -101,18 +101,17 @@ class CastVotesController extends GetxController {
       EasyLoading.show();
       final serialIds = voterbySerial.map((voter) => voter.id).toList();
 
-      log("Confirmed as casted votes: $serialIds");
-
       final res = await cst.markasCastVoter(list: serialIds);
       res.fold(
         (l) {
           Fluttertoast.showToast(msg: "something went wrong");
           EasyLoading.dismiss();
         },
-        (R) {
-          EasyLoading.dismiss();
+        (R) async {
+          await jumpToRange(selectedRange.value);
           votedSerials.clear();
           voterbySerial.clear();
+          EasyLoading.dismiss();
           Get.back();
         },
       );
