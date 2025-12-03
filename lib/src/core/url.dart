@@ -18,4 +18,6 @@ class Url {
   static String byserialNumber = "voters/by-serial-numbers/";
 
   static String castVoter = "voters/bulk-update-is-our-voter/";
+
+  static String statistics = "voters/statistics/";
 }

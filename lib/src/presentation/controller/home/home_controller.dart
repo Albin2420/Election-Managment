@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'package:election_management/src/data/repositories/Booth/booth_repo_impl.dart';
 import 'package:election_management/src/domain/repositories/Booth/booth_repo.dart';
@@ -39,6 +40,8 @@ class HomeController extends GetxController {
       log("⚠️ Error in getBoothDetails():$e");
     }
   }
+
+  Future<void> getStatus() async {}
 
   Future<void> logout() async {
     Get.find<AppStartupController>().logout();
