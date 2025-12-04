@@ -1,12 +1,15 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:election_management/src/data/repositories/Booth/booth_repo_impl.dart';
+import 'package:election_management/src/data/repositories/statitics/status_repo_impl.dart';
 import 'package:election_management/src/domain/repositories/Booth/booth_repo.dart';
+import 'package:election_management/src/domain/repositories/statitics/status_repo.dart';
 import 'package:election_management/src/presentation/controller/AppstartupController/app_startup_controller.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
   BoothRepo bth = BoothRepoImpl();
+  StatussRepo stats = StatusRepoImpl();
 
   //Boothdetails
   RxString boothId = RxString("");
@@ -20,7 +23,12 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getBoothDetails();
+    _init();
+  }
+
+  Future<void> _init() async {
+    await getBoothDetails();
+    getStatus();
   }
 
   Future<void> getBoothDetails() async {
@@ -41,7 +49,16 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<void> getStatus() async {}
+  Future<void> getStatus() async {
+    try {
+      final res = await stats.getstatus();
+      res.fold((l) {}, (R) {
+        log("R:$R");
+      });
+    } catch (e) {
+      log('⚠️ Error in getStatus():$e');
+    }
+  }
 
   Future<void> logout() async {
     Get.find<AppStartupController>().logout();
