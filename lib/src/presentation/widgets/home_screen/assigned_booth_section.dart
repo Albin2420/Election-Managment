@@ -4,8 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 class AssignedBoothSection extends StatelessWidget {
   final String boothno;
   final String wardno;
-  final String voteno;
-  const AssignedBoothSection({super.key, required this.boothno, required this.wardno, required this.voteno});
+  final String totalvoters;
+  final String voted;
+  const AssignedBoothSection({super.key, required this.boothno, required this.wardno, required this.totalvoters, required this.voted});
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +67,19 @@ class AssignedBoothSection extends StatelessWidget {
               color: Colors.white.withOpacity(0.15),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: Text('Total Registered Voters: $voteno',
+            child: Text('Total Voters : $totalvoters',
+                style: GoogleFonts.poppins(
+                    fontSize: 13, color: Colors.white)),
+          ),
+          const SizedBox(height: 12),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.15),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Text('Total Voted : $voted',
                 style: GoogleFonts.poppins(
                     fontSize: 13, color: Colors.white)),
           ),

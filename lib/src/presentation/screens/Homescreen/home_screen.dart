@@ -60,7 +60,7 @@ class HomeScreen extends StatelessWidget {
                         AssignedBoothSection(
                           boothno: '${ctrl.boothNumber.value}',
                           wardno: '${ctrl.wardNumber.value}',
-                          voteno: '${ctrl.totalvoters.value}',
+                          totalvoters: '${ctrl.totalvoters.value}', voted: '${ctrl.voted.value}',
                         ),
                         const SizedBox(height: 24),
                         Padding(

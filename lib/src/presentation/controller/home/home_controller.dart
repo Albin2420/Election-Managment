@@ -17,6 +17,7 @@ class HomeController extends GetxController {
   RxInt wardNumber = RxInt(-1);
   RxInt boothNumber = RxInt(-1);
   RxInt totalvoters = RxInt(-1);
+  RxInt voted = RxInt(-1);
   RxString boothName = RxString("");
   RxString wardName = RxString("");
   RxBool boothLoading = RxBool(true);
