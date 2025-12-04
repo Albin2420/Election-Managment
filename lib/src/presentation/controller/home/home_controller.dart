@@ -20,6 +20,13 @@ class HomeController extends GetxController {
   RxString wardName = RxString("");
   RxBool boothLoading = RxBool(true);
 
+  //status
+  RxnDouble percentage = RxnDouble();
+  RxnInt remainingvoter = RxnInt();
+  RxnString date = RxnString();
+  RxnString time = RxnString();
+
+
   @override
   void onInit() {
     super.onInit();
@@ -54,6 +61,10 @@ class HomeController extends GetxController {
       final res = await stats.getstatus();
       res.fold((l) {}, (R) {
         log("R:$R");
+        percentage.value = 0.9;
+        remainingvoter.value = 8;
+        date.value= "12/12/12";
+        time.value="12:12:12";
       });
     } catch (e) {
       log('⚠️ Error in getStatus():$e');

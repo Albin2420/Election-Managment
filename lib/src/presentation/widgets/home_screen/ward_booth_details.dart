@@ -9,20 +9,20 @@ class WardBoothDetails extends StatelessWidget {
   final String boothnumber;
   final String wardName;
   final String boothName;
-  final String percentagevote;
-  final String remainvote;
+  final double? percentagevote;
+  final int? remainvote;
   final String totalvote;
-  final String date;
-  final String time;
+  final String? date;
+  final String? time;
   const WardBoothDetails({
     super.key,
     required this.wardnumber,
     required this.boothnumber,
-    required this.percentagevote,
-    required this.remainvote,
+    this.percentagevote,
+    this.remainvote,
     required this.totalvote,
-    required this.date,
-    required this.time,
+    this.date,
+    this.time,
     required this.wardName,
     required this.boothName,
   });
@@ -90,30 +90,37 @@ class WardBoothDetails extends StatelessWidget {
 
             const SizedBox(height: 20),
 
-            VoteCard(
-              bgColor: const Color(0xFFE8F5E8),
-              label: 'Voting Percentage',
-              value: '$percentagevote%',
-              borderColor: const Color(0xFF9FF3A1),
-              labelColor: const Color(0xFF1B5E20),
-              valueColor: const Color(0xFF0B3D14),
-              imagePath: 'assets/images/green.png',
-            ),
+            // PERCENTAGE
+            if (percentagevote != null) ...[
+              VoteCard(
+                bgColor: const Color(0xFFE8F5E8),
+                label: 'Voting Percentage',
+                value: '${percentagevote!.toStringAsFixed(1)}%',
+                borderColor: const Color(0xFF9FF3A1),
+                labelColor: const Color(0xFF1B5E20),
+                valueColor: const Color(0xFF0B3D14),
+                imagePath: 'assets/images/green.png',
+              ),
+              const SizedBox(height: 20),
+            ],
 
-            const SizedBox(height: 20),
 
-            VoteCard(
-              bgColor: const Color(0xFFFFF3E0),
-              label: 'Remaining Voters',
-              value: remainvote,
-              borderColor: const Color(0xFFFFE3C2),
-              labelColor: const Color(0xFFEF6C00),
-              valueColor: const Color(0xFFB34A00),
-              imagePath: 'assets/images/orange.png',
-            ),
+// REMAINING VOTERS
+            if (remainvote != null) ...[
+              VoteCard(
+                bgColor: const Color(0xFFFFF3E0),
+                label: 'Remaining Voters',
+                value: remainvote.toString(),
+                borderColor: const Color(0xFFFFE3C2),
+                labelColor: const Color(0xFFEF6C00),
+                valueColor: const Color(0xFFB34A00),
+                imagePath: 'assets/images/orange.png',
+              ),
+              const SizedBox(height: 20),
+            ],
 
-            const SizedBox(height: 20),
 
+// TOTAL VOTERS (ALWAYS SHOWN)
             VoteCard(
               bgColor: const Color(0xFFE3F2FD),
               label: 'Total Voters',
@@ -123,34 +130,37 @@ class WardBoothDetails extends StatelessWidget {
               valueColor: const Color(0xFF062A66),
               imagePath: 'assets/images/blue.png',
             ),
-
             const SizedBox(height: 20),
 
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.grey[100],
-                border: Border.all(color: Colors.grey.shade200, width: 1),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.access_time,
-                    color: Colors.grey.shade700,
-                    size: 20,
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    'Last updated: $date, $time',
-                    style: GoogleFonts.poppins(
-                      fontSize: 14,
-                      color: Colors.grey[800],
+
+// DATE & TIME ROW
+            if (date != null && time != null) ...[
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.grey[100],
+                  border: Border.all(color: Colors.grey.shade200, width: 1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.access_time,
+                      color: Colors.grey.shade700,
+                      size: 20,
                     ),
-                  ),
-                ],
+                    const SizedBox(width: 8),
+                    Text(
+                      'Last updated: $date, $time',
+                      style: GoogleFonts.poppins(
+                        fontSize: 14,
+                        color: Colors.grey[800],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
+            ]
           ],
         ),
       ),
