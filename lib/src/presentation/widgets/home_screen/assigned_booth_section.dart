@@ -19,7 +19,7 @@ class AssignedBoothSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      // padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: const Color(0xFF2F5DFE),
         borderRadius: BorderRadius.circular(16),
@@ -30,17 +30,17 @@ class AssignedBoothSection extends StatelessWidget {
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(8),
+                // padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Container(
-                  width: 35,
-                  height: 35,
+                  width: 90,
+                  height: 55,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage("assets/images/building.png"),
-                      fit: BoxFit.contain,
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
