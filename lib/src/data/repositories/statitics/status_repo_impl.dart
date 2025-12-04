@@ -15,7 +15,12 @@ class StatusRepoImpl extends StatussRepo {
       final response = await DioClient.dio.get(url);
 
       if (response.statusCode == 200) {
-        return right({});
+        return right({
+          "totalVoters": response.data['total_voters'],
+          "totalVoted": response.data['total_voted'],
+          "ourVoters": response.data['total_our_voters'],
+          "ourVoted": response.data['total_our_voted'],
+        });
       } else {
         return Left(Failure(message: "${response.statusMessage}"));
       }
