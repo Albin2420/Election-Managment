@@ -6,6 +6,7 @@ import 'package:election_management/src/domain/repositories/Booth/booth_repo.dar
 import 'package:election_management/src/domain/repositories/statitics/status_repo.dart';
 import 'package:election_management/src/presentation/controller/AppstartupController/app_startup_controller.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class HomeController extends GetxController {
   BoothRepo bth = BoothRepoImpl();
@@ -25,7 +26,6 @@ class HomeController extends GetxController {
   RxnInt remainingvoter = RxnInt();
   RxnString date = RxnString();
   RxnString time = RxnString();
-
 
   @override
   void onInit() {
@@ -60,11 +60,22 @@ class HomeController extends GetxController {
     try {
       final res = await stats.getstatus();
       res.fold((l) {}, (R) {
-        log("R:$R");
-        percentage.value = 0.9;
-        remainingvoter.value = 8;
-        date.value= "12/12/12";
-        time.value="12:12:12";
+        log("✅ R: $R");
+
+        final totalVoters = R['totalVoters'] ?? 0;
+        final totalVoted = R['totalVoted'] ?? 0;
+
+        if (totalVoters > 0) {
+          percentage.value = (totalVoted / totalVoters) * 100;
+        } else {
+          percentage.value = 0;
+        }
+
+        remainingvoter.value = (totalVoters - totalVoted).clamp(0, totalVoters);
+
+        final now = DateTime.now();
+        date.value = DateFormat('dd/MM/yy').format(now);
+        time.value = DateFormat('hh:mm a').format(now);
       });
     } catch (e) {
       log('⚠️ Error in getStatus():$e');

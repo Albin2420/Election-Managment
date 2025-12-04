@@ -104,8 +104,6 @@ class WardBoothDetails extends StatelessWidget {
               const SizedBox(height: 20),
             ],
 
-
-// REMAINING VOTERS
             if (remainvote != null) ...[
               VoteCard(
                 bgColor: const Color(0xFFFFF3E0),
@@ -119,8 +117,6 @@ class WardBoothDetails extends StatelessWidget {
               const SizedBox(height: 20),
             ],
 
-
-// TOTAL VOTERS (ALWAYS SHOWN)
             VoteCard(
               bgColor: const Color(0xFFE3F2FD),
               label: 'Total Voters',
@@ -132,11 +128,14 @@ class WardBoothDetails extends StatelessWidget {
             ),
             const SizedBox(height: 20),
 
-
-// DATE & TIME ROW
             if (date != null && time != null) ...[
               Container(
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.only(
+                  left: 8,
+                  right: 8,
+                  top: 12,
+                  bottom: 12,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.grey[100],
                   border: Border.all(color: Colors.grey.shade200, width: 1),
@@ -149,7 +148,7 @@ class WardBoothDetails extends StatelessWidget {
                       color: Colors.grey.shade700,
                       size: 20,
                     ),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 4),
                     Text(
                       'Last updated: $date, $time',
                       style: GoogleFonts.poppins(
@@ -160,7 +159,7 @@ class WardBoothDetails extends StatelessWidget {
                   ],
                 ),
               ),
-            ]
+            ],
           ],
         ),
       ),
