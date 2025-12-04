@@ -4,8 +4,17 @@ import 'package:google_fonts/google_fonts.dart';
 class AssignedBoothSection extends StatelessWidget {
   final String boothno;
   final String wardno;
-  final String voteno;
-  const AssignedBoothSection({super.key, required this.boothno, required this.wardno, required this.voteno});
+
+  final int? ourtotalvoters; // Nullable int
+  final int? voted; // Nullable int
+
+  const AssignedBoothSection({
+    super.key,
+    required this.boothno,
+    required this.wardno,
+    this.ourtotalvoters,
+    this.voted,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,16 +32,15 @@ class AssignedBoothSection extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  // color: Colors.white.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Container(
                   width: 35,
                   height: 35,
-                  decoration: BoxDecoration(
-                    image: const DecorationImage(
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
                       image: AssetImage("assets/images/building.png"),
-                      fit: BoxFit.contain, // or BoxFit.cover
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),
@@ -51,25 +59,51 @@ class AssignedBoothSection extends StatelessWidget {
             ],
           ),
 
-          Text('You are managing Booth $boothno in Ward $wardno',
-              style: GoogleFonts.poppins(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white)),
+          const SizedBox(height: 10),
+
+          Text(
+            'You are managing Booth $boothno in Ward $wardno',
+            style: GoogleFonts.poppins(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+            ),
+          ),
 
           const SizedBox(height: 12),
 
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.15),
-              borderRadius: BorderRadius.circular(8),
+          // 👉 Show if ourtotalvoters is not null
+          if (ourtotalvoters != null) ...[
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.15),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                'Total Our Voters : $ourtotalvoters',
+                style: GoogleFonts.poppins(fontSize: 13, color: Colors.white),
+              ),
             ),
-            child: Text('Total Registered Voters: $voteno',
-                style: GoogleFonts.poppins(
-                    fontSize: 13, color: Colors.white)),
-          ),
+            const SizedBox(height: 12),
+          ],
+
+          // 👉 Show if voted is not null
+          if (voted != null) ...[
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.15),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                'Voted : $voted',
+                style: GoogleFonts.poppins(fontSize: 13, color: Colors.white),
+              ),
+            ),
+          ],
         ],
       ),
     );

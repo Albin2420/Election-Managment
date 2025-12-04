@@ -26,6 +26,8 @@ class HomeController extends GetxController {
   RxnInt remainingvoter = RxnInt();
   RxnString date = RxnString();
   RxnString time = RxnString();
+  RxnInt ourVoters = RxnInt();
+  RxnInt ourVoted = RxnInt();
 
   @override
   void onInit() {
@@ -60,10 +62,11 @@ class HomeController extends GetxController {
     try {
       final res = await stats.getstatus();
       res.fold((l) {}, (R) {
-        log("✅ R: $R");
-
         final totalVoters = R['totalVoters'] ?? 0;
         final totalVoted = R['totalVoted'] ?? 0;
+
+        ourVoted.value = R['ourVoted'];
+        ourVoters.value = R['ourVoters'];
 
         if (totalVoters > 0) {
           percentage.value = (totalVoted / totalVoters) * 100;
