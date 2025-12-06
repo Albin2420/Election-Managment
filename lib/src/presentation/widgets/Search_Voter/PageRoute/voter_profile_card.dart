@@ -58,6 +58,16 @@ class VoterProfileCard extends StatelessWidget {
           const SizedBox(height: 24),
 
           VoterDetailItem(
+            icon: Icons.person,
+            iconColor: const Color(0xFF8900E4),
+            label: "Gaurdian Name",
+            value: "${voter.guardianName}",
+            backgroundColor: const Color(0xFFF8F8F8),
+          ),
+
+          const SizedBox(height: 12),
+
+          VoterDetailItem(
             icon: Icons.tag,
             iconColor: const Color(0xFF8900E4),
             label: "Serial Number",
@@ -81,17 +91,7 @@ class VoterProfileCard extends StatelessWidget {
             icon: Icons.credit_card,
             iconColor: const Color(0xFF8900E4),
             label: "Electoral ID",
-            value: voter.id,
-            backgroundColor: const Color(0xFFF8F8F8),
-          ),
-
-          const SizedBox(height: 12),
-
-          VoterDetailItem(
-            icon: Icons.phone,
-            iconColor: const Color(0xFF8900E4),
-            label: "Phone Number",
-            value: "${voter.serialNumber}",
+            value: voter.secIdNumber ?? "",
             backgroundColor: const Color(0xFFF8F8F8),
           ),
 
