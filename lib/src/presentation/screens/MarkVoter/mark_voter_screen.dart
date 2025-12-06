@@ -22,9 +22,9 @@ class MarkVoterScreen extends StatelessWidget {
           children: [
             const MarkVoterHeader(),
 
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-              child: const SearchField(),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+              child: SearchField(),
             ),
 
             Expanded(
@@ -34,10 +34,33 @@ class MarkVoterScreen extends StatelessWidget {
                 }
 
                 if (controller.voters.isEmpty && !EasyLoading.isShow) {
-                  return const Center(
-                    child: Text(
-                      "No voters Found",
-                      style: TextStyle(fontSize: 16),
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.search_off,
+                          size: 64,
+                          color: Colors.grey.shade400,
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          controller.isSearching.value
+                              ? "No results found"
+                              : "No voters Found",
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        if (controller.isSearching.value) ...[
+                          const SizedBox(height: 8),
+                          TextButton(
+                            onPressed: () => controller.clearSearch(),
+                            child: const Text("Clear search"),
+                          ),
+                        ],
+                      ],
                     ),
                   );
                 }
@@ -45,6 +68,28 @@ class MarkVoterScreen extends StatelessWidget {
                 return ListView(
                   padding: const EdgeInsets.symmetric(horizontal: 40),
                   children: [
+                    // Show search info if searching
+                    if (controller.isSearching.value)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '${controller.voters.length} result(s) found',
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey,
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () => controller.clearSearch(),
+                              child: const Text('Clear'),
+                            ),
+                          ],
+                        ),
+                      ),
+
                     ...controller.voters.map(
                           (voter) => Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8),
@@ -54,14 +99,15 @@ class MarkVoterScreen extends StatelessWidget {
 
                     const SizedBox(height: 20),
 
-                    /// ------------ Next & Previous Under List ------------
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        PreviousButton(),
-                        NextButton(),
-                      ],
-                    ),
+                    // Hide pagination buttons when searching
+                    if (!controller.isSearching.value)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: const [
+                          PreviousButton(),
+                          NextButton(),
+                        ],
+                      ),
 
                     const SizedBox(height: 40),
                   ],

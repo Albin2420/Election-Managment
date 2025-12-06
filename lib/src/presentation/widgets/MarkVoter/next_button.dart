@@ -24,9 +24,10 @@ class NextButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(50),
             ),
             child: Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  "  Next    ",
+                  "Next",
                   style: GoogleFonts.poppins(
                     fontSize: 16,
                     color: Colors.white,
@@ -49,6 +50,7 @@ class NextButton extends StatelessWidget {
                   child: const Icon(
                     Icons.arrow_forward_ios_rounded,
                     color: Colors.black,
+                    size: 16,
                   ),
                 ),
               ],

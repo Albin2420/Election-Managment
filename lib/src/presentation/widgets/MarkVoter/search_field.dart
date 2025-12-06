@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../controller/MarkVoter/mark_voter_controller.dart';
 
 class SearchField extends StatelessWidget {
   const SearchField({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<MarkVoterController>();
+    final TextEditingController textController = TextEditingController();
+
     return Container(
       width: double.infinity,
       height: 100,
@@ -39,6 +44,10 @@ class SearchField extends StatelessWidget {
                 ],
               ),
               child: TextField(
+                controller: textController,
+                onChanged: (value) {
+                  controller.searchVoters(value);
+                },
                 decoration: InputDecoration(
                   prefixIcon: Padding(
                     padding: const EdgeInsets.only(left: 7, right: 7),
@@ -52,6 +61,21 @@ class SearchField extends StatelessWidget {
                     minWidth: 0,
                     minHeight: 0,
                   ),
+                  suffixIcon: Obx(() {
+                    return controller.searchQuery.value.isNotEmpty
+                        ? IconButton(
+                      icon: Icon(
+                        Icons.clear,
+                        size: 20,
+                        color: Colors.grey.shade600,
+                      ),
+                      onPressed: () {
+                        textController.clear();
+                        controller.clearSearch();
+                      },
+                    )
+                        : const SizedBox.shrink();
+                  }),
                   hintText: "Search by name, house number",
                   hintStyle: GoogleFonts.inter(
                     fontSize: 16,

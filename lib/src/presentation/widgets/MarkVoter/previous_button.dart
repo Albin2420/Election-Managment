@@ -24,6 +24,7 @@ class PreviousButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(50),
             ),
             child: Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
                   padding: const EdgeInsets.all(10),
@@ -41,11 +42,12 @@ class PreviousButton extends StatelessWidget {
                   child: const Icon(
                     Icons.arrow_back_ios_new_sharp,
                     color: Colors.black,
+                    size: 16,
                   ),
                 ),
                 const SizedBox(width: 10),
                 Text(
-                  "Previous ",
+                  "Previous",
                   style: GoogleFonts.poppins(
                     fontSize: 16,
                     color: Colors.white,

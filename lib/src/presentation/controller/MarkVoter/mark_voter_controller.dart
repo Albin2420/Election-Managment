@@ -10,12 +10,18 @@ import 'package:get/get.dart';
 class MarkVoterController extends GetxController {
   IsOurVoterRepo isOurVoterRepo = IsOurVoterRepoImpl();
   VotersRepo votersRepo = VotersRepoImpl();
+
   final voters = <VoterModel>[].obs;
+  final allVoters = <VoterModel>[]; // Store all voters for search
 
   // Pagination variables
   final currentPage = 1.obs;
   final hasNextPage = true.obs;
   final hasPreviousPage = false.obs;
+
+  // Search variables
+  final searchQuery = ''.obs;
+  final isSearching = false.obs;
 
   @override
   void onInit() {
@@ -24,6 +30,9 @@ class MarkVoterController extends GetxController {
   }
 
   Future<void> fetchVoters({int? pageNumber}) async {
+    // Don't fetch if currently searching
+    if (isSearching.value) return;
+
     EasyLoading.show();
     try {
       final page = pageNumber ?? currentPage.value;
@@ -35,16 +44,18 @@ class MarkVoterController extends GetxController {
             (R) {
           log("R:$R");
           voters.value = R['voters'];
+
+          // Store all voters for search functionality
+          if (page == 1) {
+            allVoters.clear();
+          }
+          allVoters.addAll(R['voters']);
+
           log("voterLength:${voters.length}");
 
           // Update pagination state
           currentPage.value = page;
-
-          // Update hasNextPage based on response
-          // Assuming the API returns empty list or specific flag when no more data
           hasNextPage.value = R['voters'].isNotEmpty;
-
-          // Update hasPreviousPage
           hasPreviousPage.value = page > 1;
 
           EasyLoading.dismiss();
@@ -57,15 +68,70 @@ class MarkVoterController extends GetxController {
   }
 
   Future<void> goToNextPage() async {
-    if (hasNextPage.value) {
+    if (hasNextPage.value && !isSearching.value) {
       await fetchVoters(pageNumber: currentPage.value + 1);
     }
   }
 
   Future<void> goToPreviousPage() async {
-    if (hasPreviousPage.value) {
+    if (hasPreviousPage.value && !isSearching.value) {
       await fetchVoters(pageNumber: currentPage.value - 1);
     }
+  }
+
+  void searchVoters(String query) {
+    searchQuery.value = query.trim().toLowerCase();
+
+    if (searchQuery.value.isEmpty) {
+      // Reset to original list when search is cleared
+      isSearching.value = false;
+      fetchVoters(pageNumber: currentPage.value);
+      return;
+    }
+
+    isSearching.value = true;
+
+    // Filter voters based on search query
+    voters.value = allVoters.where((voter) {
+      // Search by name
+      final name = voter.name?.toLowerCase() ?? '';
+
+      // Search by guardian name
+      final guardianName = voter.guardianName?.toLowerCase() ?? '';
+
+      // Search by house number (convert int to string)
+      final houseNumber = voter.houseNumber?.toString() ?? '';
+
+      // Search by serial number (convert int to string)
+      final serialNumber = voter.serialNumber?.toString() ?? '';
+
+      // Search by sec_id_number
+      final secIdNumber = voter.secIdNumber?.toLowerCase() ?? '';
+
+      // Search by address
+      final address = voter.address?.toLowerCase() ?? '';
+
+      // Search by age (convert int to string)
+      final age = voter.age?.toString() ?? '';
+
+      // Search by gender
+      final gender = voter.gender?.toLowerCase() ?? '';
+
+      return name.contains(searchQuery.value) ||
+          guardianName.contains(searchQuery.value) ||
+          houseNumber.contains(searchQuery.value) ||
+          serialNumber.contains(searchQuery.value) ||
+          secIdNumber.contains(searchQuery.value) ||
+          address.contains(searchQuery.value) ||
+          age.contains(searchQuery.value) ||
+          gender.contains(searchQuery.value);
+    }).toList();
+  }
+
+  void clearSearch() {
+    searchQuery.value = '';
+    isSearching.value = false;
+    fetchVoters(pageNumber: currentPage.value);
   }
 
   Future<bool> addVotertoOur({required dynamic isOurvoterData}) async {
