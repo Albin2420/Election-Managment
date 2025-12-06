@@ -30,12 +30,12 @@ class AssignedBoothSection extends StatelessWidget {
           Row(
             children: [
               Container(
-                // padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Container(
-                  width: 90,
+                  width: 55,
                   height: 55,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
@@ -61,12 +61,15 @@ class AssignedBoothSection extends StatelessWidget {
 
           const SizedBox(height: 10),
 
-          Text(
-            'You are managing Booth $boothno in Ward $wardno',
-            style: GoogleFonts.poppins(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Text(
+              'You are managing Booth $boothno in Ward $wardno',
+              style: GoogleFonts.poppins(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),
             ),
           ),
 

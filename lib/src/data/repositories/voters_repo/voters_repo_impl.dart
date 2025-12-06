@@ -17,6 +17,7 @@ class VotersRepoImpl extends VotersRepo {
     try {
       final response = await DioClient.dio.get(url);
       if (response.statusCode == 200) {
+        log("resp:${response.data}");
         final results = response.data['results'] as List;
 
         final List<VoterModel> voters = results

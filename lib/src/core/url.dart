@@ -1,5 +1,5 @@
 class Url {
-  static String baseUrl = 'https://vantage-stg.crimsonhack.in/api';
+  static String baseUrl = 'http://20.244.1.180/api';
 
   static String login = "token/";
   static String refreshToken = "token/refresh/";
