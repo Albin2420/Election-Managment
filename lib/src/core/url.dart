@@ -1,5 +1,5 @@
 class Url {
-  static String baseUrl = 'https://vantage-stg.crimsonhack.in/api';
+  static String baseUrl = 'http://20.244.1.180/api';
 
   static String login = "token/";
   static String refreshToken = "token/refresh/";
@@ -9,6 +9,6 @@ class Url {
   static String updateIsOurvoter = "voters/update-is-our-voter/";
   static String serialNumber = "voters/serial-numbers/";
   static String byserialNumber = "voters/by-serial-numbers/";
-  static String castVoter = "voters/bulk-update-is-our-voter/";
+  static String castVoter = "voters/bulk-update-has-voted/";
   static String status = "voters/statistics/";
 }

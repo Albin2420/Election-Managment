@@ -1,4 +1,6 @@
+import 'package:election_management/src/presentation/controller/MarkVoter/mark_voter_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SearchField extends StatelessWidget {
@@ -6,6 +8,7 @@ class SearchField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<MarkVoterController>();
     return Container(
       width: double.infinity,
       height: 100,
@@ -39,6 +42,7 @@ class SearchField extends StatelessWidget {
                 ],
               ),
               child: TextField(
+                onChanged: (value) => controller.searchVoters(value),
                 decoration: InputDecoration(
                   prefixIcon: Padding(
                     padding: const EdgeInsets.only(left: 7, right: 7),

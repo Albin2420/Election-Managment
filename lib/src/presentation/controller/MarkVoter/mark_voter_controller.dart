@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:election_management/src/data/model/votermodel.dart';
 import 'package:election_management/src/data/repositories/isourvoter/is_our_voter_repo_impl.dart';
 import 'package:election_management/src/data/repositories/voters_repo/voters_repo_impl.dart';
@@ -11,7 +10,10 @@ import 'package:get/get.dart';
 class MarkVoterController extends GetxController {
   IsOurVoterRepo isOurVoterRepo = IsOurVoterRepoImpl();
   VotersRepo votersRepo = VotersRepoImpl();
-  final voters = <VoterModel>[].obs;
+
+  final allVoters = <VoterModel>[]; // Store full list
+  final voters = <VoterModel>[].obs; // Filtered list for UI
+  final searchText = "".obs;
 
   @override
   void onInit() {
@@ -29,8 +31,10 @@ class MarkVoterController extends GetxController {
         },
         (R) {
           log("R:$R");
-          voters.value = R['voters'];
-          log("voterLength:${voters.length}");
+          allVoters.clear();
+          allVoters.addAll(R['voters']);
+
+          voters.assignAll(allVoters);
           EasyLoading.dismiss();
         },
       );
@@ -38,6 +42,26 @@ class MarkVoterController extends GetxController {
       EasyLoading.dismiss();
       log("⚠️ Error in fetchVoters :$e");
     }
+  }
+
+  void searchVoters(String query) {
+    searchText.value = query;
+
+    if (query.isEmpty) {
+      voters.assignAll(allVoters);
+      return;
+    }
+
+    final lower = query.toLowerCase();
+
+    final results = allVoters.where((v) {
+      return v.name.toLowerCase().contains(lower) ||
+          v.guardianName?.toLowerCase().contains(lower) == true ||
+          v.serialNumber.toString().contains(lower) ||
+          v.houseNumber.toString().contains(lower);
+    }).toList();
+
+    voters.assignAll(results);
   }
 
   Future<bool> addVotertoOur({required dynamic isOurvoterData}) async {
