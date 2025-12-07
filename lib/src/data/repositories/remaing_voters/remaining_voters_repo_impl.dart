@@ -11,17 +11,11 @@ import 'package:election_management/src/domain/repositories/remaining_voters_rep
 class RemainingVotersRepoImpl extends RemainingVotersRepo {
   @override
   Future<Either<Failure, Map<String, dynamic>>> remaingVoters({
-    bool? isourVoter,
-    bool? isvoted,
+    required bool isvoted,
+    required bool isourVoter,
   }) async {
-    late final String url;
-
-    if (isourVoter == null && isvoted == null) {
-      url = "${Url.baseUrl}/${Url.fetchAllvoters}";
-    } else {
-      url =
-          "${Url.baseUrl}/${Url.fetchAllvoters}/?has_voted=$isvoted&is_our_voter=$isourVoter";
-    }
+    final url =
+        "${Url.baseUrl}/${Url.fetchAllvoters}/?has_voted=$isvoted&is_our_voter=$isourVoter";
 
     try {
       final response = await DioClient.dio.get(url);

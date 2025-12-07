@@ -14,10 +14,10 @@ class RemainingVoterController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetch();
+    fetch(isvoted: false, isourVoter: false);
   }
 
-  Future<void> fetch({bool? isourVoter, bool? isvoted}) async {
+  Future<void> fetch({required bool isvoted, required bool isourVoter}) async {
     try {
       EasyLoading.show();
       final res = await rp.remaingVoters(
@@ -48,7 +48,7 @@ class RemainingVoterController extends GetxController {
     if (ourVotersOnly.value) {
       fetch(isourVoter: true, isvoted: false);
     } else {
-      fetch();
+      fetch(isvoted: false, isourVoter: false);
     }
   }
 }

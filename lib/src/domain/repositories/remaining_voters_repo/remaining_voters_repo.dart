@@ -5,7 +5,7 @@ import '../../../core/network/failure.dart';
 
 abstract class RemainingVotersRepo {
   Future<Either<Failure, Map<String, dynamic>>> remaingVoters({
-    bool? isourVoter,
-    bool? isvoted,
+    required bool isvoted,
+    required bool isourVoter,
   });
 }

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:election_management/src/presentation/controller/RemainingVoterController/remaining_voter_controller.dart';
 import 'package:election_management/src/presentation/controller/home/home_controller.dart';
 import 'package:election_management/src/presentation/screens/RemainingVoters/widgets/filter.dart';
@@ -67,7 +65,6 @@ class RemainingVoters extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: FiltersCard(
                     onOurVotersTap: () {
-                      log("message");
                       ctrlr.toggleOurVoters();
                     },
                   ),
@@ -84,7 +81,6 @@ class RemainingVoters extends StatelessWidget {
 
                     return GestureDetector(
                       onTap: () {
-                        log("isOur:${voter.isOurVoter}");
                         Get.to(() => VoterDetailsPage(currenTVoter: voter));
                       },
                       child: VoterCard(
@@ -93,6 +89,7 @@ class RemainingVoters extends StatelessWidget {
                         house: '${voter.houseNumber}',
                         id: '${voter.secIdNumber}',
                         ourVoter: voter.isOurVoter ?? false,
+                        voted: voter.hasVoted ?? false,
                       ),
                     );
                   },
