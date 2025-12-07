@@ -1,12 +1,14 @@
+import 'package:election_management/src/presentation/controller/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SearchVoterHeader extends StatelessWidget {
-  const SearchVoterHeader({super.key});
+class RemainingVoterHeader extends StatelessWidget {
+  const RemainingVoterHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final ctrl = Get.find<HomeController>();
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -36,24 +38,24 @@ class SearchVoterHeader extends StatelessWidget {
               width: 45,
               height: 45,
               decoration: BoxDecoration(
-                color: const Color(0xFF8900E4),
+                color: Colors.red,
                 borderRadius: BorderRadius.circular(16),
               ),
-              child: const Icon(Icons.search, color: Colors.white, size: 35),
+              child: const Icon(Icons.people, color: Colors.white, size: 28),
             ),
             const SizedBox(width: 12),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Search Voter",
+                  "Remaining Voters",
                   style: GoogleFonts.inter(
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 Text(
-                  "Find voter by name, house, or ID",
+                  "Ward ${ctrl.wardNumber} - Booth ${ctrl.boothNumber}",
                   style: GoogleFonts.inter(
                     fontSize: 12,
                     color: Colors.grey.shade900,

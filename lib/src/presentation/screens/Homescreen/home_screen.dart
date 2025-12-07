@@ -2,6 +2,7 @@ import 'package:election_management/src/presentation/controller/home/home_contro
 import 'package:election_management/src/presentation/screens/Addnewvoter/add_new_voter.dart';
 import 'package:election_management/src/presentation/screens/MarkVoter/mark_voter_screen.dart';
 import 'package:election_management/src/presentation/screens/SearchVoter/search_voter.dart';
+import 'package:election_management/src/presentation/widgets/home_screen/optioncard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -132,6 +133,8 @@ class HomeScreen extends StatelessWidget {
                         ),
 
                         const SizedBox(height: 24),
+
+                        OptionCard(),
 
                         const SizedBox(height: 32),
                       ],

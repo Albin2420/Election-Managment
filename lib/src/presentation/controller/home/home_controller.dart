@@ -62,7 +62,7 @@ class HomeController extends GetxController {
     try {
       final res = await stats.getstatus();
       res.fold((l) {}, (R) {
-        log("status:$R");
+        log("R$R");
         final totalVoters = R['totalVoters'] ?? 0;
         final totalVoted = R['totalVoted'] ?? 0;
 
