@@ -11,36 +11,63 @@ class MarkVoterController extends GetxController {
   IsOurVoterRepo isOurVoterRepo = IsOurVoterRepoImpl();
   VotersRepo votersRepo = VotersRepoImpl();
 
-  final allVoters = <VoterModel>[]; // Store full list
-  final voters = <VoterModel>[].obs; // Filtered list for UI
+  RxList<VoterModel> voters = <VoterModel>[].obs;
+  final allVoters = <VoterModel>[]; // Full list cache
   final searchText = "".obs;
+
+  RxInt currentPage = 1.obs;
+  RxnString next = RxnString();
+  RxnString previous = RxnString();
 
   @override
   void onInit() {
     super.onInit();
-    fetchVoters();
+    fetchVoters(pageNumber: currentPage.value);
   }
 
-  Future<void> fetchVoters() async {
-    EasyLoading.show();
+  Future<bool> fetchVoters({required int pageNumber}) async {
     try {
-      final res = await votersRepo.fetchAllVoters(pageNumber: 1);
-      res.fold(
-        (l) {
-          EasyLoading.dismiss();
-        },
-        (R) {
-          log("R:$R");
-          allVoters.clear();
-          allVoters.addAll(R['voters']);
+      if (!EasyLoading.isShow) {
+        EasyLoading.show();
 
-          voters.assignAll(allVoters);
-          EasyLoading.dismiss();
-        },
-      );
+        final res = await votersRepo.fetchAllVoters(pageNumber: pageNumber);
+
+        bool success = false;
+
+        await res.fold(
+          (l) async {
+            success = false;
+            EasyLoading.dismiss();
+          },
+          (R) async {
+            final List<dynamic> list = R['voters'] ?? [];
+
+            // Convert to VoterModel
+            allVoters.clear();
+            allVoters.addAll(
+              list
+                  .map((e) => e is VoterModel ? e : VoterModel.fromJson(e))
+                  .toList(),
+            );
+
+            voters.assignAll(allVoters);
+
+            next.value = R['next'];
+            previous.value = R['previous'];
+
+            success = true;
+            EasyLoading.dismiss();
+          },
+        );
+
+        return success;
+      } else {
+        return false;
+      }
     } catch (e) {
+      log("⚠️ Error in fetchVoters: $e");
       EasyLoading.dismiss();
-      log("⚠️ Error in fetchVoters :$e");
+      return false;
     }
   }
 
@@ -64,6 +91,32 @@ class MarkVoterController extends GetxController {
     voters.assignAll(results);
   }
 
+  Future<void> loadNext() async {
+    if (next.value == null) return;
+
+    int oldPage = currentPage.value;
+    currentPage.value++;
+
+    bool ok = await fetchVoters(pageNumber: currentPage.value);
+
+    if (!ok) {
+      currentPage.value = oldPage;
+    }
+  }
+
+  Future<void> loadPrevious() async {
+    if (previous.value == null || currentPage.value <= 1) return;
+
+    int oldPage = currentPage.value;
+    currentPage.value--;
+
+    bool ok = await fetchVoters(pageNumber: currentPage.value);
+
+    if (!ok) {
+      currentPage.value = oldPage;
+    }
+  }
+
   Future<bool> addVotertoOur({required dynamic isOurvoterData}) async {
     try {
       EasyLoading.show();
@@ -82,5 +135,11 @@ class MarkVoterController extends GetxController {
       log("⚠️ Error in addVotertoOur():$e");
       return false;
     }
+  }
+
+  @override
+  void onClose() {
+    EasyLoading.dismiss();
+    super.onClose();
   }
 }
