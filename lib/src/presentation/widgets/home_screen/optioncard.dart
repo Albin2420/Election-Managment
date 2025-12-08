@@ -41,12 +41,12 @@ class OptionCard extends StatelessWidget {
           const SizedBox(height: 16),
 
           Optcard(
-            iconImage: 'assets/images/delete-account.png',
+            iconImage: 'assets/images/org_delete_ac.png',
             title: 'Remaining Voters',
             onTap: () {
               Get.to(() => RemainingVoters());
             },
-            bgColor: Colors.orange.withOpacity(0.2),
+            bgColor: Colors.orange.withOpacity(0.15),
           ),
         ],
       ),

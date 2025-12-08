@@ -31,30 +31,30 @@ class RemainingVoters extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: StatusCard(
-                    iconImage: 'assets/images/grey_home.png',
+                    iconImage: 'assets/images/total_people.png',
                     title: 'Total Remaining',
                     onTap: () {},
-                    bgColor: Colors.red,
+                    bgColor: Color(0XFFFF6900),
                     count: '${ctrl.remainingvoter.value}',
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: StatusCard(
-                    iconImage: 'assets/images/grey_home.png',
+                    iconImage: 'assets/images/add_people.png',
                     title: 'Our Voters Remaining',
                     onTap: () {},
-                    bgColor: Colors.green,
+                    bgColor: Color(0XFF00C951),
                     count: '${ctrl.ourVoters.value! - ctrl.ourVoted.value!}',
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: StatusCard(
-                    iconImage: 'assets/images/grey_home.png',
+                    iconImage: 'assets/images/total_people.png',
                     title: 'Others Remaining',
                     onTap: () {},
-                    bgColor: Colors.blue,
+                    bgColor: Color(0XFF2B7FFF),
                     count: '${ctrl.otherRemaining.value}',
                   ),
                 ),

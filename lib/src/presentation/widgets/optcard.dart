@@ -30,7 +30,8 @@ class Optcard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Image.asset(iconImage, height: 42, width: 42, fit: BoxFit.contain),
+            const SizedBox(width: 10),
+            Image.asset(iconImage, height: 40, width: 20, fit: BoxFit.contain),
 
             const SizedBox(width: 16),
 
