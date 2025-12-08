@@ -29,6 +29,8 @@ class HomeController extends GetxController {
   RxnInt ourVoters = RxnInt();
   RxnInt ourVoted = RxnInt();
 
+  RxnInt otherRemaining = RxnInt();
+
   @override
   void onInit() {
     super.onInit();
@@ -66,6 +68,9 @@ class HomeController extends GetxController {
         final totalVoters = R['totalVoters'] ?? 0;
         final totalVoted = R['totalVoted'] ?? 0;
 
+        final totalothervoters = R['total_other_voters'] ?? 0;
+        final totalothervoted = R['total_other_voted'] ?? 0;
+
         ourVoted.value = R['ourVoted'];
         ourVoters.value = R['ourVoters'];
 
@@ -76,6 +81,9 @@ class HomeController extends GetxController {
         }
 
         remainingvoter.value = (totalVoters - totalVoted).clamp(0, totalVoters);
+
+        otherRemaining.value = (totalothervoters - totalothervoted);
+        log("otherRemaining:$otherRemaining");
 
         final now = DateTime.now();
         date.value = DateFormat('dd/MM/yy').format(now);

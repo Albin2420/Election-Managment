@@ -20,6 +20,8 @@ class StatusRepoImpl extends StatussRepo {
           "totalVoted": response.data['total_voted'],
           "ourVoters": response.data['total_our_voters'],
           "ourVoted": response.data['total_our_voted'],
+          "total_other_voted": response.data['total_other_voted'],
+          "total_other_voters": response.data['total_other_voters'],
         });
       } else {
         return Left(Failure(message: "${response.statusMessage}"));

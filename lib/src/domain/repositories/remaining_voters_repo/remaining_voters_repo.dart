@@ -7,5 +7,6 @@ abstract class RemainingVotersRepo {
   Future<Either<Failure, Map<String, dynamic>>> remaingVoters({
     required bool isvoted,
     required bool isourVoter,
+    required int pageNumber,
   });
 }

@@ -7,6 +7,7 @@ import 'package:election_management/src/presentation/screens/SearchVoter/PageRou
 import 'package:election_management/src/presentation/widgets/status_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class RemainingVoters extends StatelessWidget {
   const RemainingVoters({super.key});
@@ -27,7 +28,6 @@ class RemainingVoters extends StatelessWidget {
                 const RemainingVoterHeader(),
                 const SizedBox(height: 26),
 
-                // ---------- STATUS CARDS ----------
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: StatusCard(
@@ -55,7 +55,7 @@ class RemainingVoters extends StatelessWidget {
                     title: 'Others Remaining',
                     onTap: () {},
                     bgColor: Colors.blue,
-                    count: '5',
+                    count: '${ctrl.otherRemaining.value}',
                   ),
                 ),
 
@@ -70,12 +70,27 @@ class RemainingVoters extends StatelessWidget {
                   ),
                 ),
 
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
+                  child: Text(
+                    "Found ${ctrlr.remainingVoters} result(s)",
+                    style: GoogleFonts.inter(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey.shade700,
+                    ),
+                  ),
+                ),
+
+                // ---------- VOTER LIST ----------
                 ListView.builder(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   itemCount: ctrlr.result.length,
-                  shrinkWrap: true, // important
-                  physics:
-                      NeverScrollableScrollPhysics(), // disable inner scroll
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     final voter = ctrlr.result[index];
 
@@ -94,6 +109,41 @@ class RemainingVoters extends StatelessWidget {
                     );
                   },
                 ),
+
+                const SizedBox(height: 20),
+
+                Obx(() {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 10,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ElevatedButton(
+                          onPressed: ctrlr.previous.value == null
+                              ? null
+                              : () {
+                                  ctrlr.loadPrevious();
+                                },
+                          child: const Text("Previous"),
+                        ),
+
+                        ElevatedButton(
+                          onPressed: ctrlr.next.value == null
+                              ? null
+                              : () {
+                                  ctrlr.loadNext();
+                                },
+                          child: const Text("Next"),
+                        ),
+                      ],
+                    ),
+                  );
+                }),
+
+                const SizedBox(height: 30),
               ],
             ),
           );
