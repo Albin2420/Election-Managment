@@ -124,19 +124,55 @@ class RemainingVoters extends StatelessWidget {
                         ElevatedButton(
                           onPressed: ctrlr.previous.value == null
                               ? null
-                              : () {
-                                  ctrlr.loadPrevious();
-                                },
-                          child: const Text("Previous"),
+                              : () => ctrlr.loadPrevious(),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: ctrlr.previous.value == null
+                                ? Colors.grey
+                                : Colors.green,
+                            foregroundColor: Colors.white, // text & icon color
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 12,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: const [
+                              Icon(Icons.arrow_back),
+                              SizedBox(width: 8),
+                              Text("Previous"),
+                            ],
+                          ),
                         ),
 
                         ElevatedButton(
                           onPressed: ctrlr.next.value == null
                               ? null
-                              : () {
-                                  ctrlr.loadNext();
-                                },
-                          child: const Text("Next"),
+                              : () => ctrlr.loadNext(),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: ctrlr.next.value == null
+                                ? Colors.grey
+                                : Colors.green,
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 12,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: const [
+                              Text("Next"),
+                              SizedBox(width: 8),
+                              Icon(Icons.arrow_forward),
+                            ],
+                          ),
                         ),
                       ],
                     ),
