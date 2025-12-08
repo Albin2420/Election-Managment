@@ -31,10 +31,15 @@ class HomeController extends GetxController {
 
   RxnInt otherRemaining = RxnInt();
 
+  Timer? _statusTimer;
+
   @override
   void onInit() {
     super.onInit();
     _init();
+    _statusTimer = Timer.periodic(Duration(minutes: 4), (timer) {
+      getStatus();
+    });
   }
 
   Future<void> _init() async {
@@ -83,7 +88,6 @@ class HomeController extends GetxController {
         remainingvoter.value = (totalVoters - totalVoted).clamp(0, totalVoters);
 
         otherRemaining.value = (totalothervoters - totalothervoted);
-        log("otherRemaining:$otherRemaining");
 
         final now = DateTime.now();
         date.value = DateFormat('dd/MM/yy').format(now);
@@ -96,5 +100,11 @@ class HomeController extends GetxController {
 
   Future<void> logout() async {
     Get.find<AppStartupController>().logout();
+  }
+
+  @override
+  void onClose() {
+    _statusTimer?.cancel(); // 🧹 Prevent memory leaks
+    super.onClose();
   }
 }
