@@ -146,6 +146,7 @@ class AddNewVoterScreen extends StatelessWidget {
                           label: 'House Number',
                           hint: 'Enter house number',
                           controller: controller.houseNumberController,
+                          keyboard: TextInputType.numberWithOptions(),
                         ),
                         const SizedBox(height: 20),
                         TextInputField(

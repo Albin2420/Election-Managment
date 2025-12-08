@@ -46,7 +46,7 @@ class LoginRepoImpl extends LoginRepo {
         log("❌ Dio error response : ${e.response?.data}");
         return left(Failure(message: "${e.response?.data['detail']}"));
       } else {
-        return left(Failure(message: "${e.response}"));
+        return left(Failure(message: "${e.message}"));
       }
     } catch (e) {
       log("💥 Unexpected error in $url : $e:");
