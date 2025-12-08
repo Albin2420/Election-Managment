@@ -40,10 +40,10 @@ class StatusCard extends StatelessWidget {
           children: [
             const SizedBox(width: 8),
             Container(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: bgColor ?? Colors.white,
-                borderRadius: BorderRadius.circular(14),
+                borderRadius: BorderRadius.circular(10),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.08),
@@ -54,8 +54,8 @@ class StatusCard extends StatelessWidget {
               ),
               child: Image.asset(
                 iconImage,
-                height: 36,
-                width: 36,
+                height: 22,
+                width: 22,
                 fit: BoxFit.contain,
               ),
             ),
