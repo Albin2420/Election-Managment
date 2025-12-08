@@ -27,7 +27,6 @@ class FiltersCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          /// Title Row
           Row(
             children: [
               const Icon(Icons.filter_alt_outlined, size: 22),
@@ -44,7 +43,6 @@ class FiltersCard extends StatelessWidget {
 
           const SizedBox(height: 18),
 
-          /// Our Voters Only Chip
           Obx(() {
             final isSelected = controller.ourVotersOnly.value;
 
@@ -79,7 +77,7 @@ class FiltersCard extends StatelessWidget {
                         ),
                       ),
                       child: Icon(
-                        Icons.close,
+                        isSelected ? Icons.done : Icons.close,
                         size: 14,
                         color: isSelected ? Colors.white : Colors.black,
                       ),

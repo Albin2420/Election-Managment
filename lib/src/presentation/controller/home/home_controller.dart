@@ -5,6 +5,7 @@ import 'package:election_management/src/data/repositories/statitics/status_repo_
 import 'package:election_management/src/domain/repositories/Booth/booth_repo.dart';
 import 'package:election_management/src/domain/repositories/statitics/status_repo.dart';
 import 'package:election_management/src/presentation/controller/AppstartupController/app_startup_controller.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -30,6 +31,7 @@ class HomeController extends GetxController {
   RxnInt ourVoted = RxnInt();
 
   RxnInt otherRemaining = RxnInt();
+  RxBool error = RxBool(false);
 
   Timer? _statusTimer;
 
@@ -44,23 +46,30 @@ class HomeController extends GetxController {
 
   Future<void> _init() async {
     await getBoothDetails();
-    getStatus();
   }
 
   Future<void> getBoothDetails() async {
     try {
       boothLoading.value = true;
       final res = await bth.getMyboothDetails();
-      res.fold((l) {}, (R) {
-        boothId.value = R['lsg_booth'];
-        boothNumber.value = R['boothNumber'];
-        wardNumber.value = R['wardNumber'];
-        totalvoters.value = R['totalVoters'];
-        boothName.value = R['boothName'];
-        wardName.value = R['wardName'];
-        boothLoading.value = false;
-      });
+      res.fold(
+        (l) {
+          error.value = true;
+          Fluttertoast.showToast(msg: l.message);
+        },
+        (R) {
+          boothId.value = R['lsg_booth'];
+          boothNumber.value = R['boothNumber'];
+          wardNumber.value = R['wardNumber'];
+          totalvoters.value = R['totalVoters'];
+          boothName.value = R['boothName'];
+          wardName.value = R['wardName'];
+          boothLoading.value = false;
+          getStatus();
+        },
+      );
     } catch (e) {
+      error.value = true;
       log("⚠️ Error in getBoothDetails():$e");
     }
   }
@@ -69,7 +78,6 @@ class HomeController extends GetxController {
     try {
       final res = await stats.getstatus();
       res.fold((l) {}, (R) {
-        log("R$R");
         final totalVoters = R['totalVoters'] ?? 0;
         final totalVoted = R['totalVoted'] ?? 0;
 
