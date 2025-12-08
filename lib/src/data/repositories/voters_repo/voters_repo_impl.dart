@@ -24,8 +24,9 @@ class VotersRepoImpl extends VotersRepo {
             .toList();
 
         return right({
-          "isTherenayNext": response.data['next'] != null ? true : false,
           "voters": voters,
+          "next": response.data['next'],
+          "previous": response.data['previous'],
         });
       } else {
         return Left(Failure(message: "${response.statusMessage}"));
