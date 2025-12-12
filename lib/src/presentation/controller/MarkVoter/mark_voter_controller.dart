@@ -4,13 +4,14 @@ import 'package:election_management/src/data/repositories/isourvoter/is_our_vote
 import 'package:election_management/src/data/repositories/voters_repo/voters_repo_impl.dart';
 import 'package:election_management/src/domain/repositories/isourvoter/is_our_voter_repo.dart';
 import 'package:election_management/src/domain/repositories/voters/voters_repo.dart';
+import 'package:election_management/src/presentation/controller/home/home_controller.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 class MarkVoterController extends GetxController {
   IsOurVoterRepo isOurVoterRepo = IsOurVoterRepoImpl();
   VotersRepo votersRepo = VotersRepoImpl();
-
+  final controller = Get.find<HomeController>();
   RxList<VoterModel> voters = <VoterModel>[].obs;
   final allVoters = <VoterModel>[]; // Full list cache
   final searchText = "".obs;
@@ -126,7 +127,8 @@ class MarkVoterController extends GetxController {
           EasyLoading.dismiss();
           return false;
         },
-        (r) {
+        (r) async {
+          await controller.getStatus();
           EasyLoading.dismiss();
           return true;
         },

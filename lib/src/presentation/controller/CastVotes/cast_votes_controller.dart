@@ -8,6 +8,7 @@ import 'package:election_management/src/data/repositories/serialNumber/serial_nu
 import 'package:election_management/src/domain/repositories/byserialnumber/by_serial_number_repo.dart';
 import 'package:election_management/src/domain/repositories/castvoter/cast_voter_repo.dart';
 import 'package:election_management/src/domain/repositories/serialNumber/serial_number_repo.dart';
+import 'package:election_management/src/presentation/controller/home/home_controller.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -18,6 +19,7 @@ class CastVotesController extends GetxController {
   SerialNumberRepo sr = SerialNumberRepoImpl();
   BySerialNumberRepo byserialNumber = BySerialNumberRepoImpl();
   CastVoterRepo cst = CastVoterRepoImpl();
+  final controller = Get.find<HomeController>();
 
   final searchQuery = ''.obs;
   final searchResults = <VoterCastModel>[].obs;
@@ -109,6 +111,7 @@ class CastVotesController extends GetxController {
         },
         (R) async {
           await jumpToRange(selectedRange.value);
+          controller.getStatus();
           votedSerials.clear();
           voterbySerial.clear();
           EasyLoading.dismiss();
