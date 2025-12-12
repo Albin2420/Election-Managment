@@ -7,15 +7,16 @@ import 'package:election_management/src/data/repositories/serialNumber/serial_nu
 import 'package:election_management/src/domain/repositories/byserialnumber/by_serial_number_repo.dart';
 import 'package:election_management/src/domain/repositories/castvoter/cast_voter_repo.dart';
 import 'package:election_management/src/domain/repositories/serialNumber/serial_number_repo.dart';
+import 'package:election_management/src/presentation/controller/home/home_controller.dart';
 import 'package:election_management/src/presentation/screens/RemainingVoters/widgets/markvoted/voterdetailpage.dart';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/route_manager.dart';
-import 'package:get/state_manager.dart';
+import 'package:get/get.dart';
 
 class RemainingVoterController extends GetxController {
   SerialNumberRepo sr = SerialNumberRepoImpl();
+  final controller = Get.find<HomeController>();
   CastVoterRepo csr = CastVoterRepoImpl();
   BySerialNumberRepo rp = BySerialNumberRepoImpl();
   RxList<VoterModel> result = <VoterModel>[].obs;
@@ -107,6 +108,7 @@ class RemainingVoterController extends GetxController {
           },
           (R) async {
             await jumpToRange(selectedRange.value);
+            controller.getStatus();
             Get.back();
             EasyLoading.dismiss();
           },

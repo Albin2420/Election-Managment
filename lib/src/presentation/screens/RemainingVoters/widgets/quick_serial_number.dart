@@ -102,7 +102,6 @@
 //   }
 // }
 
-import 'dart:developer';
 import 'package:election_management/src/presentation/controller/RemainingVoterController/remaining_voter_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -164,7 +163,6 @@ class SerialNumberWidget extends StatelessWidget {
 
             const SizedBox(height: 12),
 
-            // If filter removes all serials
             if (filteredSerials.isEmpty)
               const Text("No voters found in this range"),
 
