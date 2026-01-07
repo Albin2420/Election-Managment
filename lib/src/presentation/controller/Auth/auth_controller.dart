@@ -8,7 +8,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import '../../../data/services/secure_storage_service.dart';
+import '../../../data/services/storage_service.dart';
 
 class AuthController extends GetxController {
   final appstartupCtrl = Get.find<AppStartupController>();
