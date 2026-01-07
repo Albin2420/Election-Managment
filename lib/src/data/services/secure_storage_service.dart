@@ -1,72 +1,28 @@
-// import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-// class SecureStorageService {
-//   SecureStorageService._();
-//   static final SecureStorageService instance = SecureStorageService._();
-//   factory SecureStorageService() => instance;
+class StorageService {
+  static final _storage = FlutterSecureStorage();
 
-//   final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
+  static const _accessTokenKey = 'access_token';
+  static const _refreshTokenKey = 'refresh_token';
 
-//   // iOS options
-//   final IOSOptions _iosOptions = IOSOptions(
-//     accessibility: KeychainAccessibility.first_unlock,
-//   );
+  static Future<void> saveTokens({
+    String? accessToken,
+    String? refreshToken,
+  }) async {
+    await _storage.write(key: _accessTokenKey, value: accessToken);
+    await _storage.write(key: _refreshTokenKey, value: refreshToken);
+  }
 
-//   // Android options
-//   final AndroidOptions _androidOptions = AndroidOptions(
-//     encryptedSharedPreferences: true,
-//   );
+  static Future<String?> getAccessToken() async {
+    return await _storage.read(key: _accessTokenKey);
+  }
 
-//   // Write a value
-//   Future<void> write(String key, String value) async {
-//     await _secureStorage.write(
-//       key: key,
-//       value: value,
-//       iOptions: _iosOptions,
-//       aOptions: _androidOptions,
-//     );
-//   }
+  static Future<String?> getRefreshToken() async {
+    return await _storage.read(key: _refreshTokenKey);
+  }
 
-//   // Read a value
-//   Future<String?> read(String key) async {
-//     return await _secureStorage.read(
-//       key: key,
-//       iOptions: _iosOptions,
-//       aOptions: _androidOptions,
-//     );
-//   }
-
-//   // Delete a value
-//   Future<void> delete(String key) async {
-//     await _secureStorage.delete(
-//       key: key,
-//       iOptions: _iosOptions,
-//       aOptions: _androidOptions,
-//     );
-//   }
-
-//   // Check if a key exists
-//   Future<bool> containsKey(String key) async {
-//     return await _secureStorage.containsKey(
-//       key: key,
-//       iOptions: _iosOptions,
-//       aOptions: _androidOptions,
-//     );
-//   }
-
-//   // Read all values
-//   Future<Map<String, String>> readAll() async {
-//     return await _secureStorage.readAll(
-//       iOptions: _iosOptions,
-//       aOptions: _androidOptions,
-//     );
-//   }
-
-//   // Delete all values
-//   Future<void> deleteAll() async {
-//     await _secureStorage.deleteAll(
-//       iOptions: _iosOptions,
-//       aOptions: _androidOptions,
-//     );
-//   }
-// }
+  static Future<void> clear() async {
+    await _storage.deleteAll();
+  }
+}

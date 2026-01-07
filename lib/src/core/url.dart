@@ -1,7 +1,7 @@
 class Url {
-  static String baseUrl = 'http://18.61.83.78/api'; //prod;
+  // static String baseUrl = 'http://18.61.83.78/api'; //prod;
 
-  // static String baseUrl = "http://20.244.1.180/api";
+  static String baseUrl = "http://20.244.1.180/api";
 
   static String login = "token/";
   static String refreshToken = "token/refresh/";

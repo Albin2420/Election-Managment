@@ -8,6 +8,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../../../data/services/secure_storage_service.dart';
+
 class AuthController extends GetxController {
   final appstartupCtrl = Get.find<AppStartupController>();
   final LoginRepo _loginRepo = LoginRepoImpl();
@@ -41,9 +43,9 @@ class AuthController extends GetxController {
           Fluttertoast.showToast(msg: l.message);
         },
         (R) async {
-          await appstartupCtrl.saveTokens(
-            accessTk: R['access_token'],
-            refreshTk: R['refresh_token'],
+          await StorageService.saveTokens(
+            accessToken: R['access_token'],
+            refreshToken: R['refresh_token'],
           );
           Get.offAll(() => HomeScreen());
           EasyLoading.dismiss();
