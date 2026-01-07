@@ -14,7 +14,6 @@ class AuthController extends GetxController {
   final appstartupCtrl = Get.find<AppStartupController>();
   final LoginRepo _loginRepo = LoginRepoImpl();
 
-  // Text editing controllers
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
