@@ -38,7 +38,6 @@ class DioClient {
             } else {
               log("🚪 Refresh failed → Logout user");
               final ctrl = Get.find<AppStartupController>();
-              await StorageService.clear();
               ctrl.logout();
 
               return handler.next(error);

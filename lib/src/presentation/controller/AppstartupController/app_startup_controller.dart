@@ -1,13 +1,11 @@
 import 'dart:developer';
-import 'package:election_management/src/data/services/secure_storage_service.dart';
+
+import 'package:election_management/src/data/services/storage_service.dart';
 import 'package:election_management/src/presentation/screens/Auth/loginpage.dart';
 import 'package:election_management/src/presentation/screens/Homescreen/home_screen.dart';
 import 'package:get/get.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AppStartupController extends GetxController {
-  final sh = FlutterSecureStorage();
-
   @override
   void onInit() {
     super.onInit();
@@ -31,7 +29,7 @@ class AppStartupController extends GetxController {
   }
 
   Future<void> logout() async {
-    await sh.deleteAll();
-    Get.offAll(() => LoginPage());
+    await StorageService.clear();
+    await Get.offAll(() => LoginPage());
   }
 }
