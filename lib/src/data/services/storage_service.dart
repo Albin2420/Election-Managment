@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class StorageService {
@@ -10,16 +12,30 @@ class StorageService {
     String? accessToken,
     String? refreshToken,
   }) async {
-    await _storage.write(key: _accessTokenKey, value: accessToken);
-    await _storage.write(key: _refreshTokenKey, value: refreshToken);
+    try {
+      await _storage.write(key: _accessTokenKey, value: accessToken);
+      await _storage.write(key: _refreshTokenKey, value: refreshToken);
+    } catch (e) {
+      log("⚠️ Error in saveTokens():$e");
+    }
   }
 
   static Future<String?> getAccessToken() async {
-    return await _storage.read(key: _accessTokenKey);
+    try {
+      return await _storage.read(key: _accessTokenKey);
+    } catch (e) {
+      log("⚠️ Error in getAccessToken():$e");
+      return null;
+    }
   }
 
   static Future<String?> getRefreshToken() async {
-    return await _storage.read(key: _refreshTokenKey);
+    try {
+      return await _storage.read(key: _refreshTokenKey);
+    } catch (e) {
+      log("⚠️ Error in getRefreshToken():$e");
+      return null;
+    }
   }
 
   static Future<void> clear() async {
