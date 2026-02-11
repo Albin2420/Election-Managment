@@ -1,18 +1,18 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:election_management/src/core/url.dart';
-import 'package:get/get.dart';
+import 'package:election_management/src/data/services/storage_service.dart';
 import 'package:election_management/src/presentation/controller/AppstartupController/app_startup_controller.dart';
+import 'package:get/get.dart';
 
 class DioClient {
   static final Dio dio = Dio()
     ..interceptors.add(
       InterceptorsWrapper(
-        onRequest: (options, handler) {
-          final ctrl = Get.find<AppStartupController>();
-          final token = ctrl.accessToken.value;
+        onRequest: (options, handler) async {
+          final token = await StorageService.getAccessToken();
 
-          if (token.isNotEmpty) {
+          if (token != null) {
             options.headers['Authorization'] = 'Bearer $token';
           }
           options.headers['Content-Type'] = 'application/json';
@@ -57,10 +57,9 @@ class DioClient {
   /// 🔄 Token Refresh Logic
   static Future<bool> _handleTokenRefresh() async {
     try {
-      final ctrl = Get.find<AppStartupController>();
-      final refreshToken = ctrl.refreshToken.value;
+      final refreshToken = await StorageService.getRefreshToken();
 
-      if (refreshToken.isEmpty) {
+      if (refreshToken == null) {
         log("⚠ No refresh token available");
         return false;
       }
@@ -76,8 +75,7 @@ class DioClient {
         final newAccess = response.data["access"] ?? "";
 
         if (newAccess.isNotEmpty) {
-          ctrl.accessToken.value = newAccess;
-          await ctrl.saveTokens(accessTk: newAccess);
+          await StorageService.saveTokens(accessToken: newAccess);
           log("✔ Token Refresh Success");
           return true;
         }

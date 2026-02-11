@@ -1,14 +1,11 @@
 import 'dart:developer';
+
+import 'package:election_management/src/data/services/storage_service.dart';
 import 'package:election_management/src/presentation/screens/Auth/loginpage.dart';
 import 'package:election_management/src/presentation/screens/Homescreen/home_screen.dart';
 import 'package:get/get.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AppStartupController extends GetxController {
-  RxString accessToken = RxString("");
-  RxString refreshToken = RxString("");
-  final sh = FlutterSecureStorage();
-
   @override
   void onInit() {
     super.onInit();
@@ -17,18 +14,13 @@ class AppStartupController extends GetxController {
 
   Future<void> checkToken() async {
     try {
-      final storedAccess = await sh.read(key: 'accessToken');
-      final storedRefresh = await sh.read(key: 'refreshToken');
+      final accessToken = await StorageService.getAccessToken();
+      final refreshToken = await StorageService.getRefreshToken();
 
-      accessToken.value = storedAccess ?? "";
-      refreshToken.value = storedRefresh ?? "";
-
-      if (accessToken.value.isEmpty || refreshToken.value.isEmpty) {
-        log("❌ Tokens Missing → Redirecting to LoginPage");
-        Get.offAll(() => LoginPage());
-      } else {
-        log("✅ Tokens Found → Redirecting to HomePage");
+      if (accessToken != null || refreshToken != null) {
         Get.offAll(() => HomeScreen());
+      } else {
+        Get.offAll(() => LoginPage());
       }
     } catch (e) {
       log("⚠️ Error in loadTokensAndNavigate(): $e");
@@ -36,24 +28,8 @@ class AppStartupController extends GetxController {
     }
   }
 
-  Future<void> saveTokens({String? accessTk, String? refreshTk}) async {
-    try {
-      if (accessTk != null) {
-        accessToken.value = accessTk;
-        await sh.write(key: 'accessToken', value: accessTk);
-      }
-
-      if (refreshTk != null) {
-        refreshToken.value = refreshTk;
-        await sh.write(key: 'refreshToken', value: refreshTk);
-      }
-    } catch (e) {
-      log("⚠️ Error in saveTokens():$e");
-    }
-  }
-
   Future<void> logout() async {
-    await sh.deleteAll();
-    Get.offAll(() => LoginPage());
+    await StorageService.clear();
+    await Get.offAll(() => LoginPage());
   }
 }
