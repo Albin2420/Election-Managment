@@ -22,7 +22,8 @@ class DioClient {
         },
 
         onError: (DioException error, handler) async {
-          log("❌ API Error Status: ${error.response?.statusCode}");
+          log("❌ API Error Status : ${error.response?.statusCode}");
+          log("❌ API Error Message : ${error.response?.data}");
 
           if (error.response?.statusCode == 403) {
             log("🔴 Token expired — Attempting refresh...");

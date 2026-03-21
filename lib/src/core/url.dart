@@ -1,7 +1,7 @@
 class Url {
   // static String baseUrl = 'http://18.61.83.78/api'; //prod;
 
-  static String baseUrl = "http://40.192.6.123/api";
+  static String baseUrl = "http://40.192.6.123/api/";
 
   // 40.192.6.123;
 

@@ -56,6 +56,7 @@ class AddVoterController extends GetxController {
           "is_alive": true,
           "is_disputed": true,
           "lsg_booth": hmctrl.boothId.value,
+          "sec_id_number": "lsg_booth",
         });
 
         EasyLoading.show();
