@@ -28,7 +28,7 @@ class LoginRepoImpl extends LoginRepo {
         "password": password,
       });
 
-      log("🚀 Sending login request -> $url \ndata :$requestData");
+      log("🌍 API -> POST URL: $url \ndata : $requestData");
 
       final response = await _dio.post(
         url,
