@@ -30,7 +30,6 @@ class DioClient {
             final refreshed = await _handleTokenRefresh();
 
             if (refreshed) {
-              // 🔁 Retry last failed request
               final RequestOptions requestOptions = error.requestOptions;
               final response = await dio.fetch(requestOptions);
 
@@ -54,7 +53,6 @@ class DioClient {
       ),
     );
 
-  /// 🔄 Token Refresh Logic
   static Future<bool> _handleTokenRefresh() async {
     try {
       final refreshToken = await StorageService.getRefreshToken();
