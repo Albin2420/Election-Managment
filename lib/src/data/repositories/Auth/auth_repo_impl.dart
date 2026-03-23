@@ -11,7 +11,7 @@ class LoginRepoImpl extends LoginRepo {
   final Dio _dio = Dio(
     BaseOptions(
       connectTimeout: const Duration(seconds: 10),
-      receiveTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(seconds: 20),
       sendTimeout: const Duration(seconds: 10),
     ),
   );
