@@ -8,7 +8,13 @@ import 'package:election_management/src/domain/repositories/Auth/auth_repo.dart'
 import 'package:dio/dio.dart';
 
 class LoginRepoImpl extends LoginRepo {
-  final Dio _dio = Dio();
+  final Dio _dio = Dio(
+    BaseOptions(
+      connectTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(seconds: 10),
+      sendTimeout: const Duration(seconds: 10),
+    ),
+  );
 
   @override
   Future<Either<Failure, Map<String, dynamic>>> login({
@@ -21,6 +27,9 @@ class LoginRepoImpl extends LoginRepo {
         "username": userName,
         "password": password,
       });
+
+      log("🚀 Sending login request -> $url \ndata :$requestData");
+
       final response = await _dio.post(
         url,
         options: Options(headers: {'Content-Type': 'application/json'}),
@@ -42,6 +51,13 @@ class LoginRepoImpl extends LoginRepo {
       }
     } on DioException catch (e) {
       log("❌ Dio error in $url: ${e.message}");
+
+      if (e.type == DioExceptionType.connectionTimeout ||
+          e.type == DioExceptionType.receiveTimeout ||
+          e.type == DioExceptionType.sendTimeout) {
+        return left(Failure(message: "Server not reachable"));
+      }
+
       if (e.response != null) {
         log("❌ Dio error response : ${e.response?.data}");
         return left(Failure(message: "${e.response?.data['detail']}"));
