@@ -47,4 +47,4 @@ app.*.map.json
 
 # server details and repo's
 
-url.dart
+lib/src/core/url.dart
