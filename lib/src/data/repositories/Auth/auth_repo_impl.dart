@@ -1,11 +1,11 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
+import 'package:election_management/src/core/network/error_handler.dart';
 import 'package:election_management/src/core/network/failure.dart';
 import 'package:election_management/src/core/url.dart';
 import 'package:election_management/src/domain/repositories/Auth/auth_repo.dart';
-import 'package:dio/dio.dart';
 
 class LoginRepoImpl extends LoginRepo {
   final Dio _dio = Dio(
@@ -13,6 +13,7 @@ class LoginRepoImpl extends LoginRepo {
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 20),
       sendTimeout: const Duration(seconds: 10),
+      headers: {'Content-Type': 'application/json'},
     ),
   );
 
@@ -22,51 +23,32 @@ class LoginRepoImpl extends LoginRepo {
     required String password,
   }) async {
     final url = "${Url.baseUrl}/${Url.login}";
+
     try {
-      final requestData = jsonEncode({
-        "username": userName,
-        "password": password,
-      });
+      final requestData = {"username": userName, "password": password};
 
       log("🌍 API -> POST URL: $url \ndata : $requestData");
 
-      final response = await _dio.post(
-        url,
-        options: Options(headers: {'Content-Type': 'application/json'}),
-        data: requestData,
-      );
+      final response = await _dio.post(url, data: requestData);
 
       if (response.statusCode == 200) {
-        log("✅ Response Status of $url: ${response.statusCode}");
-
-        final responseBody = response.data as Map<String, dynamic>;
+        final data = response.data;
 
         return right({
-          "access_token": responseBody['access'],
-          "refresh_token": responseBody['refresh'],
+          "access_token": data['access'],
+          "refresh_token": data['refresh'],
         });
-      } else {
-        log("❌ Response Status of $url: ${response.statusCode}");
-        return Left(Failure(message: "statuscode:${response.statusCode}"));
       }
+
+      return left(
+        Failure(code: response.statusCode ?? -1, message: "Unexpected error"),
+      );
     } on DioException catch (e) {
-      log("❌ Dio error in $url: ${e.message}");
-
-      if (e.type == DioExceptionType.connectionTimeout ||
-          e.type == DioExceptionType.receiveTimeout ||
-          e.type == DioExceptionType.sendTimeout) {
-        return left(Failure(message: "Server not reachable"));
-      }
-
-      if (e.response != null) {
-        log("❌ Dio error response : ${e.response?.data}");
-        return left(Failure(message: "${e.response?.data['detail']}"));
-      } else {
-        return left(Failure(message: "${e.message}"));
-      }
+      return left(handleDioError(e));
     } catch (e) {
-      log("💥 Unexpected error in $url : $e:");
-      return Left(Failure(message: "$e"));
+      log("💥 Unexpected error -> $e");
+
+      return const Left(Failure(code: -1, message: "Something went wrong"));
     }
   }
 }

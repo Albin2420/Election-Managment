@@ -36,7 +36,6 @@ class LoginPage extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Logo
                   Image.asset(
                     "assets/images/tick_mark.png",
                     height: 80,
@@ -45,7 +44,6 @@ class LoginPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
 
-                  // Title
                   Text(
                     "Election Management System",
                     textAlign: TextAlign.center,
@@ -63,9 +61,8 @@ class LoginPage extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  const SizedBox(height: 35),
+                  const SizedBox(height: 25),
 
-                  // Username
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -120,7 +117,6 @@ class LoginPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
 
-                  // Password
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -176,7 +172,6 @@ class LoginPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 30),
 
-                  // Login Button
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
@@ -202,7 +197,6 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
                 ],
               ),
             ),
