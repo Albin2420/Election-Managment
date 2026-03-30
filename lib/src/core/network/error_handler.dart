@@ -31,46 +31,46 @@ extension ApiStatusX on ApiStatus {
   Failure getFailure() {
     switch (this) {
       case ApiStatus.badRequest:
-        return const Failure(code: 400, message: 'Bad request - 400');
+        return const Failure(code: 400, message: 'Bad request');
 
       case ApiStatus.unauthorised:
-        return const Failure(code: 401, message: 'Unauthorized - 401');
+        return const Failure(code: 401, message: 'Unauthorized');
 
       case ApiStatus.forbidden:
-        return const Failure(code: 403, message: 'Forbidden - 403');
+        return const Failure(code: 403, message: 'Forbidden');
 
       case ApiStatus.notFound:
-        return const Failure(code: 404, message: 'Not found - 404');
+        return const Failure(code: 404, message: 'Not found');
 
       case ApiStatus.connectTimeout:
-        return const Failure(code: 408, message: 'Connection timeout - 408');
+        return const Failure(code: 408, message: 'Connection timeout');
 
       case ApiStatus.receiveTimeout:
-        return const Failure(code: -4, message: 'Receive timeout - 4');
+        return const Failure(code: -4, message: 'Receive timeout');
 
       case ApiStatus.sendTimeout:
-        return const Failure(code: -5, message: 'Send timeout - 5');
+        return const Failure(code: -5, message: 'Send timeout');
 
       case ApiStatus.cancel:
-        return const Failure(code: -3, message: 'Request cancelled - 3');
+        return const Failure(code: -3, message: 'Request cancelled');
 
       case ApiStatus.unProcessableData:
-        return const Failure(code: 422, message: 'Unprocessable content - 422');
+        return const Failure(code: 422, message: 'Unprocessable content');
 
       case ApiStatus.internalServerError:
-        return const Failure(code: 500, message: 'Internal server error - 500');
+        return const Failure(code: 500, message: 'Internal server error');
 
       case ApiStatus.notImplemented:
-        return const Failure(code: 501, message: 'Not implemented - 501');
+        return const Failure(code: 501, message: 'Not implemented');
 
       case ApiStatus.badGateway:
         return const Failure(
           code: 502,
-          message: 'Server is temporarily unavailable - 502',
+          message: 'Server is temporarily unavailable',
         );
 
       case ApiStatus.serviceUnavailable:
-        return const Failure(code: 503, message: 'Service unavailable - 503');
+        return const Failure(code: 503, message: 'Service unavailable');
 
       case ApiStatus.noInternetConnection:
         return const Failure(code: -7, message: 'No internet connection');
