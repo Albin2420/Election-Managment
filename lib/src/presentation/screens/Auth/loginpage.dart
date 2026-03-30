@@ -1,3 +1,4 @@
+import 'package:election_management/src/presentation/screens/Auth/widgets/loginbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -172,30 +173,12 @@ class LoginPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 30),
 
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (!EasyLoading.isShow) {
-                          controller.login();
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF2F5DFE),
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      child: Text(
-                        "Login to Booth",
-                        style: GoogleFonts.inter(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
+                  LoginButton(
+                    onTap: () {
+                      if (!EasyLoading.isShow) {
+                        controller.login();
+                      }
+                    },
                   ),
                 ],
               ),
