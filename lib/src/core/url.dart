@@ -1,11 +1,7 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class Url {
-  // static String baseUrl = 'http://18.61.83.78/api'; //prod;
-
-  static String baseUrl = dotenv.env['BASE_URL'] ?? '';
-
-  // 40.192.6.123;
+  static String baseUrl = dotenv.env['BASE_URL'] ?? '<url not found>';
 
   static String login = "token/";
   static String refreshToken = "token/refresh/";
