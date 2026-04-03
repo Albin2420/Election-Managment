@@ -45,6 +45,6 @@ app.*.map.json
 /android/app/release
 
 
-# server details and repo's
-
-lib/src/core/url.dart
+# Environment variables
+.env
+.env.*
