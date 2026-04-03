@@ -46,6 +46,7 @@ dependencies:
   marquee: ^2.3.0
   intl: ^0.20.2
   connectivity_plus: ^7.0.0
+  flutter_dotenv: ^6.0.0
 
 dev_dependencies:
   flutter_test:
